@@ -15,6 +15,7 @@ exports.isNotLoggedIn = (req, res, next) => {
   }
 };
 
+// board라우터에 쓰는 isLoggedIn 입니다.
 exports.isLoggedIn2 = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();

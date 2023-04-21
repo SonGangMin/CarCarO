@@ -31,7 +31,7 @@ router.get("/", async (req, res, next) => {
 router.get("/newpost", (req, res, next) => {
   res.render("newpost", { title: "회원가입" });
 });
-
+//d
 // const upload = multer();
 router.post("/", isLoggedIn2, async (req, res, next) => {
   console.log("req.body =>", req.body);
