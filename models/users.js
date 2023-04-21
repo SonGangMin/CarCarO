@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     password: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     email: {
@@ -28,11 +28,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     grade: {
       type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    like: {
-      type: DataTypes.BIGINT,
-      allowNull: true
+      allowNull: false,
+      defaultValue: 1
     }
   }, {
     sequelize,

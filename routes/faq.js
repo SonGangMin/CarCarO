@@ -3,7 +3,6 @@ const router = express.Router();
 const models = require('../models')
 const path = require('path');
 const fs = require('fs');
-const { uploadInquiry } = require('../controllers/inquiry');
 const { isLoggedIn } = require('../middlewares');
 
 router.get('/', async (req, res, next) => {
@@ -26,12 +25,16 @@ router.get('/', async (req, res, next) => {
 router.get('/inquiry', function(req, res, next) {
     res.render('inquiry',{title: '1:1문의'});
 });
-
-router.post('/', function(req, res, next) {
+router.post('/inquiry', function(req, res, next) {
     const title = req.body.title;
     const content = req.body.content;
     const user_id = req.body.user_id;
-    models.inquiry.create({
+
+    console.log("1111111111->", user_id);
+
+
+
+    models.inquirys.create({
         title: title,
         content: content,
         user_id: user_id,
@@ -44,6 +47,5 @@ router.post('/', function(req, res, next) {
     });
 })
 
-router.post('/', isLoggedIn, uploadInquiry);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('cars', {
-    car_num: {
+    carNum: {
       type: DataTypes.STRING(255),
       allowNull: false,
       unique: "cars_UN"
@@ -119,6 +119,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true
+    },
+    user_id: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
     }
   }, {
     sequelize,
@@ -138,7 +146,14 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "car_num" },
+          { name: "carNum" },
+        ]
+      },
+      {
+        name: "cars_FK",
+        using: "BTREE",
+        fields: [
+          { name: "user_id" },
         ]
       },
     ]
