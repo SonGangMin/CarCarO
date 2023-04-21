@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const models = require("../models");
 const multer = require("multer");
+const { isLoggedIn2 } = require("../middlewares");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -32,7 +33,7 @@ router.get("/newpost", (req, res, next) => {
 });
 
 // const upload = multer();
-router.post("/", async (req, res, next) => {
+router.post("/", isLoggedIn2, async (req, res, next) => {
   console.log("req.body =>", req.body);
   try {
     await models.boards.create({
