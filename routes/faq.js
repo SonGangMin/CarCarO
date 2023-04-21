@@ -3,7 +3,7 @@ const router = express.Router();
 const models = require('../models')
 const path = require('path');
 const fs = require('fs');
-const { isLoggedIn } = require('../middlewares');
+const { isLoggedIn, isLoggedIn3 } = require('../middlewares');
 
 router.get('/', async (req, res, next) => {
     try {
@@ -25,12 +25,10 @@ router.get('/', async (req, res, next) => {
 router.get('/inquiry', function(req, res, next) {
     res.render('inquiry',{title: '1:1문의'});
 });
-router.post('/inquiry', function(req, res, next) {
+router.post('/inquiry', isLoggedIn3, function(req, res, next) {
     const title = req.body.title;
     const content = req.body.content;
     const user_id = req.body.user_id;
-
-    console.log("1111111111->", user_id);
 
 
 

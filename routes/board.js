@@ -42,7 +42,7 @@ router.post("/", isLoggedIn2, async (req, res, next) => {
       content: req.body.content,
       createdAt: null,
       updatedAt: null,
-      user_id: req.user.id,
+      user_id: req.users.id,
     });
     res.redirect("/boards");
   } catch (err) {

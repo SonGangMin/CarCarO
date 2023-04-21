@@ -1,7 +1,7 @@
 const inquiryButton = document.querySelector('.inquiry');
 
 inquiryButton.addEventListener('click', function() {
-    const userId = "<%= user.id %>";
+    const userId = "<%= users.id %>";
     if (userId === undeefined || usrId === null || userId === '') {
         alert('로그인 후 이용해주세요.');
         window.location.href = '/login'; 
