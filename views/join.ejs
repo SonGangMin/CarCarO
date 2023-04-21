@@ -10,18 +10,30 @@
 <body>
     <form action="/auth/join" method="post" class="form">
         <h1 class="title">회원가입</h1>
-        <label for=""><span>아이디</span><input type="text" name="id"></label>
-        <label for=""><span>비밀번호</span><input type="password" name="password"></label>
-        <label for=""><span>이름</span><input type="text" name="name"></label>
+        <label for=""><span>아이디</span><input id="id" type="text" name="id"></label>
+        <label for=""><span>비밀번호</span><input id="pw" type="password" name="password"></label>
+        <label for=""><span>이름</span><input id="name" type="text" name="name"></label>
         <label for="">
             <span>전화번호</span>
             <div class="phone">
-                <input type="number" name="tel">
+                <input id="tel" type="number" name="tel">
             </div>
         </label>
-        <label for=""><span>이메일</span><input type="text" name="email"></label>
-        <label for=""><span>나이</span><input type="text" name="birth"></label>
+        <label for=""><span>이메일</span><input id="email" type="email" name="email"></label>
+        <label for=""><span>나이</span><input id="birth" type="text" name="birth"></label>
         <button type="submit" class="join_btn">회원가입</button>
     </form>
+    <script>
+        const id = document.getElementById('id');
+        const pw = document.getElementById('pw');
+        const name = document.getElementById('name');
+        const tel = document.getElementById('tel');
+        const email = document.getElementById('email');
+        const birth = document.getElementById('birth');
+
+        addInput(() => {
+            const valueID = id.value,
+        })
+    </script>
 </body>
 </html>
