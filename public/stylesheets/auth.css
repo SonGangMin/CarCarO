@@ -1,0 +1,59 @@
+.form{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 20px;
+}
+.form .title{
+    margin-bottom: 50px;
+}
+.form label{
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.form span{
+    display: inline-block;
+    width: 100px;
+    font-weight: bold;
+}
+.form input{
+    display: block;
+    width: calc(100% - 100px);
+    border: 1px solid #ddd;
+}
+.form .phone{
+    display: flex;
+    width: 100%;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.phone input{
+    width: calc(100% / 3);
+    margin-right: 5px;
+}
+
+.phone input:last-child{
+    margin-right: 0;
+}
+
+.form .btn{
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    padding: 5px 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    cursor: pointer;
+}

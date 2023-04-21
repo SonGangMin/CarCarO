@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%- title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+    <header id="hd">
+      <% if (!user || !user.id) {%> 
+      <div class="util">
+        <a href="/login">로그인</a>
+        <a href="/join">회원가입</a>
+      </div>
+      <%} else {%>
+        <div class="util">
+          <%= user.name %>
+          <a href="/auth/logout">로그아웃</a>
+        </div>
+      <% } %>
+      <div class="hd_menu">
+        <div class="hd_lt">
+          <h1 class="logo">
+            <a href="/">CarCarO</a>
+          </h1>
+          <ul class="nav">
+            <li>
+              <a href="/car/findcar">내차 찾기</a>
+            </li>
+            <li>
+              <a href="">내차 팔기</a>
+            </li>
+            <li>
+              <a href="">커뮤니티</a>
+            </li>
+          </ul>
+        </div>
+        <div class="hd_rt">
+          <a href="javascript:void(0);">검색</a>
+          <a href="javascript:void(0);">메뉴</a>
+        </div>
+      </div>
+    </header>
+    <script>
+      window.onload = () =>{
+                      if (new URL(location.href).searchParams.get('loginError')){ 
+                          alert(new URL(location.href).searchParams.get('loginError')); 
+                      }
+                  };
+      </script>

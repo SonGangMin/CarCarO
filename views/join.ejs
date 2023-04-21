@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="stylesheets/auth.css">
+</head>
+<body>
+    <form action="/auth/join" method="post" class="form">
+        <h1 class="title">회원가입</h1>
+        <label for=""><span>아이디</span><input type="text" name="id"></label>
+        <label for=""><span>비밀번호</span><input type="password" name="password"></label>
+        <label for=""><span>이름</span><input type="text" name="name"></label>
+        <label for="">
+            <span>전화번호</span>
+            <div class="phone">
+                <input type="number" name="tel">
+            </div>
+        </label>
+        <label for=""><span>이메일</span><input type="text" name="email"></label>
+        <label for=""><span>나이</span><input type="text" name="birth"></label>
+        <button type="submit" class="join_btn">회원가입</button>
+    </form>
+</body>
+</html>

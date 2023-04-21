@@ -22,8 +22,6 @@ function initModels(sequelize) {
   cars.hasMany(likes, { as: "likes", foreignKey: "car_num"});
   boards.belongsTo(users, { as: "user", foreignKey: "user_id"});
   users.hasMany(boards, { as: "boards", foreignKey: "user_id"});
-  cars.belongsTo(users, { as: "user", foreignKey: "user_id"});
-  users.hasMany(cars, { as: "cars", foreignKey: "user_id"});
   comments.belongsTo(users, { as: "user", foreignKey: "user_id"});
   users.hasMany(comments, { as: "comments", foreignKey: "user_id"});
   inquiry.belongsTo(users, { as: "user", foreignKey: "user_id"});
