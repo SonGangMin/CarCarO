@@ -12,12 +12,14 @@ dotenv.config();
 const pageRouter = require('./routes/page');
 const authRouter = require('./routes/auth');
 const carRouter = require('./routes/car');
+const faqRouter = require('./routes/faq');
 const {sequelize} = require('./models');
 const passportConfig = require('./passport');
 
 const app = express();
 passportConfig();
 
+app.set("views", path.join(__dirname, "views"));
 app.set('view engine', 'ejs');
 // nuncjucks.configure('views', {
 //   express: app,
@@ -51,6 +53,7 @@ app.use(passport.session());
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
 app.use('/car', carRouter);
+app.use('/faq', faqRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

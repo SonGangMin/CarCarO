@@ -1,0 +1,22 @@
+<%- include('./include/head.ejs')%>
+
+<div class="faqblock">
+    소중한 고객의 소리 <input type="text" class="search">
+    <button class="btn">검색</button><br><br><br>
+    <h1 align="center">자주 묻는 질문</h1><br>
+    <div class="manytime" align="center">
+        <div>
+            <ul>
+            <% twits.forEach(function(twit) { %>
+            <li>
+                <a href="/boards/<%= twit.postId %>"><%= twit.title %></a><br>
+                <%= twit.content %>
+            </li>
+            <% }); %>
+            </ul>
+        </div>
+    </div>
+    <button class="inquiry" ><a href="/faq/inquiry">문의하기</a></button>
+</div>
+<br><br><br>
+<div class="waringblock"></div>
