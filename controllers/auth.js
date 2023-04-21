@@ -42,7 +42,7 @@ exports.login = (req, res, next) => {
 
         
         if(!user){
-            return res.redirect(`/?loginError=${info.message}`);
+            return res.redirect(`/login/?loginError=${info.message}`);
         }
         return req.login(user, (loginError) => {
             console.log('5555555555', user);

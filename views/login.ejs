@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="stylesheets/auth.css">
+    <link rel="stylesheet" href="/stylesheets/auth.css">
 </head>
 <body>
     <form action="/auth/login" method="post" class="form">
@@ -16,5 +16,13 @@
         <button type="button" onclick="location.href=('/auth/kakao')" class="btn">카카오 로그인</button>
         <button type="button" onclick="location.href=('/join')" class="btn">회원가입</button>
       </form>
+
+      <script>
+        window.onload = () =>{
+                if (new URL(location.href).searchParams.get('loginError')){ 
+                    alert(new URL(location.href).searchParams.get('loginError')); 
+                }
+            };
+        </script>
 </body>
 </html>
