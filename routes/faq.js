@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models')
+const path = require('path');
+const fs = require('fs');
+const { uploadInquiry } = require('../controllers/inquiry');
+const { isLoggedIn } = require('../middlewares');
 
 router.get('/', async (req, res, next) => {
     try {
@@ -23,7 +27,7 @@ router.get('/inquiry', function(req, res, next) {
     res.render('inquiry',{title: '1:1문의'});
 });
 
-router.post('/inquiry', function(req, res, next) {
+router.post('/', function(req, res, next) {
     const title = req.body.title;
     const content = req.body.content;
     const user_id = req.body.user_id;
@@ -40,5 +44,6 @@ router.post('/inquiry', function(req, res, next) {
     });
 })
 
+router.post('/', isLoggedIn, uploadInquiry);
 
 module.exports = router;

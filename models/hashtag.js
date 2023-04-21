@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('hashtags', {
+  return sequelize.define('hashtag', {
     id: {
       autoIncrement: true,
       type: DataTypes.BIGINT,
@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'hashtags',
+    tableName: 'hashtag',
     timestamps: false,
     indexes: [
       {
