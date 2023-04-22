@@ -9,4 +9,25 @@
   </li>
   <% }); %>
 </ul>
+
+<% if (totalPages > 1) { %>
+
+<div>
+  <% let start = Math.ceil(currentPage / 10) * 10 - 9; let end = Math.min(start
+  + 9, totalPages); %> <% if (start > 1) { %>
+  <a href="/boards?page=1">첫 페이지</a>
+  <% } %> <% if (currentPage > 10) { %>
+  <a href="/boards?page=<%= start - 1 %>">이전</a>
+  <% } %> <% for(let i=start; i<=end; i++) { %> <% if(i === currentPage) { %>
+  <strong style="font-size: 30px"><%= i %></strong>
+  <% } else { %>
+  <a href="/boards?page=<%= i %>"><%= i %></a>
+  <% } %> <% } %> <% if (end < totalPages) { %>
+  <a href="/boards?page=<%= end + 1 %>">다음</a>
+  <% } %> <% if (end < totalPages - 9) { %>
+  <a href="/boards?page=<%= totalPages %>">마지막 페이지</a>
+  <% } %>
+</div>
+<% } %>
+
 <button><a href="/boards/newpost">게시글 등록</a></button>
