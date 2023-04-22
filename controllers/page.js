@@ -1,3 +1,5 @@
+const models = require("../models");
+
 // 메인 페이지
 exports.renderMain = (req, res) => {
   res.render("index", { title: "CarcarO" });
@@ -24,4 +26,38 @@ exports.renderSalecar = (req, res) => {
 // 마이페이지
 exports.renderMypage = (req, res) => {
   res.render("mypage", { title: "마이페이지" });
+};
+// 커뮤니티
+exports.renderBoard = async (req, res, next) => {
+  try {
+    const PAGE_SIZE = 15;
+    const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+    const offset = (page - 1) * PAGE_SIZE;
+    const total = await models.boards.count();
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+
+    const twits = await models.boards.findAll({
+      nest: true,
+      include: [
+        {
+          attributes: ["name"],
+          model: models.users,
+          as: "user",
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+      offset,
+      limit: PAGE_SIZE,
+    });
+    // console.log("자료확인--", twits[0]);
+    res.render("board", {
+      twits,
+      title: "커뮤니티",
+      totalPages,
+      currentPage: page,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 };

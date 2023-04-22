@@ -58,7 +58,7 @@ app.use(passport.session());
 app.use("/", pageRouter);
 app.use("/auth", authRouter);
 app.use("/car", carRouter);
-app.use("/boards", boardRouter);
+app.use("/board", boardRouter);
 app.use("/faq", faqRouter);
 app.use("/mypage", mypageRouter);
 
