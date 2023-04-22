@@ -4,14 +4,13 @@
 <div class="faqblock">
     소중한 고객의 소리 <input type="text" class="search">
     <button class="btn">검색</button><br><br><br>
-    <h1 align="center">자주 묻는 질문</h1><br>
+    <h1 class="manyques">자주 묻는 질문</h1><br>
     <div class="manytime" align="center">
         <div>
             <ul>
             <% twits.forEach(function(twit) { %>
             <li>
-                <a href="/boards/<%= twit.postId %>"><%= twit.title %></a><br>
-                <%= twit.content %>
+                <a href="/faq/<%= twit.title %>"><%= twit.title %></a><br>
             </li>
             <% }); %>
             </ul>
