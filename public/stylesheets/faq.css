@@ -22,8 +22,16 @@
     cursor: pointer;
 }
 
+.manytime :hover {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
 .manytime {
-    width: 500px;
+    width: 600px;
     height: 300px;
     margin: 0 auto;
     padding: 0 50px;
