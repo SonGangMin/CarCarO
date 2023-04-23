@@ -1,0 +1,51 @@
+:root {
+    --gap: 20px
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    border: 1px solid black;
+    max-width: 2400px;
+    margin: 0 auto;
+}
+
+.body {
+    background-color: #fff;
+}
+
+.box {
+    padding: var(--gap);
+    display: flex;
+    gap : var(--gap);
+    min-height: 400px;
+}
+
+.mypage_left_area {
+    width: 200px;
+    flex-shrink: 0;
+    font-size: 12px;
+    padding: var(--gap);
+    border: 1px solid black;
+}
+
+.left_area_list {
+    border: 1px solid black;
+}
+
+.mypage_profile {
+    flex-grow: 1;
+    padding: var(--gap);
+}
+
+
+.mypage_main_area {
+    padding: var(--gap);
+    flex-grow: 1;
+    min-width: 0;
+}
+
+
