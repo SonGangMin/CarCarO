@@ -1,11 +1,11 @@
 const models = require("../models");
 
 exports.renderNewpost = (req, res, next) => {
-  res.render("newpost", { title: "회원가입" });
+  res.render("newpost", { title: "글 작성" });
 };
 
 exports.createPost = async (req, res, next) => {
-  console.log("req.body =>", req.body);
+  // console.log("req.body =>", req.body);
   try {
     await models.boards.create({
       postId: null,
