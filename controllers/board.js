@@ -1,4 +1,5 @@
 const models = require("../models");
+const { Op } = require("sequelize");
 
 exports.renderBoard = async (req, res, next) => {
   try {
@@ -78,5 +79,30 @@ exports.renderBoardContent = async (req, res, next) => {
   } catch (err) {
     console.error(err);
     next(err);
+  }
+};
+
+exports.renderSearch = async (req, res, next) => {
+  const query = req.query.q;
+  if (!query) {
+    return res.redirect("/board");
+  }
+  try {
+    const word = await models.boards.findOne({
+      where: { title: query },
+    });
+    let posts = [];
+    if (word) {
+      posts = await word.getPosts({
+        include: [{ model: models.users, as: "user" }],
+      });
+    }
+    return res.render("board", {
+      title: `${query}`,
+      twits: posts,
+    });
+  } catch (err) {
+    console.error(err);
+    return next(err);
   }
 };
