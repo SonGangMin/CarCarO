@@ -10,7 +10,7 @@ module.exports = () => {
     });
 
     passport.deserializeUser((id, done) => {
-        console.log("6666666->", id);
+        // console.log("6666666->", id);
         models.users.findOne({where: {id}})
         .then(user => done(null, user))
         .catch(err => done(err));

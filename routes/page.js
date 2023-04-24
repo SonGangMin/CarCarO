@@ -1,6 +1,12 @@
 const express = require("express");
 const { isLoggedIn, isNotLoggedIn } = require("../middlewares");
-const { renderJoin, renderMain, renderLogin } = require("../controllers/page");
+const {
+  renderMain,
+  renderJoin,
+  renderLogin,
+  renderSalecar,
+  renderFindcar,
+} = require("../controllers/page");
 
 const router = express.Router();
 
@@ -12,11 +18,15 @@ router.use((req, res, next) => {
   next();
 });
 
-// router.get(isLoggedIn, renderProfile);
+// router.get('/join', renderJoin);
 router.get("/join", isNotLoggedIn, renderJoin);
+
+// router.get('/login', renderJoin);
 router.get("/login", isNotLoggedIn, renderLogin);
 
-// router.get('/join', renderJoin);
+router.get("/carsale", renderSalecar);
+router.get("/findcar", renderFindcar);
+
 router.get("/", renderMain);
 
 module.exports = router;
