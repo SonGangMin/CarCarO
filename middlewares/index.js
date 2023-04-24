@@ -41,7 +41,7 @@ exports.isLoggedIn3 = (req, res, next) => {
     res.status(403).send(`
       <script>
         alert('로그인이 필요합니다.');
-        location.href = '/faq';
+        location.href = '/login';
       </script>
     `);
   }

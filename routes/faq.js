@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
     }
   });
 
-router.get('/inquiry', function(req, res, next) {
+router.get('/inquiry', isLoggedIn3, function(req, res, next) {
     res.render('inquiry',{title: '1:1문의'});
 });
 router.post('/inquiry', isLoggedIn3, function(req, res, next) {

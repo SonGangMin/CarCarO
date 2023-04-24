@@ -2,7 +2,7 @@
 <script src="../routes/faqSearch.js"></script>
 
 <div class="faqblock">
-    <form action="faq/faqSearch/:keyword" method="get">
+    <form action=":keyword" method="get">
         질문 검색 <input type="text" class="search" name="keyword" placeholder="검색어를 입력해주세요.">
         <button class="btn">검색</button><br><br><br>
     </form>
@@ -15,8 +15,7 @@
                 <li>
                     <div class="questitle"><%= twit.title %><br><br>
                         <div class="hidden">
-                            <div class="quescontent"><%= twit.content %></div><br>
-                            <div class="answer"><%= twit.answer %></div>
+                            <div class="answer"><%= twit.content %></div><br>
                         </div>    
                     </div>
                 </li>

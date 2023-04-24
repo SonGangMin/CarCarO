@@ -1,5 +1,5 @@
-// 메인 페이지
 exports.renderMain = (req, res) => {
+  // const usergrade = req.user.grade;
   res.render("index", { title: "CarcarO" });
 };
 
