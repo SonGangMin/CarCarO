@@ -2,14 +2,13 @@
 
 <h1>검색 결과</h1>
 <ul>
-  <% results.forEach(function(twit) { %>
+  <% results.forEach(function(result) { %>
   <li>
-    <a href="/board/<%= twit.postId %>"><%= twit.title %></a>
-    내용: <%= twit.content %>
+    <a href="/board/<%= result.postId %>"><%= result.title %></a>
+    내용: <%= result.content %>
   </li>
   <% }); %>
 </ul>
-
 <% if (totalPages > 1) { %>
 
 <div>
@@ -29,9 +28,8 @@
   <% } %>
 </div>
 <% } %>
-<form action="/board/search/:result" method="get">
+<form action=":result" method="get">
   <input type="text" name="result" placeholder="검색어를 입력하세요." />
   <button type="submit">검색</button>
 </form>
-
 <button><a href="/board/newpost">게시글 등록</a></button>
