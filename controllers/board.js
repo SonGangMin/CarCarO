@@ -35,7 +35,7 @@ exports.renderBoard = async (req, res, next) => {
   }
 };
 exports.renderNewpost = (req, res, next) => {
-  res.render("newpost", { title: "글 작성" });
+  res.render("board_newpost", { title: "글 작성" });
 };
 
 exports.createPost = async (req, res, next) => {
@@ -82,61 +82,18 @@ exports.renderBoardContent = async (req, res, next) => {
   }
 };
 
-// exports.renderSearch = async (req, res, next) => {
-//   const query = req.query.q;
-//   if (!query) {
-//     return res.redirect("/board");
-//   }
-//   try {
-//     const word = await models.boards.findAll({
-//       where: { title: query },
-//     });
-//     let posts = [];
-//     if (word) {
-//       posts = await word.getPosts({
-//         include: [{ model: models.users, as: "user" }],
-//       });
-//     }
-//     return res.render("search", {
-//       title: `${query}`,
-//       twits: posts,
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     return next(err);
-//   }
-// };
-
-// exports.renderSearch = async (req, res) => {
-//   try {
-//     const result_value = req.params.result;
-//     const sql =
-//       "SELECT postId, title, content as writeDate FROM boards where title=? order by postId desc ";
-//     dbConnection.query(sql, [result_value], (err, result) => {
-//       if (err) {
-//         console.error(err);
-//       } else {
-//         console.dir(result);
-//         res.render("search", {
-//           homeName: "watchinggame",
-//           title: "search",
-//           routers,
-//           result_value,
-//           result,
-//         });
-//       }
-//     });
-//   } catch (err) {
-//     console.error(err);
-//   }
-// };
-
 exports.renderSearch = async (req, res, next) => {
-  const query = req.params.result;
+  const query = req.query.result;
+
   if (!query) {
     return res.redirect("/board");
   }
   try {
+    const PAGE_SIZE = 15;
+    const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+    const offset = (page - 1) * PAGE_SIZE;
+    const total = await models.boards.count();
+    const totalPages = Math.ceil(total / PAGE_SIZE);
     const results = await models.boards.findAll({
       where: {
         [Op.or]: [
@@ -144,10 +101,22 @@ exports.renderSearch = async (req, res, next) => {
           { content: { [Op.like]: `%${query}%` } },
         ],
       },
+      include: [
+        {
+          attributes: ["name"],
+          model: models.users,
+          as: "user",
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+      offset,
+      limit: PAGE_SIZE,
     });
-    res.render("search", {
+    res.render("board_search", {
       results,
       title: `검색 결과: ${query}`,
+      totalPages,
+      currentPage: page,
     });
   } catch (err) {
     console.error(err);
