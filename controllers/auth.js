@@ -12,7 +12,7 @@ exports.join = async (req, res, next) => {
         if(exUser){
             return res.redirect('/join?error=exist');
         }
-        console.log(password);
+        // console.log(password);
 
         const hash = await bcrypt.hash(password, 12);
 

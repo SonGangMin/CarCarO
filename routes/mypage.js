@@ -5,6 +5,4 @@ const router = express.Router();
 
 router.get('/', renderMypage);
 
-router.get('/router', renderMypage);
-
 module.exports = router;

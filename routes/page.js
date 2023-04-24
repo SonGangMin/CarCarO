@@ -11,6 +11,7 @@ const {
 const router = express.Router();
 
 router.use((req, res, next) => {
+    console.log(req.user);
   res.locals.user = req.user;
   // res.locals.followerCount = 0;
   // res.locals.followingCount = 0;

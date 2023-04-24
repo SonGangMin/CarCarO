@@ -8,14 +8,16 @@ exports.renderFindcar = (req, res) => {
 
 exports.renderSalecar = async (req, res, next) => {
     try{
-        const Car = await cars.findOne({
-             attributes: ['picture', 'user_id'],
+        const Cars = await cars.findAll({
+             attributes: ['carNum', 'user_id'],
              order: [['num', 'DESC']],
+             where: {user_id:req.user.id},
          });
-         console.log(Car);
+        //  console.log(Car);
         res.render('carsale', {
+            // id: req.user.id,
             title: '내차팔기',
-            Car: Car,
+            Cars,
         });
 
      } catch(error){
@@ -26,7 +28,7 @@ exports.renderSalecar = async (req, res, next) => {
 
 // 내차팔기 db 등록
 exports.carsale = async (req, res, next) => {
-    console.log('req.file =', req.file);
+    // console.log('req.file =', req.file);
 
 //   console.log("req.body =>", req.body);
     try{
@@ -66,5 +68,5 @@ exports.carsale = async (req, res, next) => {
         console.error(error);
         next(error);
     }
-    console.log('req.file =', req.file);
+    // console.log('req.file =', req.file);
 }

@@ -1,6 +1,6 @@
 const express = require('express');
 const {renderFindcar ,renderSalecar ,carsale, carsaleList} = require('../controllers/car');
-// const {isLoggedIn2} = require('../middlewares');
+const {isLoggedIn} = require('../middlewares');
 const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
@@ -8,7 +8,7 @@ const path = require('path');
 const router = express.Router();
 
 router.get('/findcar', renderFindcar);
-router.get('/carsale', renderSalecar);
+router.get('/carsale/', isLoggedIn, renderSalecar);
 
 // 내차팔기 등록
 try{
