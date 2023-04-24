@@ -6,6 +6,7 @@ const {
   renderLogin,
   renderSalecar,
   renderFindcar,
+  renderHeader,
 } = require("../controllers/page");
 
 const router = express.Router();
