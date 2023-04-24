@@ -53,11 +53,17 @@
                 <label for=""><span>해시태그</span><input id="hashtag" type="text" name="hashtag"></label>
                 <button type="submit" class="join_btn">내차 등록</button>
             </form>
-            <div class="viewImg">
-                <h1><%= Car.user_id %></h1>
-                <img src="" alt="">
-            </div>
         </div>
     </div>
+
+    <ul>
+        <% Cars.forEach(function(Car) { %>
+        <li>
+        작성자: <%= Car.user_id %>
+        <%= Car.user_id %>
+        </li>
+        <% }); %>
+    </ul>
+
 </body>
 </html>

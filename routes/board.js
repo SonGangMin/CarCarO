@@ -13,6 +13,6 @@ router.get("/", renderBoard);
 router.get("/newpost", isLoggedIn2, renderNewpost);
 router.post("/", isLoggedIn2, createPost);
 router.get("/:id", renderBoardContent);
-router.get("/search", renderSearch);
+router.get("/search/:result", renderSearch);
 
 module.exports = router;

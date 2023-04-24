@@ -82,27 +82,75 @@ exports.renderBoardContent = async (req, res, next) => {
   }
 };
 
+// exports.renderSearch = async (req, res, next) => {
+//   const query = req.query.q;
+//   if (!query) {
+//     return res.redirect("/board");
+//   }
+//   try {
+//     const word = await models.boards.findAll({
+//       where: { title: query },
+//     });
+//     let posts = [];
+//     if (word) {
+//       posts = await word.getPosts({
+//         include: [{ model: models.users, as: "user" }],
+//       });
+//     }
+//     return res.render("search", {
+//       title: `${query}`,
+//       twits: posts,
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     return next(err);
+//   }
+// };
+
+// exports.renderSearch = async (req, res) => {
+//   try {
+//     const result_value = req.params.result;
+//     const sql =
+//       "SELECT postId, title, content as writeDate FROM boards where title=? order by postId desc ";
+//     dbConnection.query(sql, [result_value], (err, result) => {
+//       if (err) {
+//         console.error(err);
+//       } else {
+//         console.dir(result);
+//         res.render("search", {
+//           homeName: "watchinggame",
+//           title: "search",
+//           routers,
+//           result_value,
+//           result,
+//         });
+//       }
+//     });
+//   } catch (err) {
+//     console.error(err);
+//   }
+// };
+
 exports.renderSearch = async (req, res, next) => {
-  const query = req.query.q;
+  const query = req.params.result;
   if (!query) {
     return res.redirect("/board");
   }
   try {
-    const word = await models.boards.findOne({
-      where: { title: query },
+    const results = await models.boards.findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${query}%` } },
+          { content: { [Op.like]: `%${query}%` } },
+        ],
+      },
     });
-    let posts = [];
-    if (word) {
-      posts = await word.getPosts({
-        include: [{ model: models.users, as: "user" }],
-      });
-    }
-    return res.render("board", {
-      title: `${query}`,
-      twits: posts,
+    res.render("search", {
+      results,
+      title: `검색 결과: ${query}`,
     });
   } catch (err) {
     console.error(err);
-    return next(err);
+    next(err);
   }
 };
