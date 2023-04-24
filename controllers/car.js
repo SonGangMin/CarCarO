@@ -1,6 +1,29 @@
 const {cars} = require('../models');
 const multer = require('multer');
 
+// 내차 찾기, 내차 팔기
+exports.renderFindcar = (req, res) => {
+    res.render('findcar', {title: '내차찾기'});
+};
+
+exports.renderSalecar = async (req, res, next) => {
+    try{
+        const Car = await cars.findOne({
+             attributes: ['picture', 'user_id'],
+             order: [['num', 'DESC']],
+         });
+         console.log(Car);
+        res.render('carsale', {
+            title: '내차팔기',
+            Car: Car,
+        });
+
+     } catch(error){
+         console.error(error);
+         next(error);
+     }
+};
+
 // 내차팔기 db 등록
 exports.carsale = async (req, res, next) => {
     console.log('req.file =', req.file);
