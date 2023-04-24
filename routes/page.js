@@ -24,9 +24,6 @@ router.get("/join", isNotLoggedIn, renderJoin);
 // router.get('/login', renderJoin);
 router.get("/login", isNotLoggedIn, renderLogin);
 
-router.get("/carsale", renderSalecar);
-router.get("/findcar", renderFindcar);
-
 router.get("/", renderMain);
 
 module.exports = router;

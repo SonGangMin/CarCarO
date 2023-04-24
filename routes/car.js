@@ -1,11 +1,14 @@
 const express = require('express');
-const {carsale, carsaleList} = require('../controllers/car');
+const {renderFindcar ,renderSalecar ,carsale, carsaleList} = require('../controllers/car');
 // const {isLoggedIn2} = require('../middlewares');
 const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
 
 const router = express.Router();
+
+router.get('/findcar', renderFindcar);
+router.get('/carsale', renderSalecar);
 
 // 내차팔기 등록
 try{
@@ -29,6 +32,7 @@ const upload = multer({
 });
 
 router.post('/carsale', upload.single('picture'), carsale);
+
 
 
 module.exports = router;
