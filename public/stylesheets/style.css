@@ -1,3 +1,4 @@
+/* 공통 레이아웃 css */
 *{
   margin: 0;
   padding: 0;
@@ -14,6 +15,7 @@ a {
   font-weight: bold;
 }
 
+/* 헤더 */
 #hd{
   width: 100%;
   border-bottom: 1px solid #ddd;
@@ -63,4 +65,19 @@ a {
 
 .src_menu{
   float: right;
+}
+
+/* 컨테이너 */
+.container{
+  width: 100%;
+  padding: 50px 0;
+}
+
+.contents{
+  width: 100%;
+  padding: 0 50px;
+}
+
+.title{
+  margin-bottom: 50px;
 }

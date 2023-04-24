@@ -19,11 +19,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     mile: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     year: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     fuel: {
@@ -35,11 +35,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     seater: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     disp: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING(255),
       allowNull: false
     },
     type: {
@@ -108,7 +108,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     like: {
       type: DataTypes.BIGINT,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 0
     },
     hashtag: {
       type: DataTypes.STRING(100),

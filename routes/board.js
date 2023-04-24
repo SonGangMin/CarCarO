@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
       ],
       order: [["createdAt", "DESC"]],
     });
-    console.log("자료확인--", Board[0]);
+    // console.log("자료확인--", Board[0]);
     res.render("board", {
       twits: Board,
       title: "커뮤니티",
@@ -34,7 +34,7 @@ router.get("/newpost", (req, res, next) => {
 //d
 // const upload = multer();
 router.post("/", isLoggedIn2, async (req, res, next) => {
-  console.log("req.body =>", req.body);
+  // console.log("req.body =>", req.body);
   try {
     await models.boards.create({
       postId: null,
