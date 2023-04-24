@@ -1,17 +1,12 @@
 const express = require("express");
 const { isLoggedIn, isNotLoggedIn } = require("../middlewares");
 const {
-<<<<<<< HEAD
   renderMain,
   renderJoin,
   renderLogin,
   renderSalecar,
   renderFindcar,
 } = require("../controllers/page");
-=======
-    renderMain, renderJoin, renderLogin
-} = require('../controllers/page');
->>>>>>> kdh
 
 const router = express.Router();
 
@@ -29,10 +24,8 @@ router.get("/join", isNotLoggedIn, renderJoin);
 // router.get('/login', renderJoin);
 router.get("/login", isNotLoggedIn, renderLogin);
 
-
 router.get("/carsale", renderSalecar);
 router.get("/findcar", renderFindcar);
-
 
 router.get("/", renderMain);
 

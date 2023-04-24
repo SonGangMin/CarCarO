@@ -1,16 +1,22 @@
 <%- include('./include/head.ejs')%>
 
+<script src="../public/javascript/faq.js"></script>
+<script src="../public/javascript/faqcontent.js"></script>
 <div class="faqblock">
     소중한 고객의 소리 <input type="text" class="search">
     <button class="btn">검색</button><br><br><br>
-    <h1 align="center">자주 묻는 질문</h1><br>
+    <h1 class="manyques">자주 묻는 질문</h1><br>
     <div class="manytime" align="center">
         <div>
             <ul>
             <% twits.forEach(function(twit) { %>
             <li>
-                <a href="/boards/<%= twit.postId %>"><%= twit.title %></a><br>
-                <%= twit.content %>
+                <div class="questitle"><%= twit.title %><br><br>
+                <div class="hidden">
+                    <div class="quescontent"><%= twit.content %></div><br>
+                    <div class="answer"><%= twit.answer %></div>
+                </div>    
+                </div>
             </li>
             <% }); %>
             </ul>
@@ -20,3 +26,20 @@
 </div>
 <br><br><br>
 <div class="waringblock"></div>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script>
+//     const hidden = document.querySelector('.hidden');
+//     const quesTitle = document.querySelector('.questitle');
+
+// quesTitle.addEventListener('click',function(){
+//     if(hidden.style.display = 'none'){
+//         hidden.style.display = 'block'
+//     }
+// });
+
+
+$(".questitle").click(function(){
+    $(this).find(".hidden").slideToggle()
+})
+
+</script>

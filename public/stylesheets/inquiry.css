@@ -11,6 +11,12 @@
     cursor: pointer;
 }
 
+.cancelbtn {
+    width: 70px;
+    height: 25px;
+    cursor: pointer;
+}
+
 .answer {
     width: 450px;
     height: 200px;
@@ -20,4 +26,3 @@
     border-width: 1px;
     border-color: black;
 }
-
