@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarCarO</title>
+    <link rel="stylesheet" href="/stylesheets/admin.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">
+        <a href="/manager"><img src="/images/logo.png" alt="CarCarO Logo" /></a>
+      </div>
+      <nav>
+        <ul class="tabs">
+          <li>
+            <a href="#" class="tab">회원관리</a>
+            <ul class="subtabs">
+              <li><a href="#">일반회원관리</a></li>
+              <li><a href="#">관심목록관리</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" class="tab">게시판관리</a>
+            <ul class="subtabs">
+              <li><a href="/manager/managerboard">자유게시판관리</a></li>
+              <li><a href="#">1:1문의관리</a></li>
+              <li><a href="#">FAQ관리</a></li>
+            </ul>
+          </li>
+          <li><a href="#" class="tab">차량관리</a></li>
+          <li><a href="/" class="tab">유저페이지로</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- 페이지 컨텐츠를 이곳에 추가합니다 -->
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+      $(".tabs > li ").mouseover(function () {
+        $(this).find(".subtabs").stop().slideDown(400);
+      });
+      $(".tabs > li").mouseout(function () {
+        $(this).find(".subtabs").stop().slideUp(400);
+      });
+    </script>
+  </body>
+</html>

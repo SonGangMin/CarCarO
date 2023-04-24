@@ -18,7 +18,10 @@ exports.renderBoard = async (req, res, next) => {
           as: "user",
         },
       ],
-      order: [["createdAt", "DESC"]],
+      order: [
+        ["grade", "DESC"],
+        ["createdAt", "DESC"],
+      ],
       offset,
       limit: PAGE_SIZE,
     });
