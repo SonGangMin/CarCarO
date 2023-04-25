@@ -5,6 +5,6 @@ const { renderManagerFaq, updateManagerFaq, renderUpdate, deleteManagerFaq } = r
 router.get("/", renderManagerFaq);
 router.get("/:number", renderUpdate);
 router.post("/:number", updateManagerFaq);
-router.post("/:number", deleteManagerFaq);
+router.post("/delete/:number", deleteManagerFaq);
 
 module.exports = router;

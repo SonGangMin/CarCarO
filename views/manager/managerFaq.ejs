@@ -11,7 +11,9 @@
             <tr>내용: <%= twit.content %></tr><br><br>
         </table>
         <button class="update" type="submit"><a href="/manager/managerFaq/<%= twit.number %>">수정</a></button>
-        <button class="delete" type="submit">삭제</button>
+        <form action="/manager/managerfaq/delete/<%= twit.number %>" method="POST">
+            <input type="submit" value="삭제">
+        </form>
         <br><br><hr><br><br><br>
         <% }) %>
     </div>
