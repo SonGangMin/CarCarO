@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="#" id="editform" method="post" class="form">
+    <form action="/mypage/edit" id="editform" method="post" class="form">
         <h1 class="title">회원 정보 수정</h1>
         <label for=""><span>아이디</span><
         <input id="id" type="text" name="id" value="<%= user.id%>"></label>
@@ -23,7 +23,7 @@
         <input id="email" type="email" name="email" value="<%= user.email %>"></label>
         <label for=""><span>나이</span>
         <input id="birth" type="text" name="birth" value="<%= user.birth %>"></label>
-        <button type="button" onclick="checkForm()" class="edit_btn">정보 수정</button>
+        <button type="submit" onclick="checkForm()" class="edit_btn">정보 수정</button>
     </form>
 </body>
 </html>

@@ -2,9 +2,13 @@
 
 <script src="../public/javascript/faq.js"></script>
 <script src="../public/javascript/faqcontent.js"></script>
+<!-- <script src="../routes/faqsearch.js"></script> -->
 <div class="faqblock">
-    소중한 고객의 소리 <input type="text" class="search">
-    <button class="btn">검색</button><br><br><br>
+    <form action="faq/faqSearch/:keyword" method="get">
+        질문 검색 <input type="text" class="search" name="keyword" placeholder="검색어를 입력해주세요.">
+        <button class="btn">검색</button><br><br><br>
+    </form>
+    
     <h1 class="manyques">자주 묻는 질문</h1><br>
     <div class="manytime" align="center">
         <div>
@@ -13,8 +17,7 @@
             <li>
                 <div class="questitle"><%= twit.title %><br><br>
                 <div class="hidden">
-                    <div class="quescontent"><%= twit.content %></div><br>
-                    <div class="answer"><%= twit.answer %></div>
+                    <div class="answer"><%= twit.content %></div><br>
                 </div>    
                 </div>
             </li>
@@ -41,5 +44,6 @@
 $(".questitle").click(function(){
     $(this).find(".hidden").slideToggle()
 })
+
 
 </script>

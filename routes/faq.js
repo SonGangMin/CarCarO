@@ -4,6 +4,7 @@ const models = require('../models')
 const path = require('path');
 const fs = require('fs');
 const { isLoggedIn, isLoggedIn3 } = require('../middlewares');
+const { Op } = require('sequelize');
 
 router.get('/', async (req, res, next) => {
     try {
@@ -11,7 +12,7 @@ router.get('/', async (req, res, next) => {
         nest: true,
         order: [["createdAt", "DESC"]],
       });
-      console.log("자료확인--", faq[0]);
+      // console.log("자료확인--", faq[0]);
       res.render("faq", {
         twits: faq,
         title: 'FAQ',
@@ -22,7 +23,7 @@ router.get('/', async (req, res, next) => {
     }
   });
 
-router.get('/inquiry', function(req, res, next) {
+router.get('/inquiry', isLoggedIn3, function(req, res, next) {
     res.render('inquiry',{title: '1:1문의'});
 });
 router.post('/inquiry', isLoggedIn3, function(req, res, next) {
@@ -37,7 +38,7 @@ router.post('/inquiry', isLoggedIn3, function(req, res, next) {
         content: content,
         user_id: user_id,
     }).then(result => {
-        console.log(result);
+        // console.log(result);
         res.redirect('/faq');
     }).catch(err => {
         console.error(err);
@@ -45,5 +46,31 @@ router.post('/inquiry', isLoggedIn3, function(req, res, next) {
     });
 })
 
+router.get('/faqSearch/:keyword', async (req, res, next) => {
+  const query = req.query.keyword;
+  if (!query) {
+      return res.redirect("/faq");
+  }
+  try {
+      const results = await models.faqs.findAll({
+      where: {
+          [Op.or]: [{
+              title: { [Op.like]: `%${query}%` }
+      }],
+      },
+      });
+      res.render("faqSearch", {
+      results,
+      title: `검색 결과: ${query}`,
+      });
+  } catch (err) {
+      console.error(err);
+      next(err);
+  }
+});
+
+// router.get('/faqSearch/:keyword', async (req, res, next) => {
+//   const 
+// })
 
 module.exports = router;

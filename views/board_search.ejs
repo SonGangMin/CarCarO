@@ -1,0 +1,35 @@
+<%- include('./include/head.ejs') %>
+
+<h1>검색 결과</h1>
+<ul>
+  <% results.forEach(function(result) { %>
+  <li>
+    <a href="/board/<%= result.postId %>"><%= result.title %></a>
+    내용: <%= result.content %>
+  </li>
+  <% }); %>
+</ul>
+<% if (totalPages > 1) { %>
+
+<div>
+  <% let start = Math.ceil(currentPage / 10) * 10 - 9; let end = Math.min(start
+  + 9, totalPages); %> <% if (start > 1) { %>
+  <a href="/board?page=1">첫 페이지</a>
+  <% } %> <% if (currentPage > 10) { %>
+  <a href="/board?page=<%= start - 1 %>">이전</a>
+  <% } %> <% for(let i=start; i<=end; i++) { %> <% if(i === currentPage) { %>
+  <strong style="font-size: 30px"><%= i %></strong>
+  <% } else { %>
+  <a href="/board?page=<%= i %>"><%= i %></a>
+  <% } %> <% } %> <% if (end < totalPages) { %>
+  <a href="/board?page=<%= end + 1 %>">다음</a>
+  <% } %> <% if (end < totalPages - 9) { %>
+  <a href="/board?page=<%= totalPages %>">마지막 페이지</a>
+  <% } %>
+</div>
+<% } %>
+<form action=":result" method="get">
+  <input type="text" name="result" placeholder="검색어를 입력하세요." />
+  <button type="submit">검색</button>
+</form>
+<button><a href="/board/newpost">게시글 등록</a></button>
