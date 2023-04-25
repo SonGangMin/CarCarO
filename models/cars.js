@@ -106,11 +106,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: true
     },
-    like: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      defaultValue: 0
-    },
     hashtag: {
       type: DataTypes.STRING(100),
       allowNull: true
@@ -128,6 +123,11 @@ module.exports = function(sequelize, DataTypes) {
         model: 'users',
         key: 'id'
       }
+    },
+    likes_count: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
     }
   }, {
     sequelize,

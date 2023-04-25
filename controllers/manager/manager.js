@@ -1,4 +1,4 @@
-const models = require("../models");
+const models = require("../../models");
 
 exports.renderManager = (req, res) => {
   res.render("manager/managerMain", { title: "관리자페이지" });
@@ -26,7 +26,7 @@ exports.renderManagerBoard = async (req, res, next) => {
         ["createdAt", "DESC"],
       ],
       offset,
-      limit: PAGE_SIZE,
+      limit: PAGE_SIZE
     });
     // console.log("자료확인--", twits[0]);
     res.render("manager/managerBoard", {

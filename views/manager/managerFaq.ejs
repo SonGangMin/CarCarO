@@ -1,0 +1,20 @@
+<%- include('../include/managerhead.ejs') %>
+
+<div class="faqblock">    
+    <h1 class="manyques" align="center">자주 묻는 질문 관리</h1><br>
+    <div class="manytime">
+        <% twits.forEach(function(twit) { %>
+        <table>
+            등록 번호: <tr><%= twit.number %></tr><br><br>
+            제목: <tr><%= twit.title %></tr><br><br>
+            내용: <tr><%= twit.content %></tr><br><br>
+        </table>
+        <button class="register" type="submit">등록</button>
+        <button class="down" type="submit">내리기</button>
+        <button class="update" type="submit"><a href="/manager/managerFaq/<%= twit.title %>">수정</a></button>
+        <button class="delete" type="submit">삭제</button>
+        <hr><br><br><br>
+        <% }) %>
+    </div>
+</div>
+<br><br><br>

@@ -3,7 +3,7 @@ const router = express.Router();
 const models = require('../models')
 const path = require('path');
 const fs = require('fs');
-const { isLoggedIn, isLoggedIn3 } = require('../middlewares');
+const { isLoggedIn3 } = require('../middlewares');
 const { Op } = require('sequelize');
 
 router.get('/', async (req, res, next) => {
