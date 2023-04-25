@@ -30,9 +30,9 @@ exports.renderManagerFaq = async (req, res, next) => {
 };
 
 exports.renderUpdate = async (req, res, next) => {
-    const title = req.params.title;
+    const number = req.params.number;
     try {
-        const faq = await models.faqs.findOne({ where: { title: title } });
+        const faq = await models.faqs.findOne({ where: { number } });
     if (!faq) {
         throw new Error("존재하지 않는 글입니다.");
         }
@@ -44,21 +44,33 @@ exports.renderUpdate = async (req, res, next) => {
 };
 
 exports.updateManagerFaq = async (req, res, next) => {
-    const title = req.params.title;
-    // const { title, content } = req.body;
+    const number = req.params.number;
+    const { title, content } = req.body;
     try {
-        const post = await models.title.findOne({ where: { postId: postId } });
-    if (!post) {
+        const faq = await models.faqs.findOne({ where: { number } });
+    if (!faq) {
         throw new Error("존재하지 않는 게시글입니다.");
         }
-    if (post.userId !== req.session.userId) {
-        throw new Error("게시글 수정 권한이 없습니다.");
-        }
-        await models.title.update(
+    await models.faqs.update(
         { title, content },
-        { where: { postId: postId } }
+        { where: { number } }
         );
-        res.redirect(`/board/${postId}`);
+        res.redirect(`/manager/managerFaq/`);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+};
+
+exports.deleteManagerFaq = async (req, res, next) => {
+    const number = req.params.number;
+    try {
+        const faq = await models.faqs.findOne({ where: { number } });
+    if (!faq) {
+        throw new Error("존재하지 않는 게시글입니다.");
+    }
+    await models.faqs.destroy({ where: { number } });
+        res.redirect("/manager/managerFaq/");
     } catch (err) {
         console.error(err);
         next(err);
