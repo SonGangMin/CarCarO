@@ -1,7 +1,7 @@
-const models = require("../models");
+const models = require("../../models");
 
 exports.renderManager = (req, res) => {
-  res.render("manager/managerMain", { title: "관리자페이지" });
+  res.render("manager/managerpage", { title: "관리자페이지" });
 };
 
 exports.renderManagerBoard = async (req, res, next) => {

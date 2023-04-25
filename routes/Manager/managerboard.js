@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const {
-  renderManager,
   renderManagerBoard,
 } = require("../../controllers/manager/managerboard");
 
-router.get("/", renderManager);
+router.get("/", renderManagerBoard);
 
 module.exports = router;
