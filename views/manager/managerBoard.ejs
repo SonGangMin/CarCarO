@@ -4,25 +4,45 @@
   <li style="background-color: black; color: white; font-weight: bold">
     <a
       style="background-color: black; color: white; font-weight: bold"
-      href="/board/<%= twit.postId %>"
+      href="/manager/managerboard/<%= twit.postId %>"
       ><%= twit.title %></a
     >
-    작성자: <%= twit.user.name %>
-    <button><a href="/board/<%= twit.postId %>/edit">수정</a></button>
-    <form action="/board/<%= twit.postId %>/delete" method="POST">
+    작성자: <%= twit.user.name %> 내용: <%= twit.content %> <br />
+    <button>
+      <a href="/manager/managerboard/edit/<%= twit.postId %>/">수정</a>
+    </button>
+    <form
+      action="/manager/managerboard/delete/<%= twit.postId %>"
+      method="POST"
+    >
       <input type="submit" value="삭제" />
     </form>
-    <button>공지로 등록</button>
+    <form
+      action="/manager/managerboard/editgradedown/<%= twit.postId %>"
+      method="POST"
+    >
+      <input type="submit" value="공지내리기" />
+    </form>
   </li>
   <% } else { %>
   <li>
-    <a href="/board/<%= twit.postId %>"><%= twit.title %></a>
+    <a href="/manager/managerboard/<%= twit.postId %>"><%= twit.title %></a>
     작성자: <%= twit.user.name %> 내용: <%= twit.content %> <br />
-    <button><a href="/board/<%= twit.postId %>/edit">수정</a></button>
-    <form action="/board/<%= twit.postId %>/delete" method="POST">
+    <button>
+      <a href="/manager/managerboard/edit/<%= twit.postId %>">수정</a>
+    </button>
+    <form
+      action="/manager/managerboard/delete/<%= twit.postId %>"
+      method="POST"
+    >
       <input type="submit" value="삭제" />
     </form>
-    <button>공지로 등록</button>
+    <form
+      action="/manager/managerboard/editgradeup/<%= twit.postId %>"
+      method="POST"
+    >
+      <input type="submit" value="공지로등록" />
+    </form>
   </li>
   <% } %> <% }); %>
 </ul>
@@ -46,7 +66,7 @@
   <% } %>
 </div>
 <% } %>
-<form action="/board/search/:result" method="get">
+<form action="/manager/managerboard/search/:result" method="get">
   <input type="text" name="result" placeholder="검색어를 입력하세요." />
   <button type="submit">검색</button>
 </form>

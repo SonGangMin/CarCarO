@@ -1,0 +1,14 @@
+<%- include('../include/managerhead.ejs') %>
+<h1><%= board.title %></h1>
+<p><%= board.content %></p>
+<p>작성자: <%= board.user.name %></p>
+<p>최종 작성일: <%= board.createdAt %></p>
+
+<button>
+  <a href="/manager/managerboard/edit/<%= board.postId %>">수정</a>
+</button>
+<form action="/manager/managerboard/delete/<%= board.postId %>/" method="POST">
+  <input type="submit" value="삭제" />
+</form>
+
+<button><a href="/manager/managerboard/">목록으로</a></button>

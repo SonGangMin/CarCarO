@@ -1,8 +1,7 @@
-<%- include('./include/head.ejs') %>
-
+<%- include('../include/managerhead.ejs') %> 매니저에디트~
 <h1>게시글 수정하기</h1>
 
-<form action="/board/edit/<%= post.postId %>" method="post">
+<form action="/manager/managerboard/edit/<%= post.postId %>" method="post">
   <input type="hidden" name="_method" value="PUT" />
   <div>
     <label for="title">제목</label>
@@ -23,4 +22,4 @@
   <button type="submit">수정하기</button>
 </form>
 
-<button onclick="location.href='/board/<%= post.id %>'">돌아가기</button>
+<button onclick="location.href='/manager/managerboard/'">돌아가기</button>
