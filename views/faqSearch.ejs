@@ -1,34 +1,31 @@
-<%- include('./include/head.ejs')%>
+<%- include('./include/head.ejs') %>
+<script src="../routes/faqSearch.js"></script>
 
-<script src="../public/javascript/faq.js"></script>
-<script src="../public/javascript/faqcontent.js"></script>
-<!-- <script src="../routes/faqsearch.js"></script> -->
 <div class="faqblock">
-    <form action="faq/faqSearch/:keyword" method="get">
+    <form action=":keyword" method="get">
         질문 검색 <input type="text" class="search" name="keyword" placeholder="검색어를 입력해주세요.">
         <button class="btn">검색</button><br><br><br>
     </form>
     
-    <h1 class="manyques">자주 묻는 질문</h1><br>
+    <h1 class="manyques">검색 결과</h1><br>
     <div class="manytime" align="center">
         <div>
             <ul>
-            <% twits.forEach(function(twit) { %>
-            <li>
-                <div class="questitle"><%= twit.title %><br><br>
-                <div class="hidden">
-                    <div class="answer"><%= twit.content %></div><br>
-                </div>    
-                </div>
-            </li>
-            <% }); %>
-            </ul>
+                <% results.forEach(function(twit) { %>
+                <li>
+                    <div class="questitle"><%= twit.title %><br><br>
+                        <div class="hidden">
+                            <div class="answer"><%= twit.content %></div><br>
+                        </div>    
+                    </div>
+                </li>
+                <% }); %>
+            </ul>   
         </div>
     </div>
     <button class="inquiry" ><a href="/faq/inquiry">문의하기</a></button>
 </div>
-<br><br><br>
-<div class="waringblock"></div>
+
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
 //     const hidden = document.querySelector('.hidden');

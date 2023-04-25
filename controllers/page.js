@@ -1,8 +1,11 @@
-// 메인 페이지
 exports.renderMain = (req, res) => {
-  res.render("index", { title: "CarcarO" });
+  res.render("index", { title: "CarcarO"});
 };
-
+// exports.renderMain = (req, res) => {
+//   const usergrade = req.user && req.user.grade === 2;
+//   console.log(usergrade);
+//   res.render("index", { title: "CarcarO", usergrade });
+// };
 // 로그인, 회원가입
 exports.renderJoin = (req, res) => {
   res.render("join", { title: "회원가입" });

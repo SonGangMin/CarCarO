@@ -1,6 +1,4 @@
-<%- include('./include/head.ejs') %>
-
-<h1>게시글 목록</h1>
+<%- include('../include/managerhead.ejs') %> 게시판관리
 <ul>
   <% twits.forEach(function(twit) { %> <% if (twit.grade === 2) { %>
   <li style="background-color: black; color: white; font-weight: bold">
@@ -10,11 +8,21 @@
       ><%= twit.title %></a
     >
     작성자: <%= twit.user.name %>
+    <button><a href="/board/<%= twit.postId %>/edit">수정</a></button>
+    <form action="/board/<%= twit.postId %>/delete" method="POST">
+      <input type="submit" value="삭제" />
+    </form>
+    <button>공지로 등록</button>
   </li>
   <% } else { %>
   <li>
     <a href="/board/<%= twit.postId %>"><%= twit.title %></a>
-    작성자: <%= twit.user.name %>
+    작성자: <%= twit.user.name %> 내용: <%= twit.content %> <br />
+    <button><a href="/board/<%= twit.postId %>/edit">수정</a></button>
+    <form action="/board/<%= twit.postId %>/delete" method="POST">
+      <input type="submit" value="삭제" />
+    </form>
+    <button>공지로 등록</button>
   </li>
   <% } %> <% }); %>
 </ul>
@@ -24,13 +32,13 @@
 <div>
   <% let start = Math.ceil(currentPage / 10) * 10 - 9; let end = Math.min(start
   + 9, totalPages); %> <% if (start > 1) { %>
-  <a href="/board?page=1">첫 페이지</a>
+  <a href="/managerboard?page=1">첫 페이지</a>
   <% } %> <% if (currentPage > 10) { %>
   <a href="/board?page=<%= start - 1 %>">이전</a>
   <% } %> <% for(let i=start; i<=end; i++) { %> <% if(i === currentPage) { %>
   <strong style="font-size: 30px"><%= i %></strong>
   <% } else { %>
-  <a href="/board?page=<%= i %>"><%= i %></a>
+  <a href="/managerboard?page=<%= i %>"><%= i %></a>
   <% } %> <% } %> <% if (end < totalPages) { %>
   <a href="/board?page=<%= end + 1 %>">다음</a>
   <% } %> <% if (end < totalPages - 9) { %>
@@ -42,5 +50,3 @@
   <input type="text" name="result" placeholder="검색어를 입력하세요." />
   <button type="submit">검색</button>
 </form>
-
-<button><a href="/board/newpost">게시글 등록</a></button>

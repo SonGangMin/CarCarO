@@ -18,7 +18,10 @@ exports.renderBoard = async (req, res, next) => {
           as: "user",
         },
       ],
-      order: [["createdAt", "DESC"]],
+      order: [
+        ["grade", "DESC"],
+        ["createdAt", "DESC"],
+      ],
       offset,
       limit: PAGE_SIZE,
     });
@@ -35,7 +38,7 @@ exports.renderBoard = async (req, res, next) => {
   }
 };
 exports.renderNewpost = (req, res, next) => {
-  res.render("newpost", { title: "글 작성" });
+  res.render("board_newpost", { title: "글 작성" });
 };
 
 exports.createPost = async (req, res, next) => {
@@ -58,7 +61,7 @@ exports.createPost = async (req, res, next) => {
 
 exports.renderBoardContent = async (req, res, next) => {
   try {
-    const boardId = req.params.id;
+    const boardId = req.params.postId;
     const board = await models.boards.findOne({
       where: { postId: boardId },
       include: [
@@ -72,8 +75,10 @@ exports.renderBoardContent = async (req, res, next) => {
     if (!board) {
       return res.status(404).send("해당 게시글을 찾을 수 없습니다.");
     }
+    const isOwner = req.user && board.user_id === req.user.id;
     res.render("board_content", {
       board,
+      isOwner,
       title: "게시글 내용 보기",
     });
   } catch (err) {
@@ -83,26 +88,100 @@ exports.renderBoardContent = async (req, res, next) => {
 };
 
 exports.renderSearch = async (req, res, next) => {
-  const query = req.query.q;
+  const query = req.query.result;
+
   if (!query) {
     return res.redirect("/board");
   }
   try {
-    const word = await models.boards.findOne({
-      where: { title: query },
+    const PAGE_SIZE = 15;
+    const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+    const offset = (page - 1) * PAGE_SIZE;
+    const total = await models.boards.count();
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+    const results = await models.boards.findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${query}%` } },
+          { content: { [Op.like]: `%${query}%` } },
+        ],
+      },
+      include: [
+        {
+          attributes: ["name"],
+          model: models.users,
+          as: "user",
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+      offset,
+      limit: PAGE_SIZE,
     });
-    let posts = [];
-    if (word) {
-      posts = await word.getPosts({
-        include: [{ model: models.users, as: "user" }],
-      });
-    }
-    return res.render("board", {
-      title: `${query}`,
-      twits: posts,
+    res.render("board_search", {
+      results,
+      title: `검색 결과: ${query}`,
+      totalPages,
+      currentPage: page,
     });
   } catch (err) {
     console.error(err);
-    return next(err);
+    next(err);
+  }
+};
+
+exports.renderEditPost = async (req, res, next) => {
+  const postId = req.params.postId;
+  try {
+    const post = await models.boards.findOne({ where: { postId: postId } });
+    if (!post) {
+      throw new Error("존재하지 않는 게시글입니다.");
+    }
+    if (post.userId !== req.session.userId) {
+      throw new Error("게시글 수정 권한이 없습니다.");
+    }
+    res.render("board_edit", { post, title: "수정하기" });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.editPost = async (req, res, next) => {
+  const postId = req.params.postId;
+  const { title, content } = req.body;
+  try {
+    const post = await models.boards.findOne({ where: { postId: postId } });
+    if (!post) {
+      throw new Error("존재하지 않는 게시글입니다.");
+    }
+    if (post.userId !== req.session.userId) {
+      throw new Error("게시글 수정 권한이 없습니다.");
+    }
+    await models.boards.update(
+      { title, content },
+      { where: { postId: postId } }
+    );
+    res.redirect(`/board/${postId}`);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.deletePost = async (req, res, next) => {
+  const postId = req.params.postId;
+  try {
+    const post = await models.boards.findOne({ where: { postId: postId } });
+    if (!post) {
+      throw new Error("존재하지 않는 게시글입니다.");
+    }
+    if (post.userId !== req.session.userId) {
+      throw new Error("게시글 삭제 권한이 없습니다.");
+    }
+    await models.boards.destroy({ where: { postId: postId } });
+    res.redirect("/board");
+  } catch (err) {
+    console.error(err);
+    next(err);
   }
 };

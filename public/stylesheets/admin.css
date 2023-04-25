@@ -1,0 +1,76 @@
+/* 전체 페이지 스타일 */
+body {
+  background-color: #333333;
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+/* 로고 스타일 */
+.logo {
+  margin: 10px;
+}
+
+.logo img {
+  width: 150px;
+}
+
+/* 탭 스타일 */
+.tabs {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  background-color: #000;
+}
+
+.tab {
+  display: inline-block;
+  padding: 15px 30px;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.tab a {
+  padding: 15px 30px;
+}
+
+/* .tab:hover {
+  background-color: #666666;
+} */
+
+.subtabs {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  padding: 0;
+}
+
+.subtabs li {
+  display: block;
+}
+
+.subtabs a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #ffffff;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+.subtabs a:hover {
+  background-color: #666666;
+}
+
+/* .tab:hover + .subtabs {
+  display: block;
+} */
+
+/* 페이지 컨텐츠 스타일 */
+main {
+  margin: 20px;
+}
