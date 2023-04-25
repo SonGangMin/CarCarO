@@ -1,10 +1,13 @@
 // @ts-check
-
 const models = require('../models');
+const bcrypt = require('bcrypt');
+const {hash} = require("bcrypt");
+
 exports.renderMypage = (req, res) => {
     res.render("mypage", {
         title: "마이페이지",
-    });}
+    });};
+
 // 회원 정보 수정 페이지 렌더링 처리
 exports.renderEditPage = async (req, res) => {
     try {
@@ -25,14 +28,14 @@ exports.updateUserInfo = async (req, res) => {
     try {
         const Id = req.params.id;
         const { id, password, name, tel, email, birth } = req.body; // 폼 데이터 파싱
-
+        const hash = await bcrypt.hash(password, 12);
         // 사용자 정보 수정
         await models.users.update(
-        { password, name, tel, email, birth},
-        { where: { id } }
+            { password: hash, name, tel, email, birth},
+            { where: { id } }
         );
         console.log('회원 정보가 수정되었습니다.');
-        res.redirect(`/mypage/`); // 수정된 회원 정보 페이지로 리다이렉트`
+        res.redirect(`/mypage`); // 수정된 회원 정보 페이지로 리다이렉트`
     } catch (err) {
         console.error(err);
         res.status(500).send('서버 오류');
@@ -42,4 +45,4 @@ exports.updateUserInfo = async (req, res) => {
 // 회원 정보 수정 페이지 렌더링
 exports.modifyPage = (req, res) => {
     res.render("edit", { title: "회원 정보 수정" });
-}
+};
