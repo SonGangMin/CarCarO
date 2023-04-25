@@ -6,13 +6,20 @@ exports.renderFindcar = (req, res) => {
   res.render("findcar", { title: "내차찾기" });
 };
 
+// 내차팔기 리스트
+exports.renderCarup = (req, res) => {
+  res.render("carupload", { title: "내차등록하기" });
+};
+
+// 등록된차 데이터 받기
 exports.renderSalecar = async (req, res, next) => {
   try {
     const Cars = await cars.findAll({
-      attributes: ["picture", "user_id"],
+      attributes: ["carNum", "picture"],
       order: [["num", "DESC"]],
+      where: { user_id: req.user.id },
     });
-    // console.log(Car);
+    //  console.log(Cars);
     res.render("carsale", {
       title: "내차팔기",
       Cars,
@@ -23,11 +30,15 @@ exports.renderSalecar = async (req, res, next) => {
   }
 };
 
-// 내차팔기 db 등록
-exports.carsale = async (req, res, next) => {
-  console.log("req.file =", req.file);
+exports.uploadImg = (req, res) => {
+  console.log("req.file ===========>", req.file);
+  res.json({ url: `/carImg/${req.file.filename}` });
+};
 
-  //   console.log("req.body =>", req.body);
+// 내차팔기 db 등록
+exports.uploadPost = async (req, res, next) => {
+  const { carNum } = req.body;
+  console.log("1111111111111111113", req.carNum);
   try {
     await cars.create({
       carNum: req.body.carNum,
@@ -44,7 +55,7 @@ exports.carsale = async (req, res, next) => {
       method: req.body.method,
       color: req.body.color,
       tel: req.body.tel,
-      picture: req.file.filename,
+      picture: req.body.url,
       roof: req.body.roof,
       nav: req.body.nav,
       key: req.body.key,
@@ -60,10 +71,9 @@ exports.carsale = async (req, res, next) => {
       num: null,
       user_id: req.user.id,
     });
-    res.redirect("/");
+    res.redirect("/car/carsale");
   } catch (error) {
     console.error(error);
     next(error);
   }
-  console.log("req.file =", req.file);
 };

@@ -2,57 +2,15 @@
     <div class="container">
         <div class="contents">
             <h1 class="title">내차팔기 등록하기</h1>
-            <form action="/car/carsale" method="post" class="form" enctype="multipart/form-data">
-                <label for=""><span>자동차 번호</span><input id="carNum" type="text" name="carNum"></label>
-                <label for="">
-                    <span>국산·수입</span>
-                    <select name="from" id="from">
-                        <option value="" selected>국산·수입</option>
-                        <option value="domestic">국산</option>
-                        <option value="import">수입</option>
-                    </select>
-                </label>
-                <label for="">
-                    <span>브랜드</span>
-                    <select name="brand" id="brand">
-                        <option value="" selected>브랜드</option>
-                        <option value="hyundai">현대</option>
-                        <option value="bmw">BMW</option>
-                    </select>
-                </label>
-                <label for="">
-                    <span>모델명</span>
-                    <select name="model" id="model">
-                        <option value="" selected>모델명</option>
-                        <option value="hyundai">현대</option>
-                        <option value="bmw">BMW</option>
-                    </select>
-                </label>
-                <label for=""><span>주행거리</span><input id="mile" type="text" name="mile"></label>
-                <label for=""><span>연식</span><input id="year" type="text" name="year"></label>
-                <label for=""><span>연료방식</span><input id="fuel" type="text" name="fuel"></label>
-                <label for=""><span>기어방식</span><input id="trans" type="text" name="trans"></label>
-                <label for=""><span>인승</span><input id="seater" type="text" name="seater"></label>
-                <label for=""><span>디스플레이</span><input id="disp" type="text" name="disp"></label>
-                <label for=""><span>차종</span><input id="type" type="text" name="type"></label>
-                <label for=""><span>method</span><input id="method" type="text" name="method"></label>
-                <label for=""><span>색상</span><input id="color" type="text" name="color"></label>
-                <label for=""><span>연락처</span><input id="tel" type="text" name="tel"></label>
-                <label for=""><span>사진</span><input id="picture" type="file" name="picture"></label>
-                <label for=""><span>선루프</span><input id="roof" type="text" name="roof"></label>
-                <label for=""><span>네비게이션</span><input id="nav" type="text" name="nav"></label>
-                <label for=""><span>스마트키</span><input id="key" type="text" name="key"></label>
-                <label for=""><span>오토라이트</span><input id="light" type="text" name="light"></label>
-                <label for=""><span>주차센서</span><input id="sensor" type="text" name="sensor"></label>
-                <label for=""><span>후방카메라</span><input id="camera" type="text" name="camera"></label>
-                <label for=""><span>블랙박스</span><input id="box" type="text" name="box"></label>
-                <label for=""><span>가죽시트</span><input id="leather" type="text" name="leather"></label>
-                <label for=""><span>열선시트</span><input id="heated" type="text" name="heated"></label>
-                <label for=""><span>에어백</span><input id="airbag" type="text" name="airbag"></label>
-                <label for=""><span>기타</span><input id="etc" type="text" name="etc"></label>
-                <label for=""><span>해시태그</span><input id="hashtag" type="text" name="hashtag"></label>
-                <button type="submit" class="join_btn">내차 등록</button>
-            </form>
+            <ul class="viewImg">
+                <% Cars.forEach(function(carList) { %>
+                <li>
+                    <h1><%= carList.carNum %></h1>
+                    <img src="<%= carList.picture %>" alt="">
+                </li>
+                <% }); %>
+            </ul>
+            <a href="/car/carupload">내차등록</a>
         </div>
     </div>
 

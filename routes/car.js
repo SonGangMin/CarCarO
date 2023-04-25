@@ -2,10 +2,11 @@ const express = require("express");
 const {
   renderFindcar,
   renderSalecar,
-  carsale,
-  carsaleList,
+  renderCarup,
+  uploadPost,
+  uploadImg,
 } = require("../controllers/car");
-// const {isLoggedIn2} = require('../middlewares');
+const { isLoggedIn } = require("../middlewares");
 const fs = require("fs");
 const multer = require("multer");
 const path = require("path");
@@ -13,20 +14,15 @@ const path = require("path");
 const router = express.Router();
 
 router.get("/findcar", renderFindcar);
-router.get("/carsale", renderSalecar);
+router.get("/carsale", isLoggedIn, renderSalecar);
+router.get("/carupload", isLoggedIn, renderCarup);
 
 // 내차팔기 등록
-try {
-  fs.readdirSync("carImg");
-} catch (error) {
-  console.error("carImg 폴더가 없어 carImg 폴더를 생성합니다.");
-  fs.mkdirSync("carImg");
-}
 
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, done) {
-      done(null, "carImg/");
+      done(null, "public/carImg/");
     },
     filename(req, file, done) {
       const ext = path.extname(file.originalname);
@@ -36,6 +32,15 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-router.post("/carsale", upload.single("picture"), carsale);
+router.post("/img", upload.single("img"), uploadImg);
+
+const upload2 = multer();
+router.post("/carupload", uploadPost);
+// =>{
+//         // const {carNum, from, brand, model, mile, year, fuel, trans, picture, seater, disp, type, method, color, tel, roof, nav, key, light, sensor, camera, box, leather, heated, airbag, etc, hashtag } = req.body;
+
+//         console.log('1111111111111111113', carNum, from, brand, model, mile, year, fuel, trans, picture, seater, disp, type, method, color, tel, roof, nav, key, light, sensor, camera, box, leather, heated, airbag, etc, hashtag );
+//         res.status(300).send("lllllllllllllllllllllllllllllllllllll");
+// });
 
 module.exports = router;

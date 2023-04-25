@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
         nest: true,
         order: [["createdAt", "DESC"]],
       });
-      console.log("자료확인--", faq[0]);
+      // console.log("자료확인--", faq[0]);
       res.render("faq", {
         twits: faq,
         title: 'FAQ',
@@ -38,7 +38,7 @@ router.post('/inquiry', isLoggedIn3, function(req, res, next) {
         content: content,
         user_id: user_id,
     }).then(result => {
-        console.log(result);
+        // console.log(result);
         res.redirect('/faq');
     }).catch(err => {
         console.error(err);
