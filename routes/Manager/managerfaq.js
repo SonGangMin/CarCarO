@@ -1,13 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const { renderManagerFaq, updateManagerFaq, renderUpdate, 
-    deleteManagerFaq, upgradeManagerFaq, downgradeManagerFaq } = require("../../controllers/manager/managerfaq");
+const {
+  renderManagerFaq,
+  updateManagerFaq,
+  renderUpdate,
+  deleteManagerFaq,
+  registManagerFaq,
+  downManagerFaq,
+} = require("../../controllers/manager/managerfaq");
+const { isManager } = require("../../middlewares/index");
 
-router.get("/", renderManagerFaq);
-router.get("/:number", renderUpdate);
-router.post("/:number", updateManagerFaq);
-router.post("/delete/:number", deleteManagerFaq);
-router.post("/upgrade/:number", upgradeManagerFaq);
-router.post("/downgrade/:number", downgradeManagerFaq);
+router.get("/", isManager, renderManagerFaq);
+router.get("/:number", isManager, renderUpdate);
+router.post("/:number", isManager, updateManagerFaq);
+router.post("/delete/:number", isManager, deleteManagerFaq);
+// router.post("/upgrade/:number", registManagerFaq);
+// router.post("/downgrade/:number", downManagerFaq);
 
 module.exports = router;
