@@ -45,7 +45,7 @@
                 
                 <label for=""><sapn>연락처</sapn><input id="tel" type="text" name="tel"  value="1111111"></label>
                 
-                <label for=""><span>사진</span><input id="img" type="file" name="picture" multiple></label>
+                <label for=""><span>사진</span><input id="img" type="file" name="picture" accept="/*"></label>
                 
                 <label for=""><span>선루프</span><input id="roof" type="text" name="roof"  value="1111111"></label>
                 
@@ -81,20 +81,8 @@
     </div>
     <script>
         if (document.getElementById('img')) {
-            let uploadNum = 0;
-            let index = 0;
             document.getElementById('img').addEventListener('change', function(e) {
             const formData = new FormData();
-            const length = this.files.length;
-            const max = 5;
-            switch(uploadNum){
-                case 0:
-                    if(length > max - uploadNum){
-                        alert("사진은 최대 5장까지만 가능합니다.");
-                        return;
-                    }
-            }
-
             console.log(this, this.files);
             formData.append('img', this.files[0]);
             axios.post('/car/img', formData)

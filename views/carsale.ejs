@@ -10,7 +10,7 @@
             <ul class="viewImg">
                 <% Cars.forEach(function(carList) { %>
                 <li>
-                    <a href="">
+                    <a href="/car/detail/<%= carList.carNum %>">
                         <img src="<%= carList.picture %>" alt="" class="thumbnail">
                         <p><%= carList.brand %> <%= carList.model %></p>
                         <div class="option">
@@ -24,6 +24,31 @@
                 <% }); %>
             </ul>
             <a href="/car/carupload" class="goupload">내차등록</a>
+            <% if (totalPages > 1) { %>
+                <nav>
+                  <ul class="pagination">
+                    <% if (currentPage == 1) { %>
+                      <li class="disabled"><span>&laquo;</span></li>
+                    <% } else { %>
+                      <li><a href="?page=<%= currentPage - 1 %>">&laquo;</a></li>
+                    <% } %>
+              
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                      <% if (i == currentPage) { %>
+                        <li class="active"><span><%= i %></span></li>
+                      <% } else { %>
+                        <li><a href="?page=<%= i %>"><%= i %></a></li>
+                      <% } %>
+                    <% } %>
+              
+                    <% if (currentPage == totalPages) { %>
+                      <li class="disabled"><span>&raquo;</span></li>
+                    <% } else { %>
+                      <li><a href="?page=<%= currentPage + 1 %>">&raquo;</a></li>
+                    <% } %>
+                  </ul>
+                </nav>
+              <% } %>
         </div>
     </div>
 
