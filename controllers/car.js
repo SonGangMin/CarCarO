@@ -3,8 +3,43 @@ const multer = require("multer");
 
 // 내차 찾기, 내차 팔기
 // 내차찾기 페이지
-exports.renderFindcar = (req, res) => {
-  res.render("findcar", { title: "내차찾기" });
+exports.renderFindcar = async (req, res, next) => {
+  try {
+    const PAGE_SIZE = 16;
+    const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+    const offset = (page - 1) * PAGE_SIZE;
+    const total = await cars.count();
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+    const isMine = req.user && req.user.id;
+    const twits = await cars.findAll({
+      attributes: [
+        "carNum",
+        "model",
+        "brand",
+        "picture",
+        "year",
+        "mile",
+        "fuel",
+        "hashtag",
+        "from",
+        "user_id",
+      ],
+      order: [["num", "DESC"]],
+      offset,
+      limit: PAGE_SIZE,
+    });
+    res.render("carfind", {
+      title: "내차찾기",
+      twits,
+      totalPages,
+      currentPage: page,
+      isMine,
+      total,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 };
 
 // 등록된차 리스트 페이지
@@ -19,7 +54,16 @@ exports.renderSalecar = async (req, res, next) => {
     const totalPages = Math.ceil(count / 2);
 
     const Cars = await cars.findAll({
-      attributes: ["carNum","model", "brand", "picture", "year", "mile", "fuel", "hashtag"],
+      // attributes: [
+      //   "carNum",
+      //   "model",
+      //   "brand",
+      //   "picture",
+      //   "year",
+      //   "mile",
+      //   "fuel",
+      //   "hashtag",
+      // ],
       order: [["num", "DESC"]],
       where: { user_id: req.user.id },
       offset: offset,
@@ -39,18 +83,21 @@ exports.renderSalecar = async (req, res, next) => {
 };
 
 // 등록된 차량 상세
-exports.renderDetail = async(req, res, next) => {
-  try{
+exports.renderDetail = async (req, res, next) => {
+  const carNum = req.params.carNum;
+  try {
     const Cars = await cars.findOne({
-      // attributes: ["model", "brand", "picture", "year", "mile", "fuel", "hashtag"],
+      where: { carNum },
       order: [["num", "DESC"]],
     });
-
-    res.render('cardetail', {
+    const isOwner = req.user && Cars.user_id === req.user.id;
+    // console.log(isOwner, Cars.user_id, req.user.id);
+    res.render("cardetail", {
       title: Cars.model,
       Cars,
+      isOwner,
     });
-  } catch(error){
+  } catch (error) {
     console.error(error);
     next(error);
   }
@@ -102,15 +149,15 @@ exports.uploadPost = async (req, res, next) => {
       user_id: req.user.id,
     });
     const Hashtags = req.body.hashtag.match(/#[^\s#]*/g);
-    if(Hashtags){
-        const result = await Promise.all(
-            Hashtags.map(tag => {
-                return hashtags.findOrCreate({
-                    where: {cars_hashtag: tag.slice(1).toLowerCase()},
-                })
-            }),
-        );
-        await post.addHashtags(result.map(r => r[0]));
+    if (Hashtags) {
+      const result = await Promise.all(
+        Hashtags.map((tag) => {
+          return hashtags.findOrCreate({
+            where: { cars_hashtag: tag.slice(1).toLowerCase() },
+          });
+        })
+      );
+      await post.addHashtags(result.map((r) => r[0]));
     }
     res.redirect("/car/carsale");
   } catch (error) {
@@ -119,28 +166,27 @@ exports.uploadPost = async (req, res, next) => {
   }
 };
 
-
 // 해시태그
 exports.renderHashtag = async (req, res, next) => {
-    const query = req.query.hashtag;
-    if(!query){
-        return res.redirect('/');
+  const query = req.query.hashtag;
+  if (!query) {
+    return res.redirect("/");
+  }
+  try {
+    const hashtag = await hashtags.findOne({ where: { title: query } });
+    let cars = [];
+    if (hashtag) {
+      cars = await hashtag.getPosts({
+        include: [{ model: cars }],
+      });
     }
-    try{
-        const hashtag = await hashtags.findOne({where: {title: query}});
-        let cars = [];
-        if(hashtag){
-            cars = await hashtag.getPosts({
-                include: [{ model: cars}]
-            });
-        }
 
-        return res.render('carsale', {
-            title: `${query}`,
-            twits: cars,
-        });
-    } catch(error){
-        console.error(error);
-        return next(error);
-    }
+    return res.render("carsale", {
+      title: `${query}`,
+      twits: cars,
+    });
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
 };

@@ -17,7 +17,15 @@
                     <span>해시태그 <%= Cars.hashtag %></span>
                 </div>
                 <a href="/car/carsale">목록으로</a>
-            </div>
+
+                <% if (isOwner) { %>
+                    <a href="/car/edit/<%= Cars.carNum %>">수정</a>
+                    <form action="/car/delete/<%= Cars.carNum %>" method="POST">
+                      <input type="submit" value="삭제" />
+                    </form>
+                    
+                    <% } %>
+            </div> 
         </div>
     </div>
 

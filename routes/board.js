@@ -21,6 +21,6 @@ router.get("/search/:result", renderSearch);
 router.get("/edit/:postId", renderEditPost);
 router.post("/edit/:postId", editPost);
 
-router.post("/:postId/delete", deletePost);
+router.post("/delete/:postId", deletePost);
 
 module.exports = router;

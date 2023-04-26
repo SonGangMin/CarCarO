@@ -6,7 +6,7 @@
 
 <% if (isOwner) { %>
 <button><a href="/board/edit/<%= board.postId %>">수정</a></button>
-<form action="/board/<%= board.postId %>/delete" method="POST">
+<form action="/board/delete/<%= board.postId %>" method="POST">
   <input type="submit" value="삭제" />
 </form>
 
