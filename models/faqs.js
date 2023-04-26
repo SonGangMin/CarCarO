@@ -14,6 +14,11 @@ module.exports = function(sequelize, DataTypes) {
     content: {
       type: DataTypes.STRING(100),
       allowNull: false
+    },
+    grade: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
     }
   }, {
     sequelize,
