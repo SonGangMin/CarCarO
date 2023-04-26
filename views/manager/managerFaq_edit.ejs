@@ -1,11 +1,8 @@
 <%- include('../include/managerhead.ejs') %>
 
 <div class="faqedit">
-<label>
-    <input type="checkbox" id="regist" value="2"/>자주 묻는 질문
-</label>
 
-<h1>게시글 수정하기</h1>
+<h1>자주 묻는 질문 수정하기</h1>
 
 <form action="/manager/managerFaq/<%= faq.number %>" method="post">
     <input type="hidden" name="_method" value="PUT" />

@@ -76,3 +76,39 @@ exports.deleteManagerFaq = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.registMangerFaq = async (req, res, next) => {
+    const number = req.params.number;
+    try {
+        const faq = await models.faqs.findOne({ where: { number } });
+    if (!faq) {
+        throw new Error("등록되지 않았습니다.");
+        }
+    await models.faqs.update(
+        { grade: 2 },
+        { where: { number } }
+        );
+        res.redirect(`/manager/managerFaq/`);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+};
+
+exports.downMangerFaq = async (req, res, next) => {
+    const number = req.params.number;
+    try {
+        const faq = await models.faqs.findOne({ where: { number } });
+    if (!faq) {
+        throw new Error("내리기 실패했습니다.");
+        }
+    await models.faqs.update(
+        { grade: 1 },
+        { where: { number } }
+        );
+        res.redirect(`/manager/managerFaq/`);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+};

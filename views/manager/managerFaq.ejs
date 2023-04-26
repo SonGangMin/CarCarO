@@ -14,6 +14,12 @@
         <form action="/manager/managerfaq/delete/<%= twit.number %>" method="POST">
             <input type="submit" value="삭제">
         </form>
+        <form action="/manager/managerfaq/downgrade/<%= twit.number %>" method="POST">
+        <button type="submit">자주 묻는 질문 내리기</button>
+        </form>
+        <form action="/manager/managerfaq/upgrade/<%= twit.number %>" method="POST">
+        <button type="submit">자주 묻는 질문 등록하기</button>
+        </form>
         <br><br><hr><br><br><br>
         <% }) %>
     </div>
