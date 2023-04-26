@@ -16,8 +16,5 @@ exports.renderLogin = (req, res) => {
 };
 
 // 마이페이지
-exports.renderMypage = (req, res) => {
-  res.render("mypage", { 
-    title: "마이페이지",
-});
-};
+
+
