@@ -12,18 +12,19 @@ exports.renderFindcar = async (req, res, next) => {
     const totalPages = Math.ceil(total / PAGE_SIZE);
     const isMine = req.user && req.user.id;
     const twits = await cars.findAll({
-      attributes: [
-        "carNum",
-        "model",
-        "brand",
-        "picture",
-        "year",
-        "mile",
-        "fuel",
-        "hashtag",
-        "from",
-        "user_id",
-      ],
+      // attributes: [
+      //   "carNum",
+      //   "model",
+      //   "brand",
+      //   "picture",
+      //   "year",
+      //   "mile",
+      //   "fuel",
+      //   "hashtag",
+      //   "from",
+      //   "user_id",
+      //   "likes_count",
+      // ],
       order: [["num", "DESC"]],
       offset,
       limit: PAGE_SIZE,

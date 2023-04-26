@@ -22,6 +22,7 @@
   }
   .listbox {
     border: 1px solid black;
+    /* background-color: red; */
     width: 100%;
     /* margin: 0 5%; */
   }
@@ -46,7 +47,8 @@
           <option value="hyundai">현대</option>
           <option value="genesis">제네시스</option>
           <option value="kia">기아</option>
-          <option value="ssangyong">쌍용</option>
+          <option value="chevrolet">쉐보래(GM대우)</option>
+          <option value="etc">기타</option>
         </select>
         <button type="submit" class="search">검색</button><br />
       </div>
@@ -61,27 +63,29 @@
             <option value="hyundai">현대</option>
             <option value="genesis">제네시스</option>
             <option value="kia">기아</option>
-            <option value="ssangyong">쌍용</option>
+            <option value="chevrolet">쉐보레(GM대우)</option>
+            <option value="etc">기타</option>
+
           `;
         } else if (fromSelect.value === 'imported') {
           brandSelect.innerHTML = `
-            <option value="volvo">볼보</option>
-            <option value="audi">아우디</option>
             <option value="mercedes-benz">벤츠</option>
+            <option value="audi">아우디</option>
+            <option value="bmw">BMW</option>
+            <option value="volvo">볼보</option>
+            <option value="volkswagen">폭스바겐</option>
+            <option value="porsche">포르쉐</option>
+            <option value="etc2">기타</option>
+
           `;
         }
       });
     </script>
-        차량 가격
-        <select>
-          <option>10,000</option>
-          <option>50,000</option>
-        </select>
-        부터
-        <select>
-          <option>1,000,000</option>
-          <option>5,000,000,000</option>
-        </select>
+        차량 가격 =>
+        <input type="text" name="lowprice" value="0" required onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
+        원 ~
+        <input type="text" name="highprice" value="10000000000" required onfocus="if(this.value=='10000000000') this.value='';" onblur="if(this.value=='') this.value='10000000000';">
+
         까지 &nbsp;&nbsp;&nbsp;&nbsp; 변속기
         <select>
           <option>스틱</option>
@@ -105,6 +109,21 @@
       </div>
     </form>
   </div>
+  <!-- <script>
+    const lowpriceInput = document.getElementById('lowprice-input');
+
+lowpriceInput.addEventListener('focus', function() {
+  if (this.value === '0') {
+    this.value = '';
+  }
+});
+
+lowpriceInput.addEventListener('blur', function() {
+  if (this.value === '') {
+    this.value = '0';
+  }
+});
+  </script> -->
   <style>
     .bigbox {
       border: solid 1px black;
@@ -134,14 +153,33 @@
     .bigbox h1 {
       text-align: center;
     }
+    
+    .text-box{
+      margin-bottom: 10px;
+      margin-top: -20px;
+    }
+
+
     .hash {
       width: 25%;
       display: flex;
       display: inline;
       margin: 5%;
     }
+
+    .like {
+      position: relative;
+      right: -35%;
+      top: -40px;
+      /* border: solid 1px black; */
+    }
+
     #highlight {
       background-color: lightcoral;
+    }
+    .check {
+      border: 1px solid black;
+      box-sizing: border-box;
     }
   </style>
   <div class="bigbox" id="list">
@@ -156,15 +194,25 @@
             class="listbox"
             id="<%= isMine === twit.user_id ? 'highlight' : '' %>"
           >
+          <!-- <div class="check"> -->
             <img src="<%= twit.picture %>" alt="" class="thumbnail" />
-            <br />
-            <%= twit.brand %> <%= twit.model %> <%= twit.year %>년식<br />
-            <%= twit.from %><br />
-
-            <div class="hash"><%= twit.hashtag %></div>
-            <div class="hash"><%= twit.hashtag %></div>
-            <div class="hash"><%= twit.hashtag %></div>
-            <div class="hash"><%= twit.hashtag %></div>
+            <div class="like">
+              <input type="checkbox">
+              <%= twit.likes_count %>
+            <!-- </div> -->
+            </div>
+        
+            <div class="text-box">
+              <div> <%= twit.from %> <%= twit.brand %> <%= twit.model %> </div>
+      
+              <div><%= twit.fuel %> <%= twit.year %>년식</div>
+              <div>  </div>
+              <div class="hash"><%= twit.hashtag %></div>
+              <div class="hash"><%= twit.hashtag %></div>
+              <div class="hash"><%= twit.hashtag %></div>
+              <div class="hash"><%= twit.hashtag %></div>
+            </div>
+           
           </div>
         </a>
       </li>
@@ -172,6 +220,8 @@
     </ul>
 
     <% if (totalPages > 1) { %>
+
+    
 
     <div>
       <% let start = Math.ceil(currentPage / 10) * 10 - 9; let end =
