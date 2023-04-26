@@ -1,28 +1,21 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
+<%- include ./include/head.ejs %>
+
 <body>
     <form action="/mypage/edit" id="editform" method="post" class="form">
         <h1 class="title">회원 정보 수정</h1>
         <label for=""><span>아이디</span>
-        <input id="id" type="text" name="id" value="<%= user.id %>"></label>
+        <input id="id" type="text" name="id" value="<%= user.id %>" readonly></label>
         <label for=""><span>비밀번호</span>
         <input id="pw" type="password" name="password" value=""></label>
         <label for=""><span>이름</span>
-        <input id="name" type="text" name="name" value="<%= user.name %>"></label>
+        <input id="name" type="text" name="name" value="<%= user.name %>" readonly></label>
         <label for=""><span>전화번호</span>
             <div class="phone">
                 <input id="tel" type="number" name="tel" value="<%= user.tel %>"></div></label>
         <label for=""><span>이메일</span>
         <input id="email" type="email" name="email" value="<%= user.email %>"></label>
         <label for=""><span>나이</span>
-        <input id="birth" type="number" name="birth" value="<%= user.birth %>"></label>
+        <input id="birth" type="number" name="birth" value="<%= user.birth %>" ></label>
         <button type="submit" onclick="checkForm()" class="edit_btn">정보 수정</button>
     </form>
 </body>
