@@ -1,4 +1,100 @@
 <%- include('./include/head.ejs') %>
-    <h1>findcar</h1>
-</body>
-</html>
+<style>
+  .findcar {
+  }
+  .bigbox {
+    border: solid 1px black;
+    padding: 100px;
+    position: relative;
+    left: 15%;
+  }
+  /* .searchbox {
+    border: solid 1px black;
+    padding: 30px;
+  } */
+  .select1 {
+    margin: 0;
+    padding: 20px;
+    align-items: center;
+  }
+  .search {
+    margin: 0;
+    padding-top: 18px;
+    padding-bottom: 40px;
+    align-items: center;
+  }
+
+  .statistics {
+    position: relative;
+    left: 50%;
+  }
+</style>
+<div class="findcar">
+  <div class="bigbox" id="search">
+    <div class="statistics">
+      전체: &nbsp;&nbsp;&nbsp;&nbsp; n대<br />최근등록(24시간):
+      &nbsp;&nbsp;&nbsp;&nbsp; n대
+    </div>
+    국산●수입차
+    <form>
+      <div class="searchbox">
+        <select class="select1">
+          <option>제네시스</option>
+          <option>아우디</option>
+          <option>벤츠</option>
+        </select>
+        <select class="select1">
+          <option>제네시스</option>
+          <option>아우디</option>
+          <option>벤츠</option>
+        </select>
+        <select class="select1">
+          <option>제네시스</option>
+          <option>아우디</option>
+          <option>벤츠</option>
+        </select>
+        <button type="submit" class="search">검색</button><br />
+        차량 가격
+        <select>
+          <option>10,000</option>
+          <option>50,000</option>
+        </select>
+        부터
+        <select>
+          <option>1,000,000</option>
+          <option>5,000,000,000</option>
+        </select>
+        까지 &nbsp;&nbsp;&nbsp;&nbsp; 변속기
+        <select>
+          <option>스틱</option>
+          <option>오토</option></select
+        ><br />
+        차량 연식
+        <select>
+          <option>1999년</option>
+          <option>2000년</option>
+        </select>
+        부터
+        <select>
+          <option>3000년</option>
+          <option>4000년</option>
+        </select>
+        까지 &nbsp;&nbsp;&nbsp;&nbsp; 사용 연료
+        <select>
+          <option>LPG</option>
+          <option>전기</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="bigbox" id="list">
+    <ul>
+      <% twits.forEach(function(twit) { %>
+      <li>
+        <a href="/board/<%= twit.postId %>"><%= twit.title %></a>
+        작성자: <%= twit.user.name %>
+      </li>
+      <% }) %>
+    </ul>
+  </div>
+</div>

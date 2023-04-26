@@ -47,9 +47,10 @@ exports.isLoggedIn3 = (req, res, next) => {
   }
 };
 
+//관리자인지 아닌지 확인
 exports.isManager = (req, res, next) => {
   const isOwner = req.user && req.user.grade === 2;
-  console.log(isOwner);
+  // console.log(isOwner);
   if (isOwner) {
     next();
   } else {
