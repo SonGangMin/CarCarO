@@ -10,10 +10,6 @@ module.exports = function(sequelize, DataTypes) {
     cars_hashtag: {
       type: DataTypes.STRING(100),
       allowNull: true
-    },
-    cars_number: {
-      type: DataTypes.STRING(100),
-      allowNull: false
     }
   }, {
     sequelize,

@@ -1,27 +1,31 @@
 <%- include('./include/head.ejs') %>
     <div class="container">
         <div class="contents">
-            <h1 class="title">내차팔기 등록하기</h1>
+            <h1 class="title">판매목록</h1>  
+            <h3 class="counting">총 <span></span>개</h3>
+            <form action="/car/hashtag">
+                <input type="text" name="hashtag">
+                <button class="btn">검색</button>
+            </form>
             <ul class="viewImg">
                 <% Cars.forEach(function(carList) { %>
                 <li>
-                    <h1><%= carList.carNum %></h1>
-                    <img src="<%= carList.picture %>" alt="">
+                    <a href="">
+                        <img src="<%= carList.picture %>" alt="" class="thumbnail">
+                        <p><%= carList.brand %> <%= carList.model %></p>
+                        <div class="option">
+                            <span><%= carList.year %></span>
+                            <span><%= carList.mile %>km</span>
+                            <span><%= carList.fuel %></span>
+                            <span><%= carList.hashtag %></span>
+                        </div>
+                    </a>
                 </li>
                 <% }); %>
             </ul>
-            <a href="/car/carupload">내차등록</a>
+            <a href="/car/carupload" class="goupload">내차등록</a>
         </div>
     </div>
-
-    <ul>
-        <% Cars.forEach(function(Car) { %>
-        <li>
-        작성자: <%= Car.user_id %>
-        <%= Car.user_id %>
-        </li>
-        <% }); %>
-    </ul>
 
 </body>
 </html>

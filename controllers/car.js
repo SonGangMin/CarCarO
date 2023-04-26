@@ -1,4 +1,4 @@
-const { cars } = require("../models");
+const { cars, hashtags } = require("../models");
 const multer = require("multer");
 
 // 내차 찾기, 내차 팔기
@@ -15,7 +15,15 @@ exports.renderCarup = (req, res) => {
 exports.renderSalecar = async (req, res, next) => {
   try {
     const Cars = await cars.findAll({
-      attributes: ["carNum", "picture"],
+      attributes: [
+        "model",
+        "brand",
+        "picture",
+        "year",
+        "mile",
+        "fuel",
+        "hashtag",
+      ],
       order: [["num", "DESC"]],
       where: { user_id: req.user.id },
     });
@@ -30,15 +38,16 @@ exports.renderSalecar = async (req, res, next) => {
   }
 };
 
+// 이미지 경로 주소화시키기
 exports.uploadImg = (req, res) => {
-  console.log("req.file ===========>", req.file);
-  res.json({ url: `/carImg/${req.file.filename}` });
+  console.log("req.file ===========>", req.files);
+  res.send("Upload Success");
+  // res.json({ url: `/img/${req.file.filename}` });
 };
 
 // 내차팔기 db 등록
 exports.uploadPost = async (req, res, next) => {
   const { carNum } = req.body;
-  console.log("1111111111111111113", req.carNum);
   try {
     await cars.create({
       carNum: req.body.carNum,
@@ -71,9 +80,45 @@ exports.uploadPost = async (req, res, next) => {
       num: null,
       user_id: req.user.id,
     });
+    const Hashtags = req.body.hashtag.match(/#[^\s#]*/g);
+    if (Hashtags) {
+      const result = await Promise.all(
+        Hashtags.map((tag) => {
+          return hashtags.findOrCreate({
+            where: { cars_hashtag: tag.slice(1).toLowerCase() },
+          });
+        })
+      );
+      // await post.addHashtags(result.map(r => r[0]));
+    }
     res.redirect("/car/carsale");
   } catch (error) {
     console.error(error);
     next(error);
+  }
+};
+
+// 해시태그
+exports.renderHashtag = async (req, res, next) => {
+  const query = req.query.hashtag;
+  if (!query) {
+    return res.redirect("/");
+  }
+  try {
+    const hashtag = await hashtags.findOne({ where: { title: query } });
+    let cars = [];
+    if (hashtag) {
+      cars = await hashtag.getPosts({
+        include: [{ model: cars }],
+      });
+    }
+
+    return res.render("carsale", {
+      title: `${query}`,
+      twits: cars,
+    });
+  } catch (error) {
+    console.error(error);
+    return next(error);
   }
 };
