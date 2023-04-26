@@ -19,7 +19,7 @@ exports.renderManagerFaq = async (req, res, next) => {
       // console.log("자료확인--", twits[0]);
         res.render("manager/managerFaq", {
         twits,
-        title: "커뮤니티",
+        title: "FAQ",
         totalPages,
         currentPage: page,
         });

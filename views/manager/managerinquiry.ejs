@@ -1,0 +1,18 @@
+<%- include('../include/managerhead.ejs')%>
+
+<div>
+    <h1 align="center">1대1 문의</h1><br>
+    <div align="center">
+        <div>
+            <ul>
+            <% twits.forEach(function(twit) { %>
+                <li>
+                    <a style="color: white;" href="/manager/managerinquiry/<%= twit.number%>">
+                        제목: <%= twit.title %></a><br><br>
+                        작성자: <%= twit.user_id %><br><br><hr><br><br>
+                </li>
+            <% }); %>
+            </ul>
+        </div>
+    </div>
+</div>
