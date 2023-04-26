@@ -71,7 +71,7 @@ app.use("/mypage", mypageRouter);
 
 app.use("/manager", managerPageRouter);
 app.use("/manager/managerboard", managerBoardRouter);
-app.use("/manager/managerfaq", managerfaqRouter);
+app.use("/manager/managerFaq", managerfaqRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
