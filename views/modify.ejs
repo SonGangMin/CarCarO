@@ -16,7 +16,45 @@
         <input id="email" type="email" name="email" value="<%= user.email %>"></label>
         <label for=""><span>나이</span>
         <input id="birth" type="number" name="birth" value="<%= user.birth %>" ></label>
-        <button type="submit" onclick="checkForm()" class="edit_btn">정보 수정</button>
+        <button type="button" onclick="checkForm()" class="edit_btn">정보 수정</button>
     </form>
+
+    <script>
+        const edit_form = document.getElementById('editform');
+        const pw = document.getElementById('pw');
+        const tel = document.getElementById('tel');
+        const email = document.getElementById('email');
+        const birth = document.getElementById('birth');
+
+        function checkForm() {
+            if(pw.value === ''){
+                alert('비밀번호를 입력해주세요');
+                pw.focus()
+                return false;
+            }
+            const pwCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+            if(!pwCheck.test(pw.value)){
+                alert('비밀번호는 영문 + 숫자 + 특수문자 조합으로 8~20자리로 설정하셔야 합니다')
+                pw.focus()
+                return false;
+            }
+            if(tel.value === ''){
+                alert('휴대폰 번호를 입력해주세요')
+                tel.focus()
+                return false;
+            }
+            if(email.value === ''){
+                alert('이메일을 입력해주세요')
+                tel.focus()
+                return false;
+            }
+            if(birth.value === ''){
+                alert('나이를 입력해주세요');
+                birth.focus()
+                return false;
+            } 
+            edit_form.submit();
+        }
+    </script>
 </body>
 </html>
