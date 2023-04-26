@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const { renderManagerFaq, updateManagerFaq, renderUpdate, 
-    deleteManagerFaq, registManagerFaq, downManagerFaq } = require("../../controllers/manager/managerfaq");
+    deleteManagerFaq, upgradeManagerFaq, downgradeManagerFaq } = require("../../controllers/manager/managerfaq");
 
 router.get("/", renderManagerFaq);
 router.get("/:number", renderUpdate);
 router.post("/:number", updateManagerFaq);
 router.post("/delete/:number", deleteManagerFaq);
-// router.post("/upgrade/:number", registManagerFaq);
-// router.post("/downgrade/:number", downManagerFaq);
+router.post("/upgrade/:number", upgradeManagerFaq);
+router.post("/downgrade/:number", downgradeManagerFaq);
 
 module.exports = router;

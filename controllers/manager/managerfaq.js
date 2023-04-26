@@ -77,16 +77,16 @@ exports.deleteManagerFaq = async (req, res, next) => {
     }
 };
 
-exports.registMangerFaq = async (req, res, next) => {
-    const number = req.params.number;
+exports. upgradeManagerFaq = async (req, res, next) => {
+    const grade = req.params.grade;
     try {
-        const faq = await models.faqs.findOne({ where: { number } });
+        const faq = await models.faqs.findOne({ where: { number: grade } });
     if (!faq) {
         throw new Error("등록되지 않았습니다.");
         }
     await models.faqs.update(
         { grade: 2 },
-        { where: { number } }
+        { where: { number: grade } }
         );
         res.redirect(`/manager/managerFaq/`);
     } catch (err) {
@@ -95,16 +95,16 @@ exports.registMangerFaq = async (req, res, next) => {
     }
 };
 
-exports.downMangerFaq = async (req, res, next) => {
-    const number = req.params.number;
+exports.downgradeMangerFaq = async (req, res, next) => {
+    const grade = req.params.grade;
     try {
-        const faq = await models.faqs.findOne({ where: { number } });
+        const faq = await models.faqs.findOne({ where: { number: grade } });
     if (!faq) {
         throw new Error("내리기 실패했습니다.");
         }
     await models.faqs.update(
         { grade: 1 },
-        { where: { number } }
+        { where: { number: grade } }
         );
         res.redirect(`/manager/managerFaq/`);
     } catch (err) {
