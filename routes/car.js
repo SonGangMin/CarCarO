@@ -3,6 +3,7 @@ const {
   renderFindcar,
   renderSalecar,
   renderCarup,
+  renderHashtag,
   uploadPost,
   uploadImg,
 } = require("../controllers/car");
@@ -16,13 +17,13 @@ const router = express.Router();
 router.get("/findcar", renderFindcar);
 router.get("/carsale", isLoggedIn, renderSalecar);
 router.get("/carupload", isLoggedIn, renderCarup);
+router.get("/hashtag", isLoggedIn, renderHashtag);
 
 // 내차팔기 등록
-
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, done) {
-      done(null, "public/carImg/");
+      done(null, "carImg/");
     },
     filename(req, file, done) {
       const ext = path.extname(file.originalname);
@@ -32,7 +33,7 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-router.post("/img", upload.single("img"), uploadImg);
+router.post("/img", upload.array("img", 10), uploadImg);
 
 const upload2 = multer();
 router.post("/carupload", uploadPost);

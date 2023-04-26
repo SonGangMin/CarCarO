@@ -1,49 +1,43 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('likes', {
-    number: {
-      autoIncrement: true,
+  return sequelize.define('carsHashtag', {
+    carsId: {
       type: DataTypes.BIGINT,
       allowNull: false,
-      primaryKey: true
-    },
-    car_num: {
-      type: DataTypes.BIGINT,
-      allowNull: false
-    },
-    user_id: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
+      primaryKey: true,
       references: {
-        model: 'users',
+        model: 'cars',
+        key: 'num'
+      }
+    },
+    hashtagsId: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      primaryKey: true,
+      references: {
+        model: 'hashtags',
         key: 'id'
       }
     }
   }, {
     sequelize,
-    tableName: 'likes',
-    timestamps: false,
+    tableName: 'carsHashtag',
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "number" },
+          { name: "carsId" },
+          { name: "hashtagsId" },
         ]
       },
       {
-        name: "likes_FK_1",
+        name: "carsHashtag_FK_1",
         using: "BTREE",
         fields: [
-          { name: "user_id" },
-        ]
-      },
-      {
-        name: "likes_FK",
-        using: "BTREE",
-        fields: [
-          { name: "car_num" },
+          { name: "hashtagsId" },
         ]
       },
     ]

@@ -24,9 +24,9 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     grade: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(100),
       allowNull: false,
-      defaultValue: 1
+      defaultValue: "1"
     }
   }, {
     sequelize,

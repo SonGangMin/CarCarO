@@ -2,55 +2,77 @@
     <div class="container">
         <div class="contents">
             <h1 class="title">내차팔기 등록하기</h1>
-            <form action="/car/carupload" method="post">
+            <form action="/car/carupload" method="post" class="formCar">
                 <label for=""><span>자동차 번호</span><input id="carNum" type="text" name="carNum"></label>
                 <label for="">
                     <span>국산·수입</span>
                     <select name="from" id="from">
                         <option value="" selected>국산·수입</option>
-                        <option value="domestic">국산</option>
-                        <option value="import">수입</option>
+                        <option value="국산">국산</option>
+                        <option value="수입">수입</option>
                     </select>
                 </label>       
                 <label for="">
                     <span>브랜드</span>
                     <select name="brand" id="brand">
                         <option value="" selected>브랜드</option>
-                        <option value="hyundai">현대</option>
-                        <option value="bmw">BMW</option>
+                        <option value="현대">현대</option>
+                        <option value="BMW">BMW</option>
                     </select>
                 </label>       
                 <label for="">
                     <span>모델명</span>
-                    <select name="model" id="model">
-                        <option value="" selected>모델명</option>
-                        <option value="hyundai">현대</option>
-                        <option value="bmw">BMW</option>
-                    </select>
+                    <input type="text" id="model" name="model" placeholder="ex) 그랜저ig">
                 </label> 
                 <label for=""><span>주행거리</span><input id="mile" type="text" name="mile"></label>
-                <label for=""><span>연식</span><input id="year" type="text" name="year"></label>
-                <label for=""><span>연료방식</span><input id="fuel" type="text" name="fuel"></label>
-                <label for=""><span>기어방식</span><input id="trans" type="text" name="trans"></label>
-                <label for=""><span>인승</span><input id="seater" type="text" name="seater"></label>
-                <label for=""><span>디스플레이</span><input id="disp" type="text" name="disp"></label>
-                <label for=""><span>차종</span><input id="type" type="text" name="type"></label>
-                <label for=""><span>method</span><input id="method" type="text" name="method"></label>
-                <label for=""><sapn>연락처</sapn><input id="tel" type="text" name="tel"></label>
-                <label for=""><span>사진</span><input id="img" type="file" name="picture" accept="/*"></label>
-                <label for=""><span>선루프</span><input id="roof" type="text" name="roof"></label>
-                <label for=""><span>색상</span><input id="color" type="text" name="color"></label>
-                <label for=""><span>네비게이션</span><input id="nav" type="text" name="nav"></label>
-                <label for=""><span>스마트키</span><input id="key" type="text" name="key"></label>
-                <label for=""><span>오토라이트</span><input id="light" type="text" name="light"></label>
-                <label for=""><span>주차센서</span><input id="sensor" type="text" name="sensor"></label>
-                <label for=""><span>후방카메라</span><input id="camera" type="text" name="camera"></label>
-                <label for=""><span>블랙박스</span><input id="box" type="text" name="box"></label>
-                <label for=""><span>가죽시트</span><input id="leather" type="text" name="leather"></label>
-                <label for=""><span>열선시트</span><input id="heated" type="text" name="heated"></label>
-                <label for=""><span>에어백</span><input id="airbag" type="text" name="airbag"></label>
-                <label for=""><span>기타</span><input id="etc" type="text" name="etc"></label>
-                <label for=""><span>해시태그</span><input id="hashtag" type="text" name="hashtag"></label>
+                <label for="">
+                    <span>연식</span>
+                    <select id="year" type="text" name="year">
+                        <option value="111111111" selected>-----</option>
+                    </select>
+                </label>
+                <label for=""><span>연료방식</span><input id="fuel" type="text" name="fuel" value="1111111"></label>
+
+                <label for=""><span>기어방식</span><input id="trans" type="text" name="trans"  value="1111111"></label>
+                
+                <label for=""><span>인승</span><input id="seater" type="text" name="seater" value="1111111"></label>
+                
+                <label for=""><span>디스플레이</span><input id="disp" type="text" name="disp"  value="1111111"></label>
+                
+                <label for=""><span>차종</span><input id="type" type="text" name="type"  value="1111111"></label>
+                
+                <label for=""><span>method</span><input id="method" type="text" name="method"  value="1111111"></label>
+                
+                <label for=""><sapn>연락처</sapn><input id="tel" type="text" name="tel"  value="1111111"></label>
+                
+                <label for=""><span>사진</span><input id="img" type="file" name="picture" multiple></label>
+                
+                <label for=""><span>선루프</span><input id="roof" type="text" name="roof"  value="1111111"></label>
+                
+                <label for=""><span>색상</span><input id="color" type="text" name="color"  value="1111111"></label>
+                
+                <label for=""><span>네비게이션</span><input id="nav" type="text" name="nav"  value="1111111"></label>
+                
+                <label for=""><span>스마트키</span><input id="key" type="text" name="key"  value="1111111"></label>
+                
+                <label for=""><span>오토라이트</span><input id="light" type="text" name="light"  value="1111111"></label>
+                
+                <label for=""><span>주차센서</span><input id="sensor" type="text" name="sensor"  value="1111111"></label>
+                
+                <label for=""><span>후방카메라</span><input id="camera" type="text" name="camera"  value="1111111"></label>
+                
+                <label for=""><span>블랙박스</span><input id="box" type="text" name="box"  value="1111111"></label>
+                
+                <label for=""><span>가죽시트</span><input id="leather" type="text" name="leather"  value="1111111"></label>
+                
+                <label for=""><span>열선시트</span><input id="heated" type="text" name="heated"  value="1111111"></label>
+                
+                <label for=""><span>에어백</span><input id="airbag" type="text" name="airbag"  value="1111111"></label>
+                
+                <label for=""><span>기타</span><input id="etc" type="text" name="etc"  value="1111111"></label>
+                
+                <label for=""><span>해시태그</span><input id="hashtag" type="text" name="hashtag"  value="1111111"></label>
+                
                 <input id="img-url" type="hidden" name="url">
                 
                 <button type="submit" class="join_btn">내차 등록</button>
@@ -59,8 +81,20 @@
     </div>
     <script>
         if (document.getElementById('img')) {
+            let uploadNum = 0;
+            let index = 0;
             document.getElementById('img').addEventListener('change', function(e) {
             const formData = new FormData();
+            const length = this.files.length;
+            const max = 5;
+            switch(uploadNum){
+                case 0:
+                    if(length > max - uploadNum){
+                        alert("사진은 최대 5장까지만 가능합니다.");
+                        return;
+                    }
+            }
+
             console.log(this, this.files);
             formData.append('img', this.files[0]);
             axios.post('/car/img', formData)
@@ -73,6 +107,20 @@
                 });
             });
         }
+
+        let carYear = document.getElementById('year');
+        let now = new Date();
+        let year = now.getFullYear();
+
+        function getYear(){
+            for(let i = 1950; i <= year; i++){
+                let option = document.createElement('option');
+                option.value=i;
+                option.innerHTML=`${i}년`
+                carYear.append(option);
+            }
+        }
+        getYear();
     </script>
 </body>
 </html>

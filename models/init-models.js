@@ -1,6 +1,7 @@
 var DataTypes = require("sequelize").DataTypes;
 var _boards = require("./boards");
 var _cars = require("./cars");
+var _carsHashtag = require("./carsHashtag");
 var _comments = require("./comments");
 var _faqs = require("./faqs");
 var _hashtags = require("./hashtags");
@@ -11,6 +12,7 @@ var _users = require("./users");
 function initModels(sequelize) {
   var boards = _boards(sequelize, DataTypes);
   var cars = _cars(sequelize, DataTypes);
+  var carsHashtag = _carsHashtag(sequelize, DataTypes);
   var comments = _comments(sequelize, DataTypes);
   var faqs = _faqs(sequelize, DataTypes);
   var hashtags = _hashtags(sequelize, DataTypes);
@@ -18,8 +20,12 @@ function initModels(sequelize) {
   var likes = _likes(sequelize, DataTypes);
   var users = _users(sequelize, DataTypes);
 
-  likes.belongsTo(cars, { as: "car_num_car", foreignKey: "car_num"});
-  cars.hasMany(likes, { as: "likes", foreignKey: "car_num"});
+  cars.belongsToMany(hashtags, { as: 'hashtagsId_hashtags', through: carsHashtag, foreignKey: "carsId", otherKey: "hashtagsId" });
+  hashtags.belongsToMany(cars, { as: 'carsId_cars', through: carsHashtag, foreignKey: "hashtagsId", otherKey: "carsId" });
+  carsHashtag.belongsTo(cars, { as: "car", foreignKey: "carsId"});
+  cars.hasMany(carsHashtag, { as: "carsHashtags", foreignKey: "carsId"});
+  carsHashtag.belongsTo(hashtags, { as: "hashtag", foreignKey: "hashtagsId"});
+  hashtags.hasMany(carsHashtag, { as: "carsHashtags", foreignKey: "hashtagsId"});
   boards.belongsTo(users, { as: "user", foreignKey: "user_id"});
   users.hasMany(boards, { as: "boards", foreignKey: "user_id"});
   cars.belongsTo(users, { as: "user", foreignKey: "user_id"});
@@ -34,6 +40,7 @@ function initModels(sequelize) {
   return {
     boards,
     cars,
+    carsHashtag,
     comments,
     faqs,
     hashtags,
