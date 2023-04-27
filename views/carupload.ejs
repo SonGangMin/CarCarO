@@ -16,16 +16,10 @@
                 <label for="">
                     <span>브랜드</span>
                     <!-- 국산 -->
-                    <select name="brand" id="domestic" class="brand">
+                    <select name="brand" id="brand" class="brand">
                         <option value="" selected>브랜드</option>
                         <option value="현대">현대</option>
                     </select>
-                    <!-- 수입 -->
-                    <!-- <select name="brand" id="import" class="brand">
-                        <option value="" selected>브랜드</option>
-                        <option value="현대">현대</option>
-                        <option value="BMW">BMW</option>
-                    </select> -->
                 </label>
                 <label for="">
                     <span>모델명</span>
@@ -41,43 +35,9 @@
                 <label for=""><span>연료방식</span><input id="fuel" type="text" name="fuel" value="1111111"></label>
 
                 <label for=""><span>기어방식</span><input id="trans" type="text" name="trans"  value="1111111"></label>
-                
-                <label for=""><span>인승</span><input id="seater" type="text" name="seater" value="1111111"></label>
-                
-                <label for=""><span>디스플레이</span><input id="disp" type="text" name="disp"  value="1111111"></label>
-                
-                <label for=""><span>차종</span><input id="type" type="text" name="type"  value="1111111"></label>
-                
-                <label for=""><span>method</span><input id="method" type="text" name="method"  value="1111111"></label>
-                
-                <label for=""><sapn>연락처</sapn><input id="tel" type="text" name="tel"  value="1111111"></label>
-                
+                                
                 <label for=""><span>사진</span><input id="input-multi-files" type="file" name="picture" accept="/*" multiple></label>
-                
-                <label for=""><span>선루프</span><input id="roof" type="text" name="roof"  value="1111111"></label>
-                
-                <label for=""><span>색상</span><input id="color" type="text" name="color"  value="1111111"></label>
-                
-                <label for=""><span>네비게이션</span><input id="nav" type="text" name="nav"  value="1111111"></label>
-                
-                <label for=""><span>스마트키</span><input id="key" type="text" name="key"  value="1111111"></label>
-                
-                <label for=""><span>오토라이트</span><input id="light" type="text" name="light"  value="1111111"></label>
-                
-                <label for=""><span>주차센서</span><input id="sensor" type="text" name="sensor"  value="1111111"></label>
-                
-                <label for=""><span>후방카메라</span><input id="camera" type="text" name="camera"  value="1111111"></label>
-                
-                <label for=""><span>블랙박스</span><input id="box" type="text" name="box"  value="1111111"></label>
-                
-                <label for=""><span>가죽시트</span><input id="leather" type="text" name="leather"  value="1111111"></label>
-                
-                <label for=""><span>열선시트</span><input id="heated" type="text" name="heated"  value="1111111"></label>
-                
-                <label for=""><span>에어백</span><input id="airbag" type="text" name="airbag"  value="1111111"></label>
-                
-                <label for=""><span>기타</span><input id="etc" type="text" name="etc"  value="1111111"></label>
-                
+                                
                 <label for=""><span>해시태그</span><input id="hashtag" type="text" name="hashtag"  value="1111111"></label>
                 
                 <input id="img-url" type="hidden" name="url">
@@ -115,19 +75,35 @@
   
   
         const form = document.querySelector('form');
-    //     const titleInput = document.querySelector('#title');
-    //   const contentInput = document.querySelector('#content');
-        const fileInput = document.querySelector('#input-multi-files');
+        const carNumInput = document.querySelector('#carNum');
+        const fromInput = document.querySelector('#from');
+        const brandInput = document.querySelector('#brand');
+        const modelInput = document.querySelector('#model');
+        const mileInput = document.querySelector('#mile');
+        const yearInput = document.querySelector('#year');
+        const fuelInput = document.querySelector('#fuel');
+        const transInput = document.querySelector('#trans');
+        const filesInput = document.querySelector('#input-multi-files');
+        const hashtagInput = document.querySelector('#hashtag');
+
   
         form.addEventListener('submit', async (e) => {
           e.preventDefault();
   
-          const formData = new FormData();
-        //   formData.append('title', titleInput.value);
-        //   formData.append('content', contentInput.value);
+          const formData = new FormData(form);
+            formData.append('carNum', carNumInput.value);
+            formData.append('from', fromInput.value);
+            formData.append('brand', brandInput.value);
+            formData.append('model', modelInput.value);
+            formData.append('mile', yearInput.value);
+            formData.append('fuel', fuelInput.value);
+            formData.append('trans', transInput.value);
+            formData.append('hashtag', hashtagInput.value);
+            
           for (const file of fileInput.files) {
             formData.append('files', file);
           }
+          console.log(formData);
   
           try {
             const response = await axios.post('/car/multiple-upload', formData, {

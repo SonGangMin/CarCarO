@@ -9,11 +9,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     car_num: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      references: {
-        model: 'cars',
-        key: 'carNum'
-      }
+      allowNull: false
     },
     user_id: {
       type: DataTypes.STRING(100),

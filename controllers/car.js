@@ -93,7 +93,7 @@ exports.uploadImg = async (req, res, next) => {
       fs.renameSync(oldPath, newPath);
       files.push({ filename: file.filename, url: `/carImg/${file.filename}` });
     }
-    // console.log("=======3", files);
+    console.log("=======3", req.body);
 
     await cars.create({
       carNum: req.body.carNum,
@@ -104,24 +104,7 @@ exports.uploadImg = async (req, res, next) => {
       year: req.body.year,
       fuel: req.body.fuel,
       trans: req.body.trans,
-      seater: req.body.seater,
-      disp: req.body.disp,
-      type: req.body.type,
-      method: req.body.method,
-      color: req.body.color,
-      tel: req.body.tel,
       picture: req.body.urls,
-      roof: req.body.roof,
-      nav: req.body.nav,
-      key: req.body.key,
-      light: req.body.light,
-      sensor: req.body.sensor,
-      camera: req.body.camera,
-      box: req.body.box,
-      leather: req.body.leather,
-      heated: req.body.heated,
-      airbag: req.body.airbag,
-      etc: req.body.etc,
       hashtag: req.body.hashtag,
       num: null,
       user_id: req.user.id,
