@@ -1,8 +1,8 @@
 <%- include('../include/managerhead.ejs') %>
 
 
-<div class="faqblock">    
-    <h1 class="manyques" align="center">자주 묻는 질문 관리</h1><br>
+<div class="faqblock">   
+    <h1 class="manyques" align="center">자주 묻는 질문 관리</h1>
     <div class="manytime" align="center">
         <% twits.forEach(function(twit) { %>
         <table class="manytable">
@@ -24,4 +24,5 @@
         <% }) %>
     </div>
 </div>
+<button class="update"><a href="/manager/managerfaq/createfaq">글 작성</a></button>
 <br><br><br>
