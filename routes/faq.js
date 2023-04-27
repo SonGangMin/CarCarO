@@ -31,19 +31,17 @@ router.post('/inquiry', isLoggedIn3, function(req, res, next) {
     const content = req.body.content;
     const user_id = req.body.user_id;
 
-
-
-    models.inquirys.create({
-        title: title,
-        content: content,
-        user_id: user_id,
-    }).then(result => {
-        // console.log(result);
-        res.redirect('/faq');
-    }).catch(err => {
-        console.error(err);
-        next(err);
-    });
+models.inquirys.create({
+    title: title,
+    content: content,
+    user_id: user_id,
+  }).then(result => {
+    // console.log(result);
+    res.redirect('/faq');
+  }).catch(err => {
+    console.error(err);
+    next(err);
+  });
 })
 
 router.get('/faqSearch/:keyword', async (req, res, next) => {

@@ -6,10 +6,23 @@
 
 <% if (isOwner) { %>
 <button><a href="/board/edit/<%= board.postId %>">수정</a></button>
-<form action="/board/<%= board.postId %>/delete" method="POST">
+<form action="/board/delete/<%= board.postId %>" method="POST">
   <input type="submit" value="삭제" />
 </form>
 
 <% } %>
-
+<br /><br />
+<h2>댓글~</h2>
+<ul>
+  <% comments.forEach(function(comment) { %>
+  <li>작성자: <%= comment.user_id %> 내용: <%= comment.content %></li>
+  <% }); %>
+</ul>
+<% if (isUser) { %>
+<form action="" method="post">
+  <input type="text" name="content" />
+  <input type="submit" value="등록" />
+</form>
+<% } %>
+<br />
 <button><a href="/board">목록으로</a></button>

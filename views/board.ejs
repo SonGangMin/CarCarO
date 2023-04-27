@@ -33,7 +33,7 @@
   <a href="/board?page=<%= i %>"><%= i %></a>
   <% } %> <% } %> <% if (end < totalPages) { %>
   <a href="/board?page=<%= end + 1 %>">다음</a>
-  <% } %> <% if (end < totalPages - 9) { %>
+  <% } %> <% if (end < totalPages) { %>
   <a href="/board?page=<%= totalPages %>">마지막 페이지</a>
   <% } %>
 </div>

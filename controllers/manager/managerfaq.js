@@ -19,7 +19,7 @@ exports.renderManagerFaq = async (req, res, next) => {
       // console.log("자료확인--", twits[0]);
         res.render("manager/managerFaq", {
         twits,
-        title: "커뮤니티",
+        title: "FAQ",
         totalPages,
         currentPage: page,
         });
@@ -77,15 +77,52 @@ exports.deleteManagerFaq = async (req, res, next) => {
     }
 };
 
-exports.registMangerFaq = async (req, res, next) => {
+exports.upgradeManagerFaq = async (req, res, next) => {
     const number = req.params.number;
     try {
-        const faq = await models.faqs.findOne({ where: { number } });
+        const faq = await models.faqs.findOne({ where: { number: number } });
     if (!faq) {
         throw new Error("등록되지 않았습니다.");
         }
     await models.faqs.update(
         { grade: 2 },
+        { where: { number: number } }
+        );
+        res.redirect(`/manager/managerFaq/`);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+};
+
+exports.downgradeManagerFaq = async (req, res, next) => {
+    const number = req.params.number;
+    try {
+        const faq = await models.faqs.findOne({ where: { number: number } });
+    if (!faq) {
+        throw new Error("내리기 실패했습니다.");
+        }
+    await models.faqs.update(
+        { grade: 1 },
+        { where: { number: number } }
+        );
+        res.redirect(`/manager/managerFaq/`);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+};
+
+exports.updateManagerFaq = async (req, res, next) => {
+    const number = req.params.number;
+    const { title, content } = req.body;
+    try {
+        const faq = await models.faqs.findOne({ where: { number } });
+    if (!faq) {
+        throw new Error("존재하지 않는 게시글입니다.");
+        }
+    await models.faqs.update(
+        { title, content },
         { where: { number } }
         );
         res.redirect(`/manager/managerFaq/`);
@@ -95,20 +132,23 @@ exports.registMangerFaq = async (req, res, next) => {
     }
 };
 
-exports.downMangerFaq = async (req, res, next) => {
-    const number = req.params.number;
-    try {
-        const faq = await models.faqs.findOne({ where: { number } });
-    if (!faq) {
-        throw new Error("내리기 실패했습니다.");
-        }
-    await models.faqs.update(
-        { grade: 1 },
-        { where: { number } }
-        );
-        res.redirect(`/manager/managerFaq/`);
-    } catch (err) {
+exports.renderCreateFaq = (req,res,next)=>{
+    res.render("manager/managerFaq_upload")
+}
+
+exports.createFaq = async (req,res,next)=>{
+    try{
+        await models.faqs.create({
+            number: null,
+            title: req.body.title,
+            content: req.body.content,
+            createdAt: null,
+            updatedAt: null,
+            grade: 1,
+        });
+        res.redirect("/manager/managerFaq/")
+    } catch(err){
         console.error(err);
-        next(err);
+        next(err)
     }
-};
+}

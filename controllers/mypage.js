@@ -49,3 +49,26 @@ exports.updateUserInfo = async (req, res) => {
 exports.modifyPage = (req, res) => {
     res.render("edit", { title: "회원 정보 수정" });
 };
+
+
+// 비밀번호 확인
+exports.showPasswordPage = (req, res, next) => {
+  const { id } = req.params;
+  res.render('mypage_password', { id , title:'비밀번호확인'});
+};
+
+exports.checkPasswordPage = async (req, res) => {
+    try {
+        const {password} = req.body;
+        const user = await models.users.findOne({ where: {id : req.user.id}});
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (isMatch) {
+            res.redirect(`${req.user.id}`);
+        } else {
+            res.render('mypage_password', { message: '비밀번호가 일치하지 않습니다.'});
+        }
+    } catch(err) {
+        console.error(err);
+        res.status(500).send('서버 오류');
+    }
+}

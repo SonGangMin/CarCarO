@@ -61,7 +61,7 @@
   <a href="managerboard?page=<%= i %>"><%= i %></a>
   <% } %> <% } %> <% if (end < totalPages) { %>
   <a href="managerboard?page=<%= end + 1 %>">다음</a>
-  <% } %> <% if (end < totalPages - 9) { %>
+  <% } %> <% if (end < totalPages) { %>
   <a href="managerboard?page=<%= totalPages %>">마지막 페이지</a>
   <% } %>
 </div>

@@ -98,7 +98,7 @@ exports.renderManagerBoardSearch = async (req, res, next) => {
       ],
       order: [["createdAt", "DESC"]],
       offset,
-      // limit: PAGE_SIZE,
+      limit: PAGE_SIZE,
     });
 
     res.render("manager/managerBoard_search", {
