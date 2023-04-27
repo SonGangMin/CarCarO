@@ -18,6 +18,14 @@ module.exports = function(sequelize, DataTypes) {
         model: 'users',
         key: 'id'
       }
+    },
+    post_id: {
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      references: {
+        model: 'boards',
+        key: 'postId'
+      }
     }
   }, {
     sequelize,
@@ -37,6 +45,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "user_id" },
+        ]
+      },
+      {
+        name: "comments_FK_1",
+        using: "BTREE",
+        fields: [
+          { name: "post_id" },
         ]
       },
     ]
