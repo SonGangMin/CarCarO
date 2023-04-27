@@ -1,5 +1,7 @@
 const { cars, hashtags } = require("../models");
 const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 // 내차 찾기, 내차 팔기
 // 내차찾기 페이지
@@ -109,15 +111,37 @@ exports.renderCarup = (req, res) => {
   res.render("carupload", { title: "내차등록하기" });
 };
 // 이미지 경로 주소화시키기
-exports.uploadImg = (req, res) => {
-  console.log("req.file ===========>", req.file);
-  res.json({ url: `/img/${req.file.filename}` });
-};
+// exports.uploadImg = (req, res) => {
+//   console.log("req.file ===========>", req.files);
+//   const urls = req.files.map((file) => {
+//     return `/img/${file.filename}`;
+//   });
+//   res.json({ urls: urls });
+//   res.status(200).send({
+//     message: "ok",
+//     fileInfo: req.files
+//   });
+// };
 // 내차팔기 db 등록
-exports.uploadPost = async (req, res, next) => {
-  const { carNum } = req.body;
-  console.log("1111111111111111113", req.carNum);
+exports.uploadImg = async (req, res, next) => {
   try {
+    // const { carNum, from,} = req.body;
+    const uploadedFiles = req.files;
+    const uploadDir = path.join(__dirname, "carImg");
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+    }
+    console.log(uploadedFiles);
+
+    const files = [];
+    for (const file of uploadedFiles) {
+      const oldPath = file.path;
+      const newPath = path.join(uploadDir, file.filename);
+      fs.renameSync(oldPath, newPath);
+      files.push({ filename: file.filename, url: `/carImg/${file.filename}` });
+    }
+    // console.log("=======3", files);
+
     await cars.create({
       carNum: req.body.carNum,
       from: req.body.from,
@@ -133,7 +157,7 @@ exports.uploadPost = async (req, res, next) => {
       method: req.body.method,
       color: req.body.color,
       tel: req.body.tel,
-      picture: req.body.url,
+      picture: req.body.urls,
       roof: req.body.roof,
       nav: req.body.nav,
       key: req.body.key,
@@ -150,6 +174,7 @@ exports.uploadPost = async (req, res, next) => {
       user_id: req.user.id,
     });
     const Hashtags = req.body.hashtag.match(/#[^\s#]*/g);
+
     if (Hashtags) {
       const result = await Promise.all(
         Hashtags.map((tag) => {
@@ -158,7 +183,7 @@ exports.uploadPost = async (req, res, next) => {
           });
         })
       );
-      await post.addHashtags(result.map((r) => r[0]));
+      // await post.addHashtags(result.map(r => r[0]));
     }
     res.redirect("/car/carsale");
   } catch (error) {
