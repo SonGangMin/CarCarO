@@ -28,12 +28,13 @@ router.get("/hashtag", isLoggedIn, renderHashtag);
 
 // 내차팔기 등록
 
-const upload = multer({
+const upload = multer({ 
   storage: multer.diskStorage({
     destination(req, file, done) {
       done(null, "carImg/");
     },
     filename(req, file, done) {
+      console.log('filename', file);
       const ext = path.extname(file.originalname);
       done(null, path.basename(file.originalname, ext) + Date.now() + ext);
     },
@@ -42,10 +43,10 @@ const upload = multer({
 });
 
 // 내차 등록 이미지 업로드
-router.post("/img", upload.single("img"), uploadImg);
+router.post("/multiple-upload", upload.array("files"), uploadImg);
 
-const upload2 = multer();
-router.post("/carupload", uploadPost);
+// const upload2 = multer();
+// router.post("/carupload", uploadPost);
 
 
 // 페이지네이션
