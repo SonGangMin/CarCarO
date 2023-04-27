@@ -13,4 +13,8 @@ router.post('/edit', mypageController.updateUserInfo);
 // 회원 정보 수정 페이지 라우터
 router.get('/modify', mypageController.modifyPage);
 
+router.get('/edit', function(req, res) {
+    res.render
+})
+
 module.exports = router;

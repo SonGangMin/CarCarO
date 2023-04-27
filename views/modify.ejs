@@ -1,29 +1,60 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
+<%- include ./include/head.ejs %>
+
 <body>
     <form action="/mypage/edit" id="editform" method="post" class="form">
         <h1 class="title">회원 정보 수정</h1>
         <label for=""><span>아이디</span>
-        <input id="id" type="text" name="id" value="<%= user.id %>"></label>
+        <input id="id" type="text" name="id" value="<%= user.id %>" readonly></label>
         <label for=""><span>비밀번호</span>
         <input id="pw" type="password" name="password" value=""></label>
         <label for=""><span>이름</span>
-        <input id="name" type="text" name="name" value="<%= user.name %>"></label>
+        <input id="name" type="text" name="name" value="<%= user.name %>" readonly></label>
         <label for=""><span>전화번호</span>
             <div class="phone">
                 <input id="tel" type="number" name="tel" value="<%= user.tel %>"></div></label>
         <label for=""><span>이메일</span>
         <input id="email" type="email" name="email" value="<%= user.email %>"></label>
         <label for=""><span>나이</span>
-        <input id="birth" type="number" name="birth" value="<%= user.birth %>"></label>
-        <button type="submit" onclick="checkForm()" class="edit_btn">정보 수정</button>
+        <input id="birth" type="number" name="birth" value="<%= user.birth %>" ></label>
+        <button type="button" onclick="checkForm()" class="edit_btn">정보 수정</button>
     </form>
+
+    <script>
+        const edit_form = document.getElementById('editform');
+        const pw = document.getElementById('pw');
+        const tel = document.getElementById('tel');
+        const email = document.getElementById('email');
+        const birth = document.getElementById('birth');
+
+        function checkForm() {
+            if(pw.value === ''){
+                alert('비밀번호를 입력해주세요');
+                pw.focus()
+                return false;
+            }
+            const pwCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+            if(!pwCheck.test(pw.value)){
+                alert('비밀번호는 영문 + 숫자 + 특수문자 조합으로 8~20자리로 설정하셔야 합니다')
+                pw.focus()
+                return false;
+            }
+            if(tel.value === ''){
+                alert('휴대폰 번호를 입력해주세요')
+                tel.focus()
+                return false;
+            }
+            if(email.value === ''){
+                alert('이메일을 입력해주세요')
+                tel.focus()
+                return false;
+            }
+            if(birth.value === ''){
+                alert('나이를 입력해주세요');
+                birth.focus()
+                return false;
+            } 
+            edit_form.submit();
+        }
+    </script>
 </body>
 </html>
