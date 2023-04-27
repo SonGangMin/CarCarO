@@ -1,8 +1,9 @@
 <%- include('./include/head.ejs') %>
+<script src="/javascript/carsale.js"></script>
     <div class="container">
         <div class="contents">
             <h1 class="title">내차팔기 등록하기</h1>
-            <form action="/car/carupload" method="post" class="formCar">
+            <form method="post" class="formCar">
                 <label for=""><span>자동차 번호</span><input id="carNum" type="text" name="carNum"></label>
                 <label for="">
                     <span>국산·수입</span>
@@ -14,12 +15,18 @@
                 </label>       
                 <label for="">
                     <span>브랜드</span>
-                    <select name="brand" id="brand">
+                    <!-- 국산 -->
+                    <select name="brand" id="domestic" class="brand">
+                        <option value="" selected>브랜드</option>
+                        <option value="현대">현대</option>
+                    </select>
+                    <!-- 수입 -->
+                    <!-- <select name="brand" id="import" class="brand">
                         <option value="" selected>브랜드</option>
                         <option value="현대">현대</option>
                         <option value="BMW">BMW</option>
-                    </select>
-                </label>       
+                    </select> -->
+                </label>
                 <label for="">
                     <span>모델명</span>
                     <input type="text" id="model" name="model" placeholder="ex) 그랜저ig">
@@ -45,7 +52,7 @@
                 
                 <label for=""><sapn>연락처</sapn><input id="tel" type="text" name="tel"  value="1111111"></label>
                 
-                <label for=""><span>사진</span><input id="img" type="file" name="picture" multiple></label>
+                <label for=""><span>사진</span><input id="input-multi-files" type="file" name="picture" accept="/*" multiple></label>
                 
                 <label for=""><span>선루프</span><input id="roof" type="text" name="roof"  value="1111111"></label>
                 
@@ -72,55 +79,69 @@
                 <label for=""><span>기타</span><input id="etc" type="text" name="etc"  value="1111111"></label>
                 
                 <label for=""><span>해시태그</span><input id="hashtag" type="text" name="hashtag"  value="1111111"></label>
+
                 
                 <input id="img-url" type="hidden" name="url">
                 
                 <button type="submit" class="join_btn">내차 등록</button>
             </form>
+            <div class="row">
+            <div class="col-sm-12">
+                <div class="preview-images"></div>
+            </div>
+            </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script>
-        if (document.getElementById('img')) {
-            let uploadNum = 0;
-            let index = 0;
-            document.getElementById('img').addEventListener('change', function(e) {
-            const formData = new FormData();
-            const length = this.files.length;
-            const max = 5;
-            switch(uploadNum){
-                case 0:
-                    if(length > max - uploadNum){
-                        alert("사진은 최대 5장까지만 가능합니다.");
-                        return;
-                    }
+        $(document).ready(function() {
+          let imagesPreview = function(input, placeToInsertImagePreview) {
+            if (input.files) {
+              let filesAmount = input.files.length;
+              for (i = 0; i < filesAmount; i++) {
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                  $($.parseHTML("<img>"))
+                    .attr("src", event.target.result)
+                    .appendTo(placeToInsertImagePreview);
+                };
+                reader.readAsDataURL(input.files[i]);
+              }
             }
-
-            console.log(this, this.files);
-            formData.append('img', this.files[0]);
-            axios.post('/car/img', formData)
-            .then((res) => {
-                document.getElementById('img-url').value = res.data.url;
-                document.getElementById('picture').src = res.data.url;
-            })
-            .catch((err) => {
-                console.error(err);
-                });
+          };
+          $("#input-multi-files").on("change", function() {
+            imagesPreview(this, "div.preview-images");
+          });
+        });
+  
+  
+        const form = document.querySelector('form');
+    //     const titleInput = document.querySelector('#title');
+    //   const contentInput = document.querySelector('#content');
+        const fileInput = document.querySelector('#input-multi-files');
+  
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+  
+          const formData = new FormData();
+        //   formData.append('title', titleInput.value);
+        //   formData.append('content', contentInput.value);
+          for (const file of fileInput.files) {
+            formData.append('files', file);
+          }
+  
+          try {
+            const response = await axios.post('/car/multiple-upload', formData, {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
             });
-        }
-
-        let carYear = document.getElementById('year');
-        let now = new Date();
-        let year = now.getFullYear();
-
-        function getYear(){
-            for(let i = 1950; i <= year; i++){
-                let option = document.createElement('option');
-                option.value=i;
-                option.innerHTML=`${i}년`
-                carYear.append(option);
-            }
-        }
-        getYear();
-    </script>
+            console.log(response.data);
+          } catch (error) {
+            console.error(error);
+          }
+        });
+  
+      </script>
 </body>
 </html>

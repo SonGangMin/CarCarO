@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { isLoggedIn2 } = require("../middlewares");
+const { isLoggedIn } = require("../middlewares");
 const {
   renderNewpost,
   createPost,
@@ -10,17 +10,19 @@ const {
   renderEditPost,
   editPost,
   deletePost,
+  createComment,
 } = require("../controllers/board");
 
-router.get("/", renderBoard);
-router.get("/newpost", isLoggedIn2, renderNewpost);
-router.post("/", isLoggedIn2, createPost);
-router.get("/:postId", renderBoardContent);
-router.get("/search/:result", renderSearch);
+// 게시판기능
+router.get("/", renderBoard); //게시판 입장
+router.get("/newpost", isLoggedIn, renderNewpost); // 게시글작성
+router.post("/", isLoggedIn, createPost); // 게시글작성
+router.get("/:postId", renderBoardContent); // 게시글자세히보기
+router.get("/search/:result", renderSearch); //검색
+router.get("/edit/:postId", renderEditPost); //수정
+router.post("/edit/:postId", editPost); //수정
+router.post("/delete/:postId", deletePost); //게시글삭제
 
-router.get("/edit/:postId", renderEditPost);
-router.post("/edit/:postId", editPost);
-
-router.post("/:postId/delete", deletePost);
-
+// 댓글기능
+router.post("/:postId", createComment);
 module.exports = router;

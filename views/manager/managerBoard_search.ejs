@@ -11,8 +11,8 @@
 <% if (totalPages > 1) { %>
 
 <div>
-  <% let start = Math.ceil(currentPage / 10) * 10 - 9; let end = Math.min(start
-  + 9, totalPages); %> <% if (start > 1) { %>
+  <% let start = Math.ceil(currentPage / 10) * 10 - 9; let end = totalPages; %>
+  <% if (start > 1) { %>
   <a href="managerboard?page=1">첫 페이지</a>
   <% } %> <% if (currentPage > 10) { %>
   <a href="managerboard?page=<%= start - 1 %>">이전</a>

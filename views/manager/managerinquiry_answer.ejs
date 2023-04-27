@@ -1,6 +1,6 @@
 <%- include('../include/managerhead.ejs')%>
 
-<h1 align="center"> 1대1 문의 답변하기</h1>
+<h1 align="center">답변하기</h1>
 <form action="/manager/managerinquiry/<%= title.number %>" method="post">
 <div align="center">
     <p>유저ID: <%= title.user_id %></p>
@@ -10,6 +10,7 @@
     <textarea style="border: solid 1px white;" rows="15" cols="70"
     name="answer"><%= title.answer %>
     </textarea><br>
+    <button><a href="/manager/managerinquiry">뒤로가기</a></button>
     <button type="submit">등록</button>
 </form>
 </div>

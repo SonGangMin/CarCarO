@@ -1,0 +1,34 @@
+<%- include('./include/head.ejs') %>
+    <div class="container">
+        <div class="contents">
+            <h1 class="title">판매목록</h1>  
+            <h3 class="counting">총 <span></span>개</h3>
+            <form action="/car/hashtag">
+                <input type="text" name="hashtag">
+                <button class="btn">검색</button>
+            </form>
+            <div class="viewDetail">
+                <img src="<%= Cars.picture %>" alt="" class="thumbnail">
+                <p>차명 <%= Cars.brand %> <%= Cars.model %></p>
+                <div class="option">
+                    <span>차번호 <%= Cars.carNum %></span>
+                    <span>연식 <%= Cars.year %></span>
+                    <span>주행거리 <%= Cars.mile %>km</span>
+                    <span>연료 <%= Cars.fuel %></span>
+                    <span>해시태그 <%= Cars.hashtag %></span>
+                </div>
+                <a href="/car/carsale">목록으로</a>
+
+                <% if (isOwner) { %>
+                    <a href="/car/edit/<%= Cars.carNum %>">수정</a>
+                    <form action="/car/delete/<%= Cars.carNum %>" method="POST">
+                      <input type="submit" value="삭제" />
+                    </form>
+                    
+                    <% } %>
+            </div> 
+        </div>
+    </div>
+
+</body>
+</html>

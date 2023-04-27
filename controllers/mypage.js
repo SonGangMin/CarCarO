@@ -14,8 +14,11 @@ exports.renderEditPage = async (req, res) => {
 
         const id = req.params.id // 사용자 아이디
         console.log('ee=========ee', id)
-        const user = await models.users.findAll({ where: { id: id}}); // 사용자 정보 조회
-        res.render('modify', { user,title:'회원정보수정' }); // edit.ejs 뷰에 사용자 정보 전달
+        const user = await models.users.findOne({ where: { id: id}}); // 사용자 정보 조회
+        // console.log(user[0]);
+        res.render('modify', { title:'회원정보수정' }); // modify.ejs 뷰에 사용자 정보 전달
+       
+        
         console.log('ddd=========dd', id)
     } catch (err) {
         console.error(err);
@@ -45,4 +48,32 @@ exports.updateUserInfo = async (req, res) => {
 // 회원 정보 수정 페이지 렌더링
 exports.modifyPage = (req, res) => {
     res.render("edit", { title: "회원 정보 수정" });
+};
+
+exports.renderInquiry = async (req, res, next) => {
+    const myinquiry = req.params.user_id;
+        console.log("1111111111111111 => ", myinquiry);
+    try {
+        const PAGE_SIZE = 15;
+        const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+        const offset = (page - 1) * PAGE_SIZE;
+        const total = await models.inquirys.count();
+        const totalPages = Math.ceil(total / PAGE_SIZE);
+        const twits = await models.inquirys.findAll({
+        order: [
+            ["number", "DESC"],
+        ],
+        offset,
+        limit: PAGE_SIZE,
+        });
+        res.render("myinquiry", {
+            twits,
+            title: "내 문의",
+            totalPages,
+            currentPage: page,
+        });
+        } catch (err) {
+            console.error(err);
+            next(err);
+    }
 };

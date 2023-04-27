@@ -1,0 +1,245 @@
+<%- include('./include/head.ejs') %>
+<style>
+  /* .searchbox {
+    border: solid 1px black;
+    padding: 30px;
+  } */
+  .select1 {
+    margin: 0;
+    padding: 20px;
+    align-items: center;
+  }
+  .search {
+    margin: 0;
+    padding-top: 18px;
+    padding-bottom: 40px;
+    align-items: center;
+  }
+
+  .thumbnail {
+    width: 100%;
+    height: 150px;
+  }
+  .listbox {
+    border: 1px solid black;
+    /* background-color: red; */
+    width: 100%;
+    /* margin: 0 5%; */
+  }
+  li {
+    display: inline-block;
+  }
+</style>
+<div class="findcar">
+  <div class="bigbox" id="search">
+    <div class="statistics">
+      전체: &nbsp;&nbsp;&nbsp;&nbsp; <%= total %>대<br />최근등록(24시간):
+      &nbsp;&nbsp;&nbsp;&nbsp; n대
+    </div>
+    국산●수입차
+    <form action="/car/carfind/">
+      <div class="searchbox">
+        <select class="select1" name="from" id="from">
+          <option value="domestic">국산</option>
+          <option value="imported">수입</option>
+        </select>
+        <select class="select1" name="brand" id="brand">
+          <!-- <option value="hyundai">현대</option>
+          <option value="genesis">제네시스</option>
+          <option value="kia">기아</option>
+          <option value="chevrolet">쉐보래(GM대우)</option>
+          <option value="etc">기타</option> -->
+        </select>
+        <button type="submit" class="search">검색</button><br />
+      </div>
+  
+    <script>
+      const fromSelect = document.querySelector('#from');
+      const brandSelect = document.querySelector('#brand');
+    
+      fromSelect.addEventListener('change', () => {
+        if (fromSelect.value === 'domestic') {
+          brandSelect.innerHTML = `
+            <option value="hyundai">현대</option>
+            <option value="genesis">제네시스</option>
+            <option value="kia">기아</option>
+            <option value="chevrolet">쉐보레(GM대우)</option>
+            <option value="etc">기타</option>
+
+          `;
+        } else if (fromSelect.value === 'imported') {
+          brandSelect.innerHTML = `
+            <option value="mercedes-benz">벤츠</option>
+            <option value="audi">아우디</option>
+            <option value="bmw">BMW</option>
+            <option value="volvo">볼보</option>
+            <option value="volkswagen">폭스바겐</option>
+            <option value="porsche">포르쉐</option>
+            <option value="etc2">기타</option>
+
+          `;
+        }
+      });
+    </script>
+        차량 가격 =>
+        <input type="text" name="lowprice" value="0" required onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
+        원 ~
+        <input type="text" name="highprice" value="10000000000" required onfocus="if(this.value=='10000000000') this.value='';" onblur="if(this.value=='') this.value='10000000000';">
+
+        까지 &nbsp;&nbsp;&nbsp;&nbsp; 변속기
+        <select>
+          <option>스틱</option>
+          <option>오토</option></select
+        ><br />
+        차량 연식
+        <select>
+          <option>1999년</option>
+          <option>2000년</option>
+        </select>
+        부터
+        <select>
+          <option>3000년</option>
+          <option>4000년</option>
+        </select>
+        까지 &nbsp;&nbsp;&nbsp;&nbsp; 사용 연료
+        <select>
+          <option>LPG</option>
+          <option>전기</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <!-- <script>
+    const lowpriceInput = document.getElementById('lowprice-input');
+
+lowpriceInput.addEventListener('focus', function() {
+  if (this.value === '0') {
+    this.value = '';
+  }
+});
+
+lowpriceInput.addEventListener('blur', function() {
+  if (this.value === '') {
+    this.value = '0';
+  }
+});
+  </script> -->
+  <style>
+    .bigbox {
+      border: solid 1px black;
+      padding: 100px;
+      position: relative;
+      width: 100%;
+      display: block;
+      /* left: 15%; */
+    }
+
+    .statistics {
+      text-align: right;
+      width: 100%;
+    }
+    .searchbox {
+      width: 100%;
+    }
+    .bigbox ul {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .bigbox ul li {
+      width: 25%;
+      padding: 10px 10px;
+      text-align: center;
+    }
+    .bigbox h1 {
+      text-align: center;
+    }
+    
+    .text-box{
+      margin-bottom: 10px;
+      margin-top: -20px;
+    }
+
+
+    .hash {
+      width: 25%;
+      display: flex;
+      display: inline;
+      margin: 5%;
+    }
+
+    .like {
+      position: relative;
+      right: -35%;
+      top: -40px;
+      /* border: solid 1px black; */
+    }
+
+    #highlight {
+      background-color: lightcoral;
+    }
+    .check {
+      border: 1px solid black;
+      box-sizing: border-box;
+    }
+  </style>
+  <div class="bigbox" id="list">
+    <h1>검색 결과</h1>
+    <br />
+    <ul>
+      <% twits.forEach(function(twit) { %>
+      <li>
+        <% console.log('twit.user_id =') %>
+        <a href="/car/detail/<%= twit.carNum %>">
+          <div
+            class="listbox"
+            id="<%= isMine === twit.user_id ? 'highlight' : '' %>"
+          >
+          <!-- <div class="check"> -->
+            <img src="<%= twit.picture %>" alt="" class="thumbnail" />
+            <div class="like">
+              <input type="checkbox">
+              <%= twit.likes_count %>
+            <!-- </div> -->
+            </div>
+        
+            <div class="text-box">
+              <div> <%= twit.from %> <%= twit.brand %> <%= twit.model %> </div>
+      
+              <div><%= twit.fuel %> <%= twit.year %>년식</div>
+              <div>  </div>
+              <div class="hash"><%= twit.hashtag %></div>
+              <div class="hash"><%= twit.hashtag %></div>
+              <div class="hash"><%= twit.hashtag %></div>
+              <div class="hash"><%= twit.hashtag %></div>
+            </div>
+           
+          </div>
+        </a>
+      </li>
+      <% }) %>
+    </ul>
+
+    <% if (totalPages > 1) { %>
+
+    
+
+    <div>
+      <% let start = Math.ceil(currentPage / 10) * 10 - 9; let end =
+      Math.min(start + 9, totalPages); %> <% if (start > 1) { %>
+      <a href="/car/findcar?page=1">첫 페이지</a>
+      <% } %> <% if (currentPage > 10) { %>
+      <a href="/car/findcar?page=<%= start - 1 %>">이전</a>
+      <% } %> <% for(let i=start; i<=end; i++) { %> <% if(i === currentPage) {
+      %>
+      <strong style="font-size: 30px"><%= i %></strong>
+      <% } else { %>
+      <a href="/car/findcar?page=<%= i %>"><%= i %></a>
+      <% } %> <% } %> <% if (end < totalPages) { %>
+      <a href="/car/findcar?page=<%= end + 1 %>">다음</a>
+      <% } %> <% if (end < totalPages - 9) { %>
+      <a href="/car/findcar?page=<%= totalPages %>">마지막 페이지</a>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+</div>

@@ -20,36 +20,10 @@ exports.isNotLoggedIn = (req, res, next) => {
   }
 };
 
-// board라우터에 쓰는 isLoggedIn 입니다.
-exports.isLoggedIn2 = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(403).send(`
-      <script>
-        alert('로그인이 필요합니다.');
-        location.href = '/login';
-      </script>
-    `);
-  }
-};
-
-exports.isLoggedIn3 = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(403).send(`
-      <script>
-        alert('로그인이 필요합니다.');
-        location.href = '/login';
-      </script>
-    `);
-  }
-};
-
+//관리자인지 아닌지 확인
 exports.isManager = (req, res, next) => {
   const isOwner = req.user && req.user.grade === 2;
-  console.log(isOwner);
+  // console.log(isOwner);
   if (isOwner) {
     next();
   } else {

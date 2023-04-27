@@ -8,7 +8,6 @@ exports.renderBoard = async (req, res, next) => {
     const offset = (page - 1) * PAGE_SIZE;
     const total = await models.boards.count();
     const totalPages = Math.ceil(total / PAGE_SIZE);
-
     const twits = await models.boards.findAll({
       nest: true,
       include: [
@@ -37,6 +36,7 @@ exports.renderBoard = async (req, res, next) => {
     next(err);
   }
 };
+
 exports.renderNewpost = (req, res, next) => {
   res.render("board_newpost", { title: "글 작성" });
 };
@@ -75,11 +75,28 @@ exports.renderBoardContent = async (req, res, next) => {
     if (!board) {
       return res.status(404).send("해당 게시글을 찾을 수 없습니다.");
     }
+    // console.log("========================", req.user && req.user.id);
+    const user = req.user && req.user.id;
+    const isUser = user !== undefined;
+    console.log(isUser);
+    const comments = await models.comments.findAll({
+      where: { post_id: req.params.postId },
+      include: [
+        {
+          attributes: ["name"],
+          model: models.users,
+          as: "user",
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
     const isOwner = req.user && board.user_id === req.user.id;
     res.render("board_content", {
       board,
       isOwner,
       title: "게시글 내용 보기",
+      comments,
+      isUser,
     });
   } catch (err) {
     console.error(err);
@@ -177,6 +194,26 @@ exports.deletePost = async (req, res, next) => {
     }
     await models.boards.destroy({ where: { postId: postId } });
     res.redirect("/board");
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.createComment = async (req, res, next) => {
+  // console.log("req.body =>", req.body);
+  // console.log("==========", req.params.postId);
+  postId = req.params.postId;
+  try {
+    await models.comments.create({
+      number: null,
+      content: req.body.content,
+      createdAt: null,
+      updatedAt: null,
+      user_id: req.user.id,
+      post_id: req.params.postId,
+    });
+    res.redirect(`/board/${postId}`);
   } catch (err) {
     console.error(err);
     next(err);
