@@ -3,7 +3,7 @@ const router = express.Router();
 const models = require('../models')
 const path = require('path');
 const fs = require('fs');
-const { isLoggedIn3 } = require('../middlewares');
+const { isLoggedIn } = require('../middlewares');
 const { Op } = require('sequelize');
 
 router.get('/', async (req, res, next) => {
@@ -23,10 +23,10 @@ router.get('/', async (req, res, next) => {
     }
   });
 
-router.get('/inquiry', isLoggedIn3, function(req, res, next) {
+router.get('/inquiry', isLoggedIn, function(req, res, next) {
     res.render('inquiry',{title: '1:1문의'});
 });
-router.post('/inquiry', isLoggedIn3, function(req, res, next) {
+router.post('/inquiry', isLoggedIn, function(req, res, next) {
     const title = req.body.title;
     const content = req.body.content;
     const user_id = req.body.user_id;

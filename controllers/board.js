@@ -36,6 +36,7 @@ exports.renderBoard = async (req, res, next) => {
     next(err);
   }
 };
+
 exports.renderNewpost = (req, res, next) => {
   res.render("board_newpost", { title: "글 작성" });
 };
