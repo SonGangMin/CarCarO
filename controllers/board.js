@@ -77,7 +77,7 @@ exports.renderBoardContent = async (req, res, next) => {
     // console.log("========================", req.user && req.user.id);
     const user = req.user && req.user.id;
     const isUser = user !== undefined;
-    console.log(isUser);
+    // console.log(isUser);
     const comments = await models.comments.findAll({
       where: { post_id: req.params.postId },
       include: [
@@ -89,13 +89,16 @@ exports.renderBoardContent = async (req, res, next) => {
       ],
       order: [["createdAt", "DESC"]],
     });
-    const isOwner = req.user && board.user_id === req.user.id;
+    const isboardOwner = req.user && board.user_id === req.user.id;
+    const userId = req.user && req.user.id;
+    console.log(userId);
     res.render("board_content", {
       board,
-      isOwner,
+      isboardOwner,
       title: "게시글 내용 보기",
       comments,
       isUser,
+      userId,
     });
   } catch (err) {
     console.error(err);
@@ -184,7 +187,7 @@ exports.editPost = async (req, res, next) => {
 exports.deletePost = async (req, res, next) => {
   const postId = req.params.postId;
   try {
-    const post = await models.boards.findOne({ where: { postId: postId } });
+    const post = await models.boards.findOne({ where: { postId } });
     if (!post) {
       throw new Error("존재하지 않는 게시글입니다.");
     }
@@ -213,6 +216,38 @@ exports.createComment = async (req, res, next) => {
       post_id: req.params.postId,
     });
     res.redirect(`/board/${postId}`);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.deleteComment = async (req, res, next) => {
+  const commentId = req.params.commentId;
+  try {
+    const comment = await models.comments.findOne({
+      where: { number: commentId },
+    });
+    // if (!comment) {
+    //   throw new Error("존재하지 않는 게시글입니다.");
+    // }
+    // if (comment.user_id !== req.session.userId) {
+    //   throw new Error("게시글 삭제 권한이 없습니다.");
+    // }
+    await models.comments.destroy({ where: { number: commentId } });
+    res.redirect("back");
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.editComment = async (req, res, next) => {
+  const commentId = req.params.commentId;
+  const { content } = req.body;
+  try {
+    await models.comments.update({ content }, { where: { number: commentId } });
+    res.redirect("back");
   } catch (err) {
     console.error(err);
     next(err);

@@ -11,6 +11,8 @@ const {
   editPost,
   deletePost,
   createComment,
+  editComment,
+  deleteComment,
 } = require("../controllers/board");
 
 // 게시판기능
@@ -24,5 +26,7 @@ router.post("/edit/:postId", editPost); //수정
 router.post("/delete/:postId", deletePost); //게시글삭제
 
 // 댓글기능
-router.post("/:postId", createComment);
+router.post("/:postId", createComment); //댓글작성
+router.post("/comment/edit/:commentId", editComment);
+router.post("/comment/delete/:commentId", deleteComment); //댓글삭제
 module.exports = router;
