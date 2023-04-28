@@ -46,7 +46,7 @@ app.set("view engine", "ejs");
 
 app.use(morgan("dev"));
 app.use("/", express.static(path.join(__dirname, "public")));
-app.use("/img", express.static(path.join(__dirname, "carImg")));
+app.use("/carImg", express.static(path.join(__dirname, "carImg")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
