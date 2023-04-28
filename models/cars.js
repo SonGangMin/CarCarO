@@ -22,11 +22,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     brand: {
       type: DataTypes.STRING(255),
-      allowNull: false,
-      references: {
-        model: 'importeds',
-        key: 'brand'
-      }
+      allowNull: false
     },
     from: {
       type: DataTypes.STRING(255),
