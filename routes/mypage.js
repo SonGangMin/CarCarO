@@ -1,7 +1,7 @@
 const express = require("express");
 
 const mypageController = require("../controllers/mypage");
-const { isLoggedIn } = require("../middlewares");
+const { isLoggedIn, isMyId } = require("../middlewares");
 
 const router = express.Router();
 
@@ -13,6 +13,10 @@ router.post("/edit", isLoggedIn, mypageController.updateUserInfo);
 // 회원 정보 수정 페이지 라우터
 router.get("/modify", isLoggedIn, mypageController.modifyPage);
 
-router.get("/myinquiry/:user_id", isLoggedIn, mypageController.renderInquiry );
+router.get("/myinquiry/:user_id", isLoggedIn, mypageController.renderInquiry);
+
+// 비밀번호 확인
+router.get("/password/:id", isLoggedIn, mypageController.showPasswordPage);
+router.post("/edit/:id", isLoggedIn, mypageController.checkPasswordPage);
 
 module.exports = router;
