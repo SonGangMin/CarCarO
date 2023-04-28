@@ -4,38 +4,68 @@
     <form action="/mypage/edit/" id="editform" method="post" class="form">
         <h1 class="title">회원 정보 수정</h1>
         <label for=""><span>아이디</span>
-        <input id="id" type="text" name="id" value="<%= user.id %>" readonly></label>
+        <input id="id" type="text" name="id" value="<%= user.id %>" readonly></label><br>
         <label for=""><span>비밀번호</span>
-        <input id="pw" type="password" name="password" value=""></label>
+        <input id="pw" type="password" name="password" value=""  onkeyup="checkPassword()">    
+        <span id="password_feedback"></span></label><br>
+        <label for=""><span>비밀번호 확인</span>
+        <input id="pw_confirm" type="password" name="password_confirm" value=""></label>
+        <span id="password_confirm_feedback"></span></label><br>
         <label for=""><span>이름</span>
-        <input id="name" type="text" name="name" value="<%= user.name %>" readonly></label>
+        <input id="name" type="text" name="name" value="<%= user.name %>" readonly></label><br>
         <label for=""><span>전화번호</span>
             <div class="phone">
-                <input id="tel" type="number" name="tel" value="<%= user.tel %>"></div></label>
+                <input id="tel" type="number" name="tel" value="<%= user.tel %>"></div></label><br>
         <label for=""><span>이메일</span>
-        <input id="email" type="email" name="email" value="<%= user.email %>"></label>
+        <input id="email" type="email" name="email" value="<%= user.email %>"></label><br>
         <label for=""><span>나이</span>
-        <input id="birth" type="number" name="birth" value="<%= user.birth %>" ></label>
+        <input id="birth" type="number" name="birth" value="<%= user.birth %>" ></label><br>
         <button type="button" onclick="checkForm()" class="edit_btn">정보 수정</button>
     </form>
 
     <script>
         const edit_form = document.getElementById('editform');
         const pw = document.getElementById('pw');
+        const password_feedback = document.getElementById('password_feedback');
+        const pw_confirm = document.getElementById('pw_confirm')
         const tel = document.getElementById('tel');
         const email = document.getElementById('email');
         const birth = document.getElementById('birth');
+        const passwordFeedback = document.getElementById('password_feedback');
+        const password_confirm_feedback = document.getElementById('password_confirm_feedback');
+
+        pw_confirm.addEventListener('input', updateValue);
+
+        function updateValue(e) {
+
+            console.log(typeof pw, typeof pw_confirm);
+
+            if(pw.value === pw_confirm.value) {
+                password_confirm_feedback.textContent = "비밀번호가 일치 합니다.";
+                passwordFeedback.style.color = 'green';
+            }else{
+                password_confirm_feedback.textContent = "비밀번호 맞지 않습니다.";
+            }
+        }
 
         function checkForm() {
             if(pw.value === ''){
-                alert('비밀번호를 입력해주세요');
                 pw.focus()
                 return false;
             }
-            const pwCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
-            if(!pwCheck.test(pw.value)){
-                alert('비밀번호는 영문 + 숫자 + 특수문자 조합으로 8~20자리로 설정하셔야 합니다')
-                pw.focus()
+            if (!checkPassword()) { // 비밀번호 유효성 검사를 수행
+                pw.focus();
+                return false;
+            }
+            
+            if(!pw_confirm.value === ''){
+                alert('비밀번호 확인을 입력해주세요');
+                pw_confirm.focus()
+                return false;
+            }
+            if(pw.value !== pw_confirm.value){
+                alert('비밀번호와 비밀번호 확인이 일치하지 않습니다');
+                pw_confirm.focus()
                 return false;
             }
             if(tel.value === ''){
@@ -45,7 +75,7 @@
             }
             if(email.value === ''){
                 alert('이메일을 입력해주세요')
-                tel.focus()
+                email.focus()
                 return false;
             }
             if(birth.value === ''){
@@ -53,8 +83,27 @@
                 birth.focus()
                 return false;
             } 
-            edit_form.submit();
+            // 모든 조건을 만족하면 true 반환
+            return true;
         }
+
+        function checkPassword() {
+            const passwordFeedback = document.getElementById('password_feedback');
+            const pw = document.getElementById('pw');
+            const pwCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
+        
+            if (!pwCheck.test(pw.value)) {
+                passwordFeedback.textContent = '비밀번호는 영문 + 숫자 + 특수문자 조합으로 8~20자리로 설정하셔야 합니다';
+                passwordFeedback.style.color = 'red';
+                return false;
+            } else {
+                passwordFeedback.textContent = '사용 가능한 비밀번호입니다';
+                passwordFeedback.style.color = 'green';
+                return true;
+            }
+        
+        }
+        
     </script>
 </body>
 </html>

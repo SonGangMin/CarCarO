@@ -2,6 +2,7 @@
 const models = require('../models');
 const bcrypt = require('bcrypt');
 const {hash} = require("bcrypt");
+const axios = require('axios');
 
 exports.renderMypage = (req, res) => {
     res.render("mypage", {
@@ -51,7 +52,7 @@ exports.modifyPage = (req, res) => {
 };
 
 
-// 비밀번호 확인
+// 마이페이지 들어가기 전 비밀번호 확인 페이지
 exports.showPasswordPage = (req, res, next) => {
   const { id } = req.params;
   res.render('mypage_password', { id , title:'비밀번호확인'});
@@ -72,3 +73,39 @@ exports.checkPasswordPage = async (req, res) => {
         res.status(500).send('서버 오류');
     }
 }
+
+
+// 회원정보수정 페이지 실시간 비밀번호 체크
+exports.getModify = async (req, res, next) => {
+    try {
+        const user = req.session.user;
+        res.render('modify', {user});
+    } catch(error) {
+        console.error(error);
+        next(error);
+    }
+};
+
+exports.checkPassword = async (req, res, next) => {
+    try {
+        const { password } = req.body;
+        const user = req.session.user;
+        const response = await axios.post('http://localhost:3006/api/checkPassword', { id: user.id, password }); 
+        res.json({ result: response.data.result});
+    } catch(error) {
+        console.error(error);
+        next(error);
+    }
+};
+
+exports.postModify = async (req, res, next) => {
+    try {
+        const { password, tel, email, birth } = req.body;
+        const user= req.session.user;
+        await axios.patch(`http://localhost:3006/api/mypage/${user.id}`, { password, tel, email, birth });
+        res.redirect('/mypage');
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+};
