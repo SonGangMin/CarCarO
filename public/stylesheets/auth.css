@@ -25,12 +25,12 @@
 }
 .form span{
     display: inline-block;
-    width: 100px;
+    width: 150px;
     font-weight: bold;
 }
 .form input{
     display: block;
-    width: calc(100% - 100px);
+    width: calc(100% - 150px);
     border: 1px solid #ddd;
 }
 .form .phone{

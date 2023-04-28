@@ -1,4 +1,6 @@
 <%- include('./include/head.ejs') %>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick-theme.css"/>
     <div class="container">
         <div class="contents">
             <h1 class="title"><%= Cars.brand %> <%= Cars.model %> <%= Cars.carNum %></h1>  
@@ -12,9 +14,14 @@
                             <span><%= Cars.fuel %></span>
                             <span><%= Cars.hashtag %></span>
                         </div>
-                        <% for (let i = 0; i < Cars.picture.length; i++) { %>
-                            <img src="<%= Cars.picture[i].url %>" alt="" class="thumbnail">
-                        <% } %>
+                        <ul class="bxslider">
+                            <% for (let i = 0; i < Cars.picture.length; i++) { %>
+                                <li>
+                                    <img src="<%= Cars.picture[i].url %>" alt="" class="thumbnail">
+                                </li>
+                                <a data-slide-index="0" href=""> <img src="<%= Cars.picture[i].url %>" alt="" class="thumbnail"></a>
+                            <% } %>
+                        </ul>
                       </li>
                   </ul>
                 <a href="/car/carsale">목록으로</a>
@@ -28,5 +35,13 @@
             </div> 
         </div>
     </div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          $(".slider").bxSlider();
+        });
+      </script>
 </body>
 </html>
