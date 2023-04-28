@@ -178,7 +178,7 @@ exports.editPost = async (req, res, next) => {
       throw new Error("게시글 수정 권한이 없습니다.");
     }
     await models.boards.update({ title, content }, { where: { postId } });
-    res.redirect(`/board/`);
+    res.redirect(`/board/${postId}`);
   } catch (err) {
     console.error(err);
     next(err);
