@@ -117,7 +117,8 @@ exports.renderCarup = (req, res) => {
 
 // 내차팔기 db 등록
 exports.uploadPost = async (req, res, next) => {
-  console.log("2222222222222222222222222222222222");
+  console.log("333333333333333333", req.body.disp);
+  console.log("2222222222222222222222222222222222->", req.body.leather);
   const {
     carNum,
     from,

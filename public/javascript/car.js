@@ -22,6 +22,10 @@ fromSelect.addEventListener("change", () => {
         <option value="아우디">아우디</option>
         <option value="포르쉐">포르쉐</option>
     `;
+  } else{
+    brandSelect.innerHTML = `
+      <option value="" selected>국산·수입 선택하세요</option>
+    `;
   }
 });
 
