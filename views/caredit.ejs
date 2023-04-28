@@ -1,0 +1,202 @@
+<%- include('./include/head.ejs') %>
+    <div class="container">
+        <div class="contents">
+            <h1 class="title">내차 수정하기</h1>
+            <form method="post" id="carForm" class="formCar" enctype="multipart/form-data">
+                <label for=""><span>자동차 번호</span><input id="carNum" type="text" name="carNum" value="<%= Cars.carNum %>"></label>
+                <label for="">
+                    <span>국산·수입</span>
+                    <select name="from" id="from" value="<%= Cars.from %>">
+                        <option value="<%= Cars.from %>"><%= Cars.from %></option>
+                        <!-- <option value="<%= Cars.from %>" selected>국산·수입</option>
+                        <option value="국산">국산</option>
+                        <option value="수입">수입</option> -->
+                    </select>
+                </label>       
+                <label for="">
+                    <span>브랜드</span>
+                    <!-- 국산 -->
+                    <select name="brand" id="brand" class="brand">
+                        <option value="<%= Cars.brand %>"><%= Cars.brand %></option>
+                    </select>
+                </label>
+                <label for="">
+                    <span>모델명</span>
+                    <input type="text" id="model" name="model" placeholder="ex) 그랜저ig" value="<%= Cars.model %>">
+                </label> 
+                <label for=""><span>주행거리</span><input id="mile" type="text" name="mile" value="<%= Cars.mile %>"></label>
+                <label for="">
+                    <span>연식</span>
+                    <input id="year" type="text" name="year" value="<%= Cars.year %>">
+                </label>
+                <label for=""><span>연료방식</span><input id="fuel" type="text" name="fuel" value="<%= Cars.fuel %>"></label>
+
+                <label for=""><span>기어방식</span><input id="trans" type="text" name="trans"  value="<%= Cars.trans %>"></label>
+
+                <label for=""><span>인승</span><input id="seater" type="text" name="seater" value="<%= Cars.seater %>"></label>
+
+                <label for=""><span>사진</span><input id="input-multi-files" type="file" name="picture" accept="/*" multiple value="<%= Cars.picture %>"></label>
+                       
+                <label for="" id="preview" class="preview">
+                    <span>미리보기</span>
+                    <div class="row">
+                        <div class="preview-images"></div>
+                    </div>
+                </label>
+
+                <label for=""><span>판매가격</span><input id="price" type="number" name="price" value="<%= Cars.price %>"></label>
+
+                <label for=""><span>디스플레이</span><input id="disp" type="text" name="disp"  value="<%= Cars.disp %>"></label>
+                
+                <label for=""><span>차종</span><input id="type" type="text" name="type"  value="<%= Cars.type %>"></label>
+                
+                <label for=""><span>method</span><input id="method" type="text" name="method"  value="<%= Cars.method %>"></label>
+                
+                <label for=""><span>연락처</span><input id="tel" type="text" name="tel"  value="<%= Cars.tel %>"></label>
+                
+                <label for=""><span>선루프</span><input id="roof" type="text" name="roof"  value="<%= Cars.roof %>"></label>
+                
+                <label for=""><span>색상</span><input id="color" type="text" name="color"  value="<%= Cars.color %>"></label>
+                
+                <label for=""><span>네비게이션</span><input id="nav" type="text" name="nav"  value="<%= Cars.nav %>"></label>
+                
+                <label for=""><span>스마트키</span><input id="key" type="text" name="key"  value="<%= Cars.key %>"></label>
+                
+                <label for=""><span>오토라이트</span><input id="light" type="text" name="light"  value="<%= Cars.light %>"></label>
+                
+                <label for=""><span>주차센서</span><input id="sensor" type="text" name="sensor"  value="<%= Cars.sensor %>"></label>
+                
+                <label for=""><span>후방카메라</span><input id="camera" type="text" name="camera"  value="<%= Cars.camera %>"></label>
+                
+                <label for=""><span>블랙박스</span><input id="box" type="text" name="box"  value="<%= Cars.box %>"></label>
+                
+                <label for=""><span>가죽시트</span><input id="leather" type="text" name="leather"  value="<%= Cars.leather %>"></label>
+                
+                <label for=""><span>열선시트</span><input id="heated" type="text" name="heated"  value="<%= Cars.heated %>"></label>
+                
+                <label for=""><span>에어백</span><input id="airbag" type="text" name="airbag"  value="<%= Cars.airbag %>"></label>
+                
+                <label for=""><span>기타</span><input id="etc" type="text" name="etc"  value="<%= Cars.etc %>"></label>
+                
+                <label for=""><span>해시태그</span><input id="hashtag" type="text" name="hashtag"  value="<%= Cars.hashtag %>"></label>
+                
+                <input id="img-url" type="hidden" name="url">
+                
+                <button type="submit" class="join_btn">내차 등록</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+          let imagesPreview = function(input, placeToInsertImagePreview) {
+            if (input.files) {
+              let filesAmount = input.files.length;
+              for (i = 0; i < filesAmount; i++) {
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                  $($.parseHTML("<img>"))
+                    .attr("src", event.target.result)
+                    .appendTo(placeToInsertImagePreview);
+                };
+                reader.readAsDataURL(input.files[i]);
+              }
+            }
+          };
+          $("#input-multi-files").on("change", function() {
+            imagesPreview(this, "div.preview-images");
+          });
+        });
+  
+  
+        const form = document.querySelector('#carForm');
+        const carNumInput = document.querySelector('#carNum');
+        const fromInput = document.querySelector('#from');
+        const brandInput = document.querySelector('#brand');
+        const modelInput = document.querySelector('#model');
+        const mileInput = document.querySelector('#mile');
+        const yearInput = document.querySelector('#year');
+        const fuelInput = document.querySelector('#fuel');
+        const transInput = document.querySelector('#trans');
+        const fileInput = document.querySelector('#input-multi-files');
+        const seaterInput = document.querySelector('#seater');
+        const dispInput = document.querySelector('#disp');
+        const typeInput = document.querySelector('#type');
+        const methodInput = document.querySelector('#method');
+        const colorInput = document.querySelector('#color');
+        const telInput = document.querySelector('#tel');
+        const roofInput = document.querySelector('#roof');
+        const navInput = document.querySelector('#nav');
+        const keyInput = document.querySelector('#key');
+        const lightInput = document.querySelector('#light');
+        const sensorInput = document.querySelector('#sensor');
+        const cameraInput = document.querySelector('#camera');
+        const boxInput = document.querySelector('#box');
+        const leatherInput = document.querySelector('#leather');
+        const heatedInput = document.querySelector('#heated');
+        const airbagInput = document.querySelector('#airbag');
+        const etcInput = document.querySelector('#etc');
+        const priceInput = document.querySelector('#price');
+        const hashtagInput = document.querySelector('#hashtag');
+
+  
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append('carNum', carNumInput.value);
+            formData.append('from', fromInput.value);
+            formData.append('brand', brandInput.value);
+            formData.append('model', modelInput.value);
+            formData.append('mile', mileInput.value);
+            formData.append('year', yearInput.value);
+            formData.append('fuel', fuelInput.value);
+            formData.append('trans', transInput.value);
+            formData.append('seater', seaterInput.value);
+            formData.append('disp', dispInput.value);
+            formData.append('type', typeInput.value);
+            formData.append('method', methodInput.value);
+            formData.append('color', colorInput.value);
+            formData.append('tel', telInput.value);
+            formData.append('roof', roofInput.value);
+            formData.append('nav', navInput.value);
+            formData.append('key', keyInput.value);
+            formData.append('light', lightInput.value);
+            formData.append('sensor', sensorInput.value);
+            formData.append('camera', cameraInput.value);
+            formData.append('box', boxInput.value);
+            formData.append('leather', leatherInput.value);
+            formData.append('heated', heatedInput.value);
+            formData.append('airbag', airbagInput.value);
+            formData.append('etc', etcInput.value);
+            formData.append('price', priceInput.value);
+            formData.append('hashtag', hashtagInput.value);
+            console.log("55555555555555", fileInput.files);
+            
+            for (const file of fileInput.files) {
+            formData.append('files', file);
+            }
+            console.log(formData);
+
+            try {
+                const response = await axios.post('/car/edit/<%= Cars.carNum %>', formData, {
+                    headers: {
+                    'Content-Type': 'multipart/form-data',
+                    },
+                });
+
+                if(response.status == 200){
+                    confirm('수정하시겠습니까?');
+                    return(location.href="/car/carsale");
+                }
+
+                console.log("111", response.status);
+                console.log("222", response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    </script>
+    <script src="/javascript/car.js" defer></script>
+</body>
+</html>

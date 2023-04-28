@@ -14,8 +14,11 @@ exports.renderEditPage = async (req, res) => {
 
         const id = req.params.id // 사용자 아이디
         console.log('ee=========ee', id)
-        const user = await models.users.findAll({ where: { id: id}}); // 사용자 정보 조회
-        res.render('modify', { user,title:'회원정보수정' }); // edit.ejs 뷰에 사용자 정보 전달
+        const user = await models.users.findOne({ where: { id: id}}); // 사용자 정보 조회
+        // console.log(user[0]);
+        res.render('modify', { title:'회원정보수정' }); // modify.ejs 뷰에 사용자 정보 전달
+       
+        
         console.log('ddd=========dd', id)
     } catch (err) {
         console.error(err);

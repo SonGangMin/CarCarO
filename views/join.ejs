@@ -1,85 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="stylesheets/auth.css">
-</head>
-<body>
-<form action="/auth/join" id="joinform" method="post" class="form">
-    <h1 class="title">회원가입</h1>
-    <label for=""><span>아이디</span><input id="id" type="text" name="id"></label>
-    <label for=""><span>비밀번호</span><input id="pw" type="password" name="password"></label>
-    <label for=""><span>이름</span><input id="name" type="text" name="name"></label>
-    <label for="">
+    <link rel="stylesheet" href="stylesheets/auth.css" />
+  </head>
+  <body>
+    <form action="/auth/join" id="joinform" method="post" class="form">
+      <h1 class="title">회원가입</h1>
+      <label for=""
+        ><span>아이디</span><input id="id" type="text" name="id"
+      /></label>
+      <label for=""
+        ><span>비밀번호</span><input id="pw" type="password" name="password"
+      /></label>
+      <label for=""
+        ><span>이름</span><input id="name" type="text" name="name"
+      /></label>
+      <label for="">
         <span>전화번호</span>
         <div class="phone">
-            <input id="tel" type="number" name="tel">
+          <input id="tel" type="number" name="tel" />
         </div>
-    </label>
-    <label for=""><span>이메일</span><input id="email" type="email" name="email"></label>
-    <label for=""><span>나이</span><input id="birth" type="text" name="birth"></label>
-    <button type="button" onclick="checkForm()" class="join_btn">회원가입</button>
-    <!-- <button id="submit" type="submit" onclick="checkForm()" class="join_btn">회원가입</button> -->
-</form>
-<script>
-    const join_form = document.getElementById('joinform');
-    const id = document.getElementById('id');
-    const pw = document.getElementById('pw');
-    const name = document.getElementById('name');
-    const tel = document.getElementById('tel');
-    const email = document.getElementById('email');
-    const birth = document.getElementById('birth');
+      </label>
+      <label for=""
+        ><span>이메일</span><input id="email" type="email" name="email"
+      /></label>
+      <label for=""
+        ><span>나이</span><input id="birth" type="text" name="birth"
+      /></label>
+      <button type="button" onclick="checkForm()" class="join_btn">
+        회원가입
+      </button>
+      <!-- <button id="submit" type="submit" onclick="checkForm()" class="join_btn">회원가입</button> -->
+    </form>
+    <script>
+      const join_form = document.getElementById("joinform");
+      const id = document.getElementById("id");
+      const pw = document.getElementById("pw");
+      const name = document.getElementById("name");
+      const tel = document.getElementById("tel");
+      const email = document.getElementById("email");
+      const birth = document.getElementById("birth");
 
-    function checkForm() {
-        if(id.value === ''){
-            alert('아이디를 입력해주세요');
-            id.focus()
-            return false;
+      function checkForm() {
+        if (id.value === "") {
+          alert("아이디를 입력해주세요");
+          id.focus();
+          return false;
         }
         const idCheck = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}$/;
-        if(!idCheck.test(id.value)){
-            alert('아이디는 영문 + 숫자 조합으로 8~20자리로 설정하셔야 합니다.');
-            pw.focus()
-            return false;
+        if (!idCheck.test(id.value)) {
+          alert("아이디는 영문 + 숫자 조합으로 8~20자리로 설정하셔야 합니다.");
+          pw.focus();
+          return false;
         }
 
-        if(pw.value === ''){
-            alert('비밀번호를 입력해주세요');
-            pw.focus()
-            return false;
+        if (pw.value === "") {
+          alert("비밀번호를 입력해주세요");
+          pw.focus();
+          return false;
         }
         const pwCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
-        if(!pwCheck.test(pw.value)){
-            alert('비밀번호는 영문 + 숫자 + 특수문자 조합으로 8~20자리로 설정하셔야 합니다.');
-            pw.focus()
-            return false;
+        if (!pwCheck.test(pw.value)) {
+          alert(
+            "비밀번호는 영문 + 숫자 + 특수문자 조합으로 8~20자리로 설정하셔야 합니다."
+          );
+          pw.focus();
+          return false;
         }
-
-        if(pw.value === ''){
-            alert('비밀번호를 입력해주세요');
-            pw.focus()
-            return false;
+        if (name.value === "") {
+          alert("이름을 입력해주세요");
+          name.focus();
+          return false;
         }
-        if(name.value === ''){
-            alert('이름을 입력해주세요');
-            name.focus()
-            return false;
+        if (tel.value === "") {
+          alert("휴대폰 번호를 입력해주세요");
+          tel.focus();
+          return false;
         }
-        if(tel.value === ''){
-            alert('휴대폰 번호를 입력해주세요');
-            tel.focus()
-            return false;
-        }
-        if(birth.value === ''){
-            alert('나이를 입력해주세요');
-            birth.focus()
-            return false;
+        if (birth.value === "") {
+          alert("나이를 입력해주세요");
+          birth.focus();
+          return false;
         }
         join_form.submit();
-    }
-</script>
-</body>
+      }
+    </script>
+  </body>
 </html>

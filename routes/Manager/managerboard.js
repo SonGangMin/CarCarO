@@ -10,15 +10,16 @@ const {
   editManagerGradedown,
   editManagerGradeup,
 } = require("../../controllers/manager/managerboard");
+const { isManager } = require("../../middlewares/index");
 
-router.get("/", renderManagerBoard);
-router.get("/:postId", renderManagerBoardContent);
-router.get("/search/:result", renderManagerBoardSearch);
-router.get("/edit/:postId", renderManagerBoardEdit);
-router.post("/edit/:postId", editManagerBoard);
-router.post("/delete/:postId", deleteManagerPost);
+router.get("/", isManager, renderManagerBoard);
+router.get("/:postId", isManager, renderManagerBoardContent);
+router.get("/search/:result", isManager, renderManagerBoardSearch);
+router.get("/edit/:postId", isManager, renderManagerBoardEdit);
+router.post("/edit/:postId", isManager, editManagerBoard);
+router.post("/delete/:postId", isManager, deleteManagerPost);
 
-router.post("/editgradeup/:postId", editManagerGradeup);
-router.post("/editgradedown/:postId", editManagerGradedown);
+router.post("/editgradeup/:postId", isManager, editManagerGradeup);
+router.post("/editgradedown/:postId", isManager, editManagerGradedown);
 
 module.exports = router;
