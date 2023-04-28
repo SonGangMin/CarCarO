@@ -126,3 +126,12 @@
 }
 
 /* 판매 상세 */
+.slider .bx-pager{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.slider .bx-pager img{
+    width: 100%;
+    height: 100%;
+}

@@ -1,6 +1,8 @@
 <%- include('./include/head.ejs') %>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/slick-theme.css"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
     <div class="container">
         <div class="contents">
             <h1 class="title"><%= Cars.brand %> <%= Cars.model %> <%= Cars.carNum %></h1>  
@@ -14,15 +16,20 @@
                             <span><%= Cars.fuel %></span>
                             <span><%= Cars.hashtag %></span>
                         </div>
-                        <ul class="bxslider">
-                            <% for (let i = 0; i < Cars.picture.length; i++) { %>
+                        <div class="slider">
+                            <ul class="bxslider">
+                              <% for (let i = 0; i < Cars.picture.length; i++) { %>
                                 <li>
-                                    <img src="<%= Cars.picture[i].url %>" alt="" class="thumbnail">
+                                  <img src="<%= Cars.picture[i].url %>" alt="" />
                                 </li>
-                                <a data-slide-index="0" href=""> <img src="<%= Cars.picture[i].url %>" alt="" class="thumbnail"></a>
-                            <% } %>
-                        </ul>
-                      </li>
+                              <% } %>
+                            </ul>
+                            <div id="bx-pager" class="bx-pager">
+                              <% for (let i = 0; i < Cars.picture.length; i++) { %>
+                                <a data-slide-index="<%= i %>" href="" id="imgBox"><img src="<%= Cars.picture[i].url %>" id="slideImg" /></a>
+                              <% } %>
+                            </div>
+                        </div>
                   </ul>
                 <a href="/car/carsale">목록으로</a>
 
@@ -35,13 +42,25 @@
             </div> 
         </div>
     </div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
     <script>
-        $(document).ready(function(){
-          $(".slider").bxSlider();
+        $(document).ready(function() {
+          $('.bxslider').bxSlider({
+            pagerCustom: '#bx-pager',
+            auto: true,
+            pause: 3000 // 3초마다 슬라이드 이동
+          });
         });
+
+        const imgBox = document.getElementById('imgBox');
+        const slideImg = document.querySelectorAll('#bx-pager img');
+        const n = slideImg.length;
+
+        if (imgBox) {
+        slideImg.forEach((img) => {
+            imgBox.style.cssText += `width: calc(100% / ${n}); height: 50px; display: block;` ;
+        });
+        }
+
       </script>
 </body>
 </html>
