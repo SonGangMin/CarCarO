@@ -63,3 +63,20 @@ exports.isManager = (req, res, next) => {
   `);
   }
 };
+
+
+exports.isMyId = (req,res,next)=>{
+  const myId = req.user && req.user.id === req.params.id;
+  console.log('req.user.id=================>',req.user&&req.user.id)
+  console.log('req.params.id================>',req.params.id)
+  if(myId){
+    next();
+  }else{
+    res.status(403).send(`
+    <script>
+    alert('지 아뒤도 아닌게 어딜?');
+    location.href = '/';
+  </script>
+    `)
+  }
+}

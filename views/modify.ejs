@@ -1,7 +1,7 @@
 <%- include ./include/head.ejs %>
 
 <body>
-    <form action="/mypage/edit" id="editform" method="post" class="form">
+    <form action="/mypage/edit/" id="editform" method="post" class="form">
         <h1 class="title">회원 정보 수정</h1>
         <label for=""><span>아이디</span>
         <input id="id" type="text" name="id" value="<%= user.id %>" readonly></label>
