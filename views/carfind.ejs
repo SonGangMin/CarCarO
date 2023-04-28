@@ -195,7 +195,7 @@ lowpriceInput.addEventListener('blur', function() {
             id="<%= isMine === twit.user_id ? 'highlight' : '' %>"
           >
           <!-- <div class="check"> -->
-            <img src="<%= twit.picture %>" alt="" class="thumbnail" />
+            <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail" />
             <div class="like">
               <input type="checkbox">
               <%= twit.likes_count %>
