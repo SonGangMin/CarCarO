@@ -4,15 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title><%= title %></title>
     <link rel="stylesheet" href="stylesheets/auth.css" />
   </head>
+
   <body>
+
     <form action="/auth/join" id="joinform" method="post" class="form">
       <h1 class="title">회원가입</h1>
       <label for=""
         ><span>아이디</span><input id="id" type="text" name="id"
-      /> &nbsp;&nbsp;&nbsp;<button type="submit" style="width: 100px;">중복 확인</button></label>
+      /> &nbsp;&nbsp;&nbsp;
+      <button onclick="checkedid()" id="checkid" name="checkid" style="width: 100px;">중복 확인</button></label>
       <label for=""
         ><span>비밀번호</span><input id="pw" type="password" name="password"
       /></label>
@@ -39,10 +42,13 @@
       </button>
       <!-- <button id="submit" type="submit" onclick="checkForm()" class="join_btn">회원가입</button> -->
     </form>
-    <script src=""></script> 
     <script>
+        document.querySelector("#checkid").addEventListener("click", function (event) {
+      event.preventDefault(); // 폼 전송 막기
+  });
       const join_form = document.getElementById("joinform");
       const id = document.getElementById("id");
+      const checkid = document.getElementById("checkid");
       const pw = document.getElementById("pw");
       const checkpw = document.getElementById("checkpw");
       const name = document.getElementById("name");
@@ -63,7 +69,6 @@
           pw.focus();
           return false;
         }
-
         if (pw.value === "") {
           alert("비밀번호를 입력해주세요");
           pw.focus();
@@ -111,6 +116,7 @@
         }
         join_form.submit();
       }
+
     </script>
   </body>
 </html>

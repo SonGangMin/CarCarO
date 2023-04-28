@@ -1,6 +1,23 @@
 <%- include ./include/head.ejs %>
 
-<div>
+<div class="container" style="float: left; width: 30%;">
+    <section class="box">
+        <aside class="mypage_left_area">
+        <ul class="left_area_box">
+            <li class="left_area_list"><a href="#">내차찾기 신청관리</a></li>
+            <li class="left_area_list"><a href="#">내차팔기 신청관리</a></li>
+            <li class="left_area_list"><a href="#">관심차량</a></li>
+            <li class="left_area_list">
+            <a href="/mypage/myinquiry/<%= user.id %>"> 내 문의</a>
+            </li>
+            <li class="left_area_list">
+            <a href="/mypage/password/<%= user.id %>">회원정보</a>
+            </li>
+        </ul>
+        </aside>
+    </section>
+</div>
+<div style="float: left; width: 50%;">
     <h1 align="center">내 문의</h1><br><br><br>
     <div align="center">
         <div>
@@ -13,7 +30,8 @@
                     height: 100px;"><br> <%= twit.content %></div><br>▽<br>
                     <div class="hidden">
                         <br><br>답변<br><div style="border: solid 1px black; width: 330px;">
-                        <div><%= twit.answer %></div>추가 문의는 문의하기를 이용해주세요.<br>
+                        <div><%= twit.answer %></div>추가 문의는 문의하기를 이용해주세요.<br>▶
+                        <button><a href="/faq/inquiry">문의하기</a></button>◀
                         </div>
                     </div>    
                     </div>

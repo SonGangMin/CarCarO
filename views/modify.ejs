@@ -1,7 +1,25 @@
 <%- include ./include/head.ejs %>
 
+
+<div class="container" style="float: left; width: 30%;">
+    <section class="box">
+        <aside class="mypage_left_area">
+        <ul class="left_area_box">
+            <li class="left_area_list"><a href="#">내차찾기 신청관리</a></li>
+            <li class="left_area_list"><a href="#">내차팔기 신청관리</a></li>
+            <li class="left_area_list"><a href="#">관심차량</a></li>
+            <li class="left_area_list">
+            <a href="/mypage/myinquiry/<%= user.id %>"> 내 문의</a>
+            </li>
+            <li class="left_area_list">
+            <a href="/mypage/password/<%= user.id %>">회원정보</a>
+            </li>
+        </ul>
+        </aside>
+    </section>
+</div>
 <body>
-    <form action="/mypage/edit/" id="editform" method="post" class="form">
+    <form action="/mypage/edit/" id="editform" method="post" class="form" style="float: left; width: 50%;">
         <h1 class="title">회원 정보 수정</h1>
         <label for=""><span>아이디</span>
         <input id="id" type="text" name="id" value="<%= user.id %>" readonly></label>
