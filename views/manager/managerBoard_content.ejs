@@ -46,10 +46,16 @@
           name="content"
         />
       </div>
+      <input
+        class="input"
+        type="button"
+        onclick="window.location.reload();"
+        value="취소"
+      />
       <input class="input" type="submit" value="적용" />
-      <input class="input" type="button" value="취소" />
-      <button class="edit">수정</button>
     </form>
+    <button class="txt" id="edit">수정</button>
+
     <form action="/board/comment/delete/<%= comment.number %>" method="POST">
       <input type="submit" value="삭제" />
     </form>
@@ -58,32 +64,27 @@
 </ul>
 
 <script>
-  document
-    .querySelectorAll(".edit")
-    .addEventListener("click", function (event) {
-      event.preventDefault(); // 폼 전송 막기
-    });
-
-  const edits = document.querySelectorAll(".edit");
+  // document.querySelector(".edit").addEventListener("click", function (event) {
+  //   event.preventDefault(); // 폼 전송 막기
+  // });
+  const edits = document.querySelectorAll("#edit");
   edits.forEach((target) => {
     target.addEventListener("click", function () {
-      const test = this.parentNode.childNodes;
-
+      const test = this.parentNode.childNodes[1].childNodes;
+      const test2 = this.parentNode.childNodes;
       const txtcomment = test[1];
       const inputcomment = test[3];
       const inputsubmit = test[5];
       const inputcancel = test[7];
-      const txtedit = test[9];
-      const txtdelete = this.parentNode.parentNode.childNodes[3].childNodes[1];
-
+      const txtedit = test2[3];
+      const txtdelete = test2[5];
+      console.log(test2);
       txtcomment.style.display = "none";
       inputcomment.style.display = "block";
       inputsubmit.style.display = "block";
       inputcancel.style.display = "block";
       txtedit.style.display = "none";
       txtdelete.style.display = "none";
-
-      // console.log(test);
     });
   });
 </script>
