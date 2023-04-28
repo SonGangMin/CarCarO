@@ -31,11 +31,12 @@
   <% comments.forEach(function(comment) { %>
   <li class="comment">
     작성자: <%= comment.user.name %>(<%= comment.user_id %>) 내용:
+    <div class="txt"><%= comment.content %></div>
+    <% if (comment.user_id === userId) { %>
     <form
       action="/manager/managerboard/comment/edit/<%= comment.number %>"
       method="post"
     >
-      <div class="txt"><%= comment.content %></div>
       <div class="input" style="display: none">
         <input
           type="text"
@@ -58,7 +59,7 @@
       <input type="submit" value="삭제" />
     </form>
   </li>
-  <% }); %>
+  <% } %><% }); %>
 </ul>
 
 <script>
@@ -68,14 +69,15 @@
   const edits = document.querySelectorAll("#edit");
   edits.forEach((target) => {
     target.addEventListener("click", function () {
-      const test = this.parentNode.childNodes[1].childNodes;
+      const test = this.parentNode.childNodes[3].childNodes;
       const test2 = this.parentNode.childNodes;
-      const txtcomment = test[1];
-      const inputcomment = test[3];
-      const inputsubmit = test[5];
-      const inputcancel = test[7];
-      const txtedit = test2[3];
-      const txtdelete = test2[5];
+      const test3 = this.parentNode;
+      const txtcomment = test2[1]; //완
+      const inputcomment = test[1]; //완
+      const inputsubmit = test[5]; //완
+      const inputcancel = test[3];
+      const txtedit = test2[5];
+      const txtdelete = test2[7];
       console.log(test2);
       txtcomment.style.display = "none";
       inputcomment.style.display = "block";

@@ -32,7 +32,7 @@
 <ul>
   <% comments.forEach(function(comment) { %>
   <li class="comment">
-    작성자: <%= comment.user_id %> 내용:
+    작성자: <%= comment.user.name %>(<%= comment.user_id %>) 내용:
     <form
       action="/manager/managerboard/comment/edit/<%= comment.number %>"
       method="post"
