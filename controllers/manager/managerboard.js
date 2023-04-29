@@ -58,11 +58,23 @@ exports.renderManagerBoardContent = async (req, res, next) => {
     if (!board) {
       return res.status(404).send("해당 게시글을 찾을 수 없습니다.");
     }
-    const isOwner = req.user && board.user_id === req.user.id;
+    const comments = await models.comments.findAll({
+      where: { post_id: req.params.postId },
+      include: [
+        {
+          attributes: ["name"],
+          model: models.users,
+          as: "user",
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+    // const isOwner = req.user && board.user_id === req.user.id;
     res.render("manager/managerBoard_content", {
       board,
-      isOwner,
+      // isOwner,
       title: "게시글 내용 보기",
+      comments,
     });
   } catch (err) {
     console.error(err);
@@ -143,7 +155,7 @@ exports.editManagerBoard = async (req, res, next) => {
       { title, content },
       { where: { postId: postId } }
     );
-    res.redirect(`/manager/managerboard/`);
+    res.redirect(`/manager/managerboard/${postId}`);
   } catch (err) {
     console.error(err);
     next(err);
@@ -191,6 +203,37 @@ exports.editManagerGradedown = async (req, res, next) => {
     }
     await models.boards.update({ grade: 1 }, { where: { postId } });
     res.redirect("/manager/managerboard");
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+exports.createManagerComment = async (req, res, next) => {
+  // console.log("req.body =>", req.body);
+  // console.log("==========", req.params.postId);
+  postId = req.params.postId;
+  try {
+    await models.comments.create({
+      number: null,
+      content: req.body.content,
+      createdAt: null,
+      updatedAt: null,
+      user_id: req.user.id,
+      post_id: req.params.postId,
+    });
+    res.redirect(`/manager/managerboard/${postId}`);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.editManagerComment = async (req, res, next) => {
+  const commentId = req.params.commentId;
+  const { content } = req.body;
+  try {
+    await models.comments.update({ content }, { where: { number: commentId } });
+    res.redirect("back");
   } catch (err) {
     console.error(err);
     next(err);

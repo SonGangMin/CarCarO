@@ -1,34 +1,47 @@
 <%- include('./include/head.ejs') %>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/slick-theme.css"/>
     <div class="container">
         <div class="contents">
-            <h1 class="title">판매목록</h1>  
-            <h3 class="counting">총 <span></span>개</h3>
-            <form action="/car/hashtag">
-                <input type="text" name="hashtag">
-                <button class="btn">검색</button>
-            </form>
+            <h1 class="title"><%= Cars.brand %> <%= Cars.model %> <%= Cars.carNum %></h1>  
             <div class="viewDetail">
-                <img src="<%= Cars.picture %>" alt="" class="thumbnail">
-                <p>차명 <%= Cars.brand %> <%= Cars.model %></p>
-                <div class="option">
-                    <span>차번호 <%= Cars.carNum %></span>
-                    <span>연식 <%= Cars.year %></span>
-                    <span>주행거리 <%= Cars.mile %>km</span>
-                    <span>연료 <%= Cars.fuel %></span>
-                    <span>해시태그 <%= Cars.hashtag %></span>
-                </div>
+                <ul class="viewDetail">
+                    <li>
+                        <p><%= Cars.brand %> <%= Cars.model %></p>
+                        <div class="option">
+                            <span><%= Cars.year %></span>
+                            <span><%= Cars.mile %>km</span>
+                            <span><%= Cars.fuel %></span>
+                            <span><%= Cars.hashtag %></span>
+                        </div>
+                        <ul class="bxslider">
+                            <% for (let i = 0; i < Cars.picture.length; i++) { %>
+                                <li>
+                                    <img src="<%= Cars.picture[i].url %>" alt="" class="thumbnail">
+                                </li>
+                                <a data-slide-index="0" href=""> <img src="<%= Cars.picture[i].url %>" alt="" class="thumbnail"></a>
+                            <% } %>
+                        </ul>
+                      </li>
+                  </ul>
                 <a href="/car/carsale">목록으로</a>
 
                 <% if (isOwner) { %>
-                    <a href="/car/edit/<%= Cars.carNum %>">수정</a>
+                    <a href="/car/caredit/<%= Cars.carNum %>">수정</a>
                     <form action="/car/delete/<%= Cars.carNum %>" method="POST">
                       <input type="submit" value="삭제" />
                     </form>
-                    
-                    <% } %>
+                <% } %>
             </div> 
         </div>
     </div>
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script>
+        $(document).ready(function(){
+          $(".slider").bxSlider();
+        });
+      </script>
 </body>
 </html>

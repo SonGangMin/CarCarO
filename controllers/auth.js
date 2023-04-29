@@ -60,3 +60,19 @@ exports.logout = (req, res) => {
         res.redirect('/');
     });
 };
+
+
+exports.checkid = async (req, res, next) => {
+    const id = req.params.id;
+    try {
+        const user = await models.users.findOne({ where: { id } });
+        if (user) {
+            res.status(200).json({ message: "user exists" });
+        } else {
+            res.status(404).json({ message: "user does not exist" });
+        }
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+};

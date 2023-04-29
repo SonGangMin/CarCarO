@@ -20,34 +20,6 @@ exports.isNotLoggedIn = (req, res, next) => {
   }
 };
 
-
-// board라우터에 쓰는 isLoggedIn 입니다.
-exports.isLoggedIn2 = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(403).send(`
-      <script>
-        alert('로그인이 필요합니다.');
-        location.href = '/login';
-      </script>
-    `);
-  }
-};
-
-exports.isLoggedIn3 = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.status(403).send(`
-      <script>
-        alert('로그인이 필요합니다.');
-        location.href = '/login';
-      </script>
-    `);
-  }
-};
-
 //관리자인지 아닌지 확인
 exports.isManager = (req, res, next) => {
   const isOwner = req.user && req.user.grade === 2;
@@ -64,19 +36,18 @@ exports.isManager = (req, res, next) => {
   }
 };
 
-
-exports.isMyId = (req,res,next)=>{
+exports.isMyId = (req, res, next) => {
   const myId = req.user && req.user.id === req.params.id;
-  console.log('req.user.id=================>',req.user&&req.user.id)
-  console.log('req.params.id================>',req.params.id)
-  if(myId){
+  console.log("req.user.id=================>", req.user && req.user.id);
+  console.log("req.params.id================>", req.params.id);
+  if (myId) {
     next();
-  }else{
+  } else {
     res.status(403).send(`
     <script>
     alert('지 아뒤도 아닌게 어딜?');
     location.href = '/';
   </script>
-    `)
+    `);
   }
-}
+};

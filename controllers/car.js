@@ -1,4 +1,4 @@
-const { cars, hashtags } = require("../models");
+const { cars, hashtags, users } = require("../models");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
@@ -49,35 +49,40 @@ exports.renderFindcar = async (req, res, next) => {
 exports.renderSalecar = async (req, res, next) => {
   try {
     const pageNum = parseInt(req.query.page) || 1;
-    const offset = (pageNum - 1) * 2;
-    const count = await cars.count({
+    const limit = 5;
+    const offset = (pageNum - 1) * limit;
+
+    // 전체 데이터 수 구하기
+    const countResult = await cars.findAndCountAll({
       where: { user_id: req.user.id },
     });
+    const totalCount = countResult.count;
 
-    const totalPages = Math.ceil(count / 2);
+    const totalPages = Math.ceil(totalCount / limit);
 
     const Cars = await cars.findAll({
-      // attributes: [
-      //   "carNum",
-      //   "model",
-      //   "brand",
-      //   "picture",
-      //   "year",
-      //   "mile",
-      //   "fuel",
-      //   "hashtag",
-      // ],
+      attributes: [
+        "carNum",
+        "model",
+        "brand",
+        "picture",
+        "year",
+        "mile",
+        "fuel",
+        "hashtag",
+      ],
       order: [["num", "DESC"]],
       where: { user_id: req.user.id },
       offset: offset,
-      limit: 2,
+      limit: limit,
     });
-    //  console.log(Cars);
+
     res.render("carsale", {
       title: "내차팔기",
       Cars,
       currentPage: pageNum,
       totalPages,
+      totalCount, // 전체 데이터 수 추가
     });
   } catch (error) {
     console.error(error);
@@ -91,10 +96,10 @@ exports.renderDetail = async (req, res, next) => {
   try {
     const Cars = await cars.findOne({
       where: { carNum },
-      order: [["num", "DESC"]],
     });
     const isOwner = req.user && Cars.user_id === req.user.id;
-    // console.log(isOwner, Cars.user_id, req.user.id);
+    // console.log("Cars.user_id====================", Cars.user_id);
+    // console.log("users.id=======================", req.user.id);
     res.render("cardetail", {
       title: Cars.model,
       Cars,
@@ -110,71 +115,79 @@ exports.renderDetail = async (req, res, next) => {
 exports.renderCarup = (req, res) => {
   res.render("carupload", { title: "내차등록하기" });
 };
-// 이미지 경로 주소화시키기
-// exports.uploadImg = (req, res) => {
-//   console.log("req.file ===========>", req.files);
-//   const urls = req.files.map((file) => {
-//     return `/img/${file.filename}`;
-//   });
-//   res.json({ urls: urls });
-//   res.status(200).send({
-//     message: "ok",
-//     fileInfo: req.files
-//   });
-// };
-// 내차팔기 db 등록
-exports.uploadImg = async (req, res, next) => {
-  try {
-    // const { carNum, from,} = req.body;
-    const uploadedFiles = req.files;
-    const uploadDir = path.join(__dirname, "carImg");
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir);
-    }
-    console.log(uploadedFiles);
 
+// 내차팔기 db 등록
+exports.uploadPost = async (req, res, next) => {
+  console.log("333333333333333333", req.body.disp);
+  console.log("2222222222222222222222222222222222->", req.body.leather);
+  const {
+    carNum,
+    from,
+    brand,
+    model,
+    mile,
+    year,
+    fuel,
+    trans,
+    seater,
+    disp,
+    type,
+    method,
+    color,
+    tel,
+    roof,
+    nav,
+    key,
+    light,
+    sensor,
+    camera,
+    box,
+    leather,
+    heated,
+    airbag,
+    etc,
+    price,
+    hashtag,
+  } = req.body;
+  console.log("req.files ==============", req.files);
+  try {
     const files = [];
-    for (const file of uploadedFiles) {
-      const oldPath = file.path;
-      const newPath = path.join(uploadDir, file.filename);
-      fs.renameSync(oldPath, newPath);
+    for (const file of req.files) {
       files.push({ filename: file.filename, url: `/carImg/${file.filename}` });
     }
-    // console.log("=======3", files);
-
-    await cars.create({
-      carNum: req.body.carNum,
-      from: req.body.from,
-      brand: req.body.brand,
-      model: req.body.model,
-      mile: req.body.mile,
-      year: req.body.year,
-      fuel: req.body.fuel,
-      trans: req.body.trans,
-      seater: req.body.seater,
-      disp: req.body.disp,
-      type: req.body.type,
-      method: req.body.method,
-      color: req.body.color,
-      tel: req.body.tel,
-      picture: req.body.urls,
-      roof: req.body.roof,
-      nav: req.body.nav,
-      key: req.body.key,
-      light: req.body.light,
-      sensor: req.body.sensor,
-      camera: req.body.camera,
-      box: req.body.box,
-      leather: req.body.leather,
-      heated: req.body.heated,
-      airbag: req.body.airbag,
-      etc: req.body.etc,
-      hashtag: req.body.hashtag,
+    const Cars = await cars.create({
+      carNum,
+      from,
+      brand,
+      model,
+      mile,
+      year,
+      fuel,
+      trans,
+      picture: files,
+      seater,
+      disp,
+      type,
+      method,
+      color,
+      tel,
+      roof,
+      nav,
+      key,
+      light,
+      sensor,
+      camera,
+      box,
+      leather,
+      heated,
+      airbag,
+      etc,
+      price,
+      hashtag,
       num: null,
       user_id: req.user.id,
     });
     const Hashtags = req.body.hashtag.match(/#[^\s#]*/g);
-
     if (Hashtags) {
       const result = await Promise.all(
         Hashtags.map((tag) => {
@@ -185,7 +198,8 @@ exports.uploadImg = async (req, res, next) => {
       );
       // await post.addHashtags(result.map(r => r[0]));
     }
-    res.redirect("/car/carsale");
+
+    res.status(200).json({ msg: "/car/carsale" });
   } catch (error) {
     console.error(error);
     next(error);
@@ -214,5 +228,58 @@ exports.renderHashtag = async (req, res, next) => {
   } catch (error) {
     console.error(error);
     return next(error);
+  }
+};
+
+// 리스트 수정
+exports.carEdit = async (req, res, next) => {
+  try {
+    const carNum = req.params.carNum;
+    const Cars = await cars.findOne({
+      where: {
+        carNum,
+      },
+    });
+    res.render("caredit", {
+      title: "내차 수정하기",
+      Cars,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+// 수정 등록
+exports.editBtn = async (req, res, next) => {
+  try {
+    const carNum = req.params.carNum === cars.carNum;
+    const Cars = await cars.update({
+      where: {
+        carNum,
+      },
+    });
+    res.redirect("caredit", {
+      title: "내차 수정하기",
+      Cars,
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+// 게시글, 리스트 삭제
+exports.listDelete = async (req, res, next) => {
+  try {
+    const carNum = req.params.carNum;
+    console.log("lllllllll->", req.params.carNum);
+    await cars.destroy({
+      where: { carNum },
+    });
+    res.redirect("/car/carsale");
+  } catch (error) {
+    console.error(error);
+    next(error);
   }
 };

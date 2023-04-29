@@ -59,7 +59,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     picture: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.JSON,
       allowNull: false
     },
     roof: {
@@ -128,6 +128,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 0
+    },
+    price: {
+      type: DataTypes.BIGINT,
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
     }
   }, {
     sequelize,

@@ -6,7 +6,9 @@ const {
   renderHashtag,
   uploadPost,
   renderDetail,
-  uploadImg,
+  carEdit,
+  editBtn,
+  listDelete,
 } = require("../controllers/car");
 const { isLoggedIn } = require("../middlewares");
 const fs = require("fs");
@@ -16,41 +18,72 @@ const path = require("path");
 const router = express.Router();
 
 // 내차찾기 페이지
-router.get("/findcar", renderFindcar);
+router.get("/carfind", renderFindcar);
 // 내차팔기 리스트 페이지
 router.get("/carsale", isLoggedIn, renderSalecar);
 // 내차팔기 등록 페이지
 router.get("/carupload", isLoggedIn, renderCarup);
+// 내차팔기 수정 페이지
+router.get("/caredit/:carNum", isLoggedIn, carEdit);
+// 내차팔기 수정 등록
+router.post("/edit/:carNum", isLoggedIn, editBtn);
+// 내차팔기 리스트 삭제
+router.post("/delete/:carNum", isLoggedIn, listDelete);
 // 내차팔기 리스트 상세 페이지
-router.get("/detail/:carNum", renderDetail);
+router.get("/detail/:carNum", isLoggedIn, renderDetail);
 // 해시태그 검색 리스트 페이지
 router.get("/hashtag", isLoggedIn, renderHashtag);
 
 // 내차팔기 등록
 
-const upload = multer({ 
+const upload = multer({
   storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, "carImg/");
+    destination(req, file, cb) {
+      cb(null, "carImg/");
     },
     filename(req, file, done) {
-      console.log('filename', file);
+      console.log("333333333333333333333333333333333333");
+      console.log("filename", file);
       const ext = path.extname(file.originalname);
-      done(null, path.basename(file.originalname, ext) + Date.now() + ext);
+      const fileName = `${path.basename(
+        file.originalname,
+        ext
+      )}_${Date.now()}${ext}`;
+      done(null, fileName);
     },
   }),
+  fileFilter: (req, file, cb) => {
+    const typeArray = file.mimetype.split("/");
+    const fileType = typeArray[1];
+
+    if (
+      fileType == "jpg" ||
+      fileType == "png" ||
+      fileType == "jpeg" ||
+      fileType == "gif" ||
+      fileType == "webp"
+    ) {
+      req.fileValidationError = null;
+      cb(null, true);
+    } else {
+      req.fileValidationError =
+        "jpg,jpeg,png,gif,webp 파일만 업로드 가능합니다.";
+      cb(null, false);
+    }
+  },
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
 // 내차 등록 이미지 업로드
-router.post("/multiple-upload", upload.array("files"), uploadImg);
+router.post("/multiple-upload", upload.array("files"), uploadPost);
 
 // const upload2 = multer();
 // router.post("/carupload", uploadPost);
 
-
 // 페이지네이션
-const data = [ /* your data here */ ];
+const data = [
+  /* your data here */
+];
 const itemsPerPage = 10;
 const totalPages = Math.ceil(data.length / itemsPerPage);
 

@@ -1,7 +1,25 @@
 <%- include ./include/head.ejs %>
 
+
+<div class="container" style="float: left; width: 30%;">
+    <section class="box">
+        <aside class="mypage_left_area">
+        <ul class="left_area_box">
+            <li class="left_area_list"><a href="#">내차찾기 신청관리</a></li>
+            <li class="left_area_list"><a href="#">내차팔기 신청관리</a></li>
+            <li class="left_area_list"><a href="#">관심차량</a></li>
+            <li class="left_area_list">
+            <a href="/mypage/myinquiry/<%= user.id %>"> 내 문의</a>
+            </li>
+            <li class="left_area_list">
+            <a href="/mypage/password/<%= user.id %>">회원정보</a>
+            </li>
+        </ul>
+        </aside>
+    </section>
+</div>
 <body>
-    <form action="/mypage/edit/" id="editform" method="post" class="form">
+    <form action="/mypage/edit/" id="editform" method="post" class="form" style="float: left; width: 50%;">
         <h1 class="title">회원 정보 수정</h1>
         <label for=""><span>아이디</span>
         <input id="id" type="text" name="id" value="<%= user.id %>" readonly></label><br>
@@ -15,11 +33,14 @@
         <input id="name" type="text" name="name" value="<%= user.name %>" readonly></label><br>
         <label for=""><span>전화번호</span>
             <div class="phone">
-                <input id="tel" type="number" name="tel" value="<%= user.tel %>"></div></label><br>
+                <input id="tel" type="number" name="tel" value="<%= user.tel %>"></div></label>
+                <span id="tel_feedback"></span><br>
         <label for=""><span>이메일</span>
-        <input id="email" type="email" name="email" value="<%= user.email %>"></label><br>
+        <input id="email" type="email" name="email" value="<%= user.email %>"></label>
+        <span id="email_feedback"></span><br>
         <label for=""><span>나이</span>
-        <input id="birth" type="number" name="birth" value="<%= user.birth %>" ></label><br>
+        <input id="birth" type="number" name="birth" value="<%= user.birth %>" ></label>
+        <span id="birth_message"></span><br>
         <button type="button" onclick="checkForm()" class="edit_btn">정보 수정</button>
     </form>
 
@@ -33,6 +54,9 @@
         const birth = document.getElementById('birth');
         const passwordFeedback = document.getElementById('password_feedback');
         const password_confirm_feedback = document.getElementById('password_confirm_feedback');
+        const telFeedback = document.getElementById('tel_feedback');
+        const emailFeedback = document.getElementById('email_feedback');
+        const birthFeedback = document.getElementById('birth_feedback')
 
         pw_confirm.addEventListener('input', updateValue);
 
@@ -41,10 +65,11 @@
             console.log(typeof pw, typeof pw_confirm);
 
             if(pw.value === pw_confirm.value) {
-                password_confirm_feedback.textContent = "비밀번호가 일치 합니다.";
+                password_confirm_feedback.textContent = "비밀번호가 일치 합니다";
                 passwordFeedback.style.color = 'green';
             }else{
-                password_confirm_feedback.textContent = "비밀번호 맞지 않습니다.";
+                password_confirm_feedback.textContent = "비밀번호 맞지 않습니다";
+                passwordFeedback.style.color = 'red';
             }
         }
 
@@ -69,7 +94,7 @@
                 return false;
             }
             if(tel.value === ''){
-                alert('휴대폰 번호를 입력해주세요')
+                alert('전화번호를 입력해주세요')
                 tel.focus()
                 return false;
             }
@@ -83,6 +108,8 @@
                 birth.focus()
                 return false;
             } 
+            edit_form.submit();
+            
             // 모든 조건을 만족하면 true 반환
             return true;
         }
@@ -104,6 +131,37 @@
         
         }
         
-    </script>
+        // 이메일 유효성 검사
+        email.addEventListener('input', function() {
+            const emailValue = email.value;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (emailRegex.test(emailValue)) {
+                emailFeedback.textContent = '올바른 이메일 주소입니다';
+                emailFeedback.style.color = 'green';
+                return true;
+            } else {
+                emailFeedback.textContent = '올바른 이메일 주소가 아닙니다';
+                emailFeedback.style.color = 'red';
+                return false;
+            }
+        });
+        
+
+        // 전화번호 유효성 검사
+        tel.addEventListener('input', function() {
+            const telValue = tel.value;
+            const telRegex = /^[0-9]{10,11}$/;
+
+            if (telRegex.test(telValue)) {
+                telFeedback.textContent = '올바른 전화번호입니다';
+                telFeedback.style.color = 'green';
+            } else {
+                telFeedback.textContent = '올바른 전화번호가 아닙니다';
+                telFeedback.style.color = 'red'
+            }
+        })
+
+</script>
 </body>
 </html>

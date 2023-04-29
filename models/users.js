@@ -44,6 +44,15 @@ module.exports = function(sequelize, DataTypes) {
           { name: "id" },
         ]
       },
+      {
+        name: "users_UN",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "email" },
+          { name: "tel" },
+        ]
+      },
     ]
   });
 };

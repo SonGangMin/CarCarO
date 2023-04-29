@@ -1,28 +1,42 @@
 <%- include('../include/managerhead.ejs') %>
 
-
 <div class="faqblock">   
-    <h1 class="manyques" align="center">자주 묻는 질문 관리</h1>
-    <div class="manytime" align="center">
-        <% twits.forEach(function(twit) { %>
-        <table class="manytable">
-            <tr>등록 번호: <%= twit.number %></tr><br><br>
-            <tr>제목: <%= twit.title %></tr><br><br>
-            <tr>내용: <%= twit.content %></tr><br><br>
-        </table>
-        <button class="update" type="submit"><a href="/manager/managerFaq/<%= twit.number %>">수정</a></button>
-        <form action="/manager/managerfaq/delete/<%= twit.number %>" method="POST">
-            <input type="submit" value="삭제">
-        </form>
-        <form action="/manager/managerfaq/downgrade/<%= twit.number %>" method="POST">
-        <button type="submit">자주 묻는 질문 내리기</button>
-        </form>
-        <form action="/manager/managerfaq/upgrade/<%= twit.number %>" method="POST">
-        <button type="submit">자주 묻는 질문 등록하기</button>
-        </form>
-        <br><br><hr><br><br><br>
-        <% }) %>
+    <h1 class="manyques" align="center">FAQ 관리</h1>
+    <div class="manytime" align="center" style="list-style: none;">
+        <ul>
+            <% twits.forEach(function(twit) { %> 
+            <% if (twit.grade === 2) { %>
+            <li style="color: white; background-color: burlywood; list-style: none;">
+                제목: <%= twit.title %> <br><br>
+                내용: <%= twit.content %> <br><br>
+                <button>
+                <a href="/manager/managerfaq/<%= twit.number %>">수정</a>
+                </button>
+                <form action="/manager/managerfaq/delete/<%= twit.number %>" method="POST">
+                    <input type="submit" value="삭제" />
+                </form>
+                <form action="/manager/managerfaq/downgrade/<%= twit.number %>" method="POST">
+                    <button type="submit">FAQ 내리기</button>
+                </form>
+            </li>
+            <% } else { %>
+            <li style="list-style: none;">
+                제목: <%= twit.title %><br><br>
+                내용: <%= twit.content %><br><br>
+                <button>
+                <a href="/manager/managerfaq/<%= twit.number %>">수정</a>
+                </button>
+                <form action="/manager/managerfaq/delete/<%= twit.number %>" method="POST">
+                    <input type="submit" value="삭제" />
+                </form>
+                <form action="/manager/managerfaq/upgrade/<%= twit.number %>" method="POST">
+                    <button type="submit">FAQ 등록하기</button>
+                </form>
+            </li>
+            <% } %> 
+            <hr>
+            <% }); %>
+        </ul>
     </div>
 </div>
 <button class="update"><a href="/manager/managerfaq/createfaq">글 작성</a></button>
-<br><br><br>
