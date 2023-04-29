@@ -86,6 +86,10 @@
       border: 1px solid black;
       box-sizing: border-box;
     }
+    .unit {
+      position: absolute;
+      right: 0;
+    }
 </style>
 <div class="findcar">
   <div class="bigbox" id="search">
@@ -107,12 +111,15 @@
 
         <input type="text" name="model" class="select1" placeholder="모델명">
       </div>
+      <div class="price-input">
         차량 가격 
         <input type="number" class="lowprice" name="lowprice" value="0" required onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
-        원 ~
+        <span>만원</span>
+        ~
         <input type="number" class="highprice" name="highprice" value="10000000000" required onfocus="if(this.value=='10000000000') this.value='';" onblur="if(this.value=='') this.value='10000000000';">
-
-        까지 &nbsp;&nbsp;&nbsp;&nbsp; 변속기
+        <span>만원 까지</span>
+      </div>
+      변속기
         <select name="trans">
           <option value='' selected>전체</option>
           <option value="수동">수동</option>
@@ -231,7 +238,7 @@ lowpriceInput.addEventListener('blur', function() {
             <div class="text-box">
               <div> <%= twit.from %> <%= twit.brand %> <%= twit.model %> </div>
       
-              <div><%= twit.fuel %> <%= twit.year %>년식</div>
+              <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
               <div>  </div>
               <div class="hash"><%= twit.hashtag %></div>
               <div class="hash"><%= twit.hashtag %></div>
@@ -249,18 +256,18 @@ lowpriceInput.addEventListener('blur', function() {
     <div>
       <% let start = Math.ceil(currentPage / 10) * 10 - 9; let end =
       Math.min(start + 9, totalPages); %> <% if (start > 1) { %>
-      <a href="/car/findcar?page=1">첫 페이지</a>
+      <a href="/car/carfind?page=1">첫 페이지</a>
       <% } %> <% if (currentPage > 10) { %>
-      <a href="/car/findcar?page=<%= start - 1 %>">이전</a>
+      <a href="/car/carfind?page=<%= start - 1 %>">이전</a>
       <% } %> <% for(let i=start; i<=end; i++) { %> <% if(i === currentPage) {
       %>
       <strong style="font-size: 30px"><%= i %></strong>
       <% } else { %>
-      <a href="/car/findcar?page=<%= i %>"><%= i %></a>
+      <a href="/car/carfind?page=<%= i %>"><%= i %></a>
       <% } %> <% } %> <% if (end < totalPages) { %>
-      <a href="/car/findcar?page=<%= end + 1 %>">다음</a>
+      <a href="/car/carfind?page=<%= end + 1 %>">다음</a>
       <% } %> <% if (end < totalPages - 9) { %>
-      <a href="/car/findcar?page=<%= totalPages %>">마지막 페이지</a>
+      <a href="/car/carfind?page=<%= totalPages %>">마지막 페이지</a>
       <% } %>
     </div>
     <% } %>
@@ -275,6 +282,7 @@ lowpriceInput.addEventListener('blur', function() {
   fromSelect.addEventListener('change', () => {
     if (fromSelect.value === "국산") {
     brandSelect.innerHTML = `
+    <option value="">국산 전체</option>
         <option value="현대">현대</option>
         <option value="제네시스">제네시스</option>
         <option value="기아">기아</option>
@@ -285,6 +293,7 @@ lowpriceInput.addEventListener('blur', function() {
     `;
   } else if (fromSelect.value === "수입") {
     brandSelect.innerHTML = `
+    <option value="">수입 전체</option>
     <option value="벤츠">벤츠</option>
     <option value="아우디">아우디</option>
     <option value="BMW">BMW</option>

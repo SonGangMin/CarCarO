@@ -24,19 +24,20 @@ exports.renderFindcar = async (req, res, next) => {
       },
     });
     const twits = await cars.findAll({
-      // attributes: [
-      //   "carNum",
-      //   "model",
-      //   "brand",
-      //   "picture",
-      //   "year",
-      //   "mile",
-      //   "fuel",
-      //   "hashtag",
-      //   "from",
-      //   "user_id",
-      //   "likes_count",
-      // ],
+      attributes: [
+        "carNum",
+        "model",
+        "brand",
+        "picture",
+        "year",
+        "mile",
+        "fuel",
+        "hashtag",
+        "from",
+        "user_id",
+        "likes_count",
+        "price",
+      ],
       order: [["num", "DESC"]],
       offset,
       limit: PAGE_SIZE,
@@ -58,6 +59,20 @@ exports.renderFindcar = async (req, res, next) => {
 // 내차찾기 검색
 exports.renderCarSearch = async (req, res, next) => {
   try {
+    const PAGE_SIZE = 16;
+    const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+    const offset = (page - 1) * PAGE_SIZE;
+    const total = await cars.count();
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+    const isMine = req.user && req.user.id;
+    const twentyFourHoursAgo = moment().subtract(24, "hours").toDate();
+    const recenttotal = await cars.count({
+      where: {
+        createdAt: {
+          [Op.gte]: twentyFourHoursAgo,
+        },
+      },
+    });
     const {
       from,
       brand,
@@ -82,6 +97,9 @@ exports.renderCarSearch = async (req, res, next) => {
       mile: {
         [Op.between]: [shortmile, longmile],
       },
+      model: {
+        [Op.like]: [`%${model}%`],
+      },
     };
 
     if (trans) {
@@ -97,9 +115,33 @@ exports.renderCarSearch = async (req, res, next) => {
       where.fuel = fuel;
     }
 
-    const Cars = await cars.findAll({ where });
+    const Cars = await cars.findAll({
+      where,
+      order: [["num", "DESC"]],
+      offset,
+      limit: PAGE_SIZE,
+    });
 
-    res.render("carfind_search", { Cars, title: "차량검색결과" });
+    res.render("carfind_search", {
+      Cars,
+      title: "차량검색결과",
+      totalPages,
+      currentPage: page,
+      isMine,
+      total,
+      recenttotal,
+      from,
+      brand,
+      model,
+      lowprice,
+      highprice,
+      trans,
+      startyear,
+      endyear,
+      fuel,
+      shortmile,
+      longmile,
+    });
   } catch (err) {
     console.error(err);
     next(err);
