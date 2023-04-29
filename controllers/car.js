@@ -1,7 +1,9 @@
 const { cars, hashtags, users } = require("../models");
+const moment = require("moment");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const { Op } = require("sequelize");
 
 // 내차 찾기, 내차 팔기
 // 내차찾기 페이지
@@ -13,6 +15,14 @@ exports.renderFindcar = async (req, res, next) => {
     const total = await cars.count();
     const totalPages = Math.ceil(total / PAGE_SIZE);
     const isMine = req.user && req.user.id;
+    const twentyFourHoursAgo = moment().subtract(24, "hours").toDate();
+    const recenttotal = await cars.count({
+      where: {
+        createdAt: {
+          [Op.gte]: twentyFourHoursAgo,
+        },
+      },
+    });
     const twits = await cars.findAll({
       // attributes: [
       //   "carNum",
@@ -38,7 +48,58 @@ exports.renderFindcar = async (req, res, next) => {
       currentPage: page,
       isMine,
       total,
+      recenttotal,
     });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+// 내차찾기 검색
+exports.renderCarSearch = async (req, res, next) => {
+  try {
+    const {
+      from,
+      brand,
+      model,
+      lowprice,
+      highprice,
+      trans,
+      startyear,
+      endyear,
+      fuel,
+      shortmile,
+      longmile,
+    } = req.query;
+
+    const where = {
+      price: {
+        [Op.between]: [lowprice, highprice],
+      },
+      year: {
+        [Op.between]: [startyear, endyear],
+      },
+      mile: {
+        [Op.between]: [shortmile, longmile],
+      },
+    };
+
+    if (trans) {
+      where.trans = trans;
+    }
+    if (from) {
+      where.from = from;
+    }
+    if (brand) {
+      where.brand = brand;
+    }
+    if (fuel) {
+      where.fuel = fuel;
+    }
+
+    const Cars = await cars.findAll({ where });
+
+    res.render("carfind_search", { Cars, title: "차량검색결과" });
   } catch (err) {
     console.error(err);
     next(err);

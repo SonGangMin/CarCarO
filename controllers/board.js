@@ -88,7 +88,7 @@ exports.renderBoardContent = async (req, res, next) => {
           as: "user",
         },
       ],
-      order: [["createdAt", "DESC"]],
+      order: [["createdAt", "ASC"]],
     });
     const isboardOwner = req.user && board.user_id === req.user.id;
     const userId = req.user && req.user.id;

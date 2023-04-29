@@ -91,35 +91,36 @@
   <div class="bigbox" id="search">
     <div class="statistics">
       전체: &nbsp;&nbsp;&nbsp;&nbsp; <%= total %>대<br />최근등록(24시간):
-      &nbsp;&nbsp;&nbsp;&nbsp; n대
+      &nbsp;&nbsp;&nbsp;&nbsp; <%= recenttotal %>대
     </div>
     국산●수입차
-    <form action="/car/carfind/">
+    <form action="/car/carfind/search/:result" method="get">
       <div class="searchbox">
         <select class="select1" name="from" id="from">
           <option value="" selected>국산·수입</option>
-          <option value="domestic">국산</option>
-          <option value="imported">수입</option>
+          <option value="국산">국산</option>
+          <option value="수입">수입</option>
         </select>
         <select class="select1" name="brand" id="brand">
-          <option value="">------</option>
+          <option value="" selected>국산·수입 선택하세요</option>
         </select>
+
         <input type="text" name="model" class="select1" placeholder="모델명">
       </div>
         차량 가격 
-        <input type="text" name="lowprice" value="0" required onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
+        <input type="number" class="lowprice" name="lowprice" value="0" required onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
         원 ~
-        <input type="text" name="highprice" value="10000000000" required onfocus="if(this.value=='10000000000') this.value='';" onblur="if(this.value=='') this.value='10000000000';">
+        <input type="number" class="highprice" name="highprice" value="10000000000" required onfocus="if(this.value=='10000000000') this.value='';" onblur="if(this.value=='') this.value='10000000000';">
 
         까지 &nbsp;&nbsp;&nbsp;&nbsp; 변속기
         <select name="trans">
-          <option>전체</option>
-          <option value="auto">오토</option>
-          <option value="stick">스틱</option></select
+          <option value='' selected>전체</option>
+          <option value="수동">수동</option>
+          <option value="자동">자동</option></select
         ><br />
         차량 연식
         <select name="startyear">
-          <option value="1900" selected>2000년 이전</option>
+          <option value="0" selected>2000년 이전</option>
           <option value="2001">2001년</option>
           <option value="2002">2002년</option>
           <option value="2003">2003년</option>
@@ -173,18 +174,18 @@
         까지 &nbsp;&nbsp;&nbsp;&nbsp; 
         사용 연료
         <select name="fuel">
-          <option selected>전체</option>
-          <option value="gasoline">휘발유</option>
-          <option value="diesel">경유</option>
-          <option value="elec">전기</option>
-          <option value="hydrogen">수소</option>
-          <option value="hybrid">하이브리드</option>
-          <option value="etc">기타</option>
+          <option value="" selected>전체</option>
+          <option value="휘발유">휘발유</option>
+          <option value="경유">경유</option>
+          <option value="전기">전기</option>
+          <option value="수소">수소</option>
+          <option value="하이브리드">하이브리드</option>
+          <option value="기타">기타</option>
         </select><br>
         주행거리
-        <input type="text" name="shortmile" value="0" required onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
+        <input type="number" class="shortmile" name="shortmile" value="0" required onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
         km ~
-        <input type="text" name="longmile" value="5000000" required onfocus="if(this.value=='10000000000') this.value='';" onblur="if(this.value=='') this.value='10000000000';">km
+        <input type="number" class="longmile" name="longmile" value="5000000" required onfocus="if(this.value=='10000000000') this.value='';" onblur="if(this.value=='') this.value='10000000000';">km
 <br>
         <button type="submit" class="search">검색</button><br />
       </div>
@@ -272,25 +273,42 @@ lowpriceInput.addEventListener('blur', function() {
   const brandSelect = document.querySelector('#brand');
 
   fromSelect.addEventListener('change', () => {
-    if (fromSelect.value === 'domestic') {
-      brandSelect.innerHTML = `
-        <option value="hyundai">현대</option>
-        <option value="genesis">제네시스</option>
-        <option value="kia">기아</option>
-        <option value="chevrolet">쉐보레(GM대우)</option>
-        <option value="etc">기타</option>
-
-      `;
-    } else if (fromSelect.value === 'imported') {
-      brandSelect.innerHTML = `
-        <option value="mercedes-benz">벤츠</option>
-        <option value="audi">아우디</option>
-        <option value="bmw">BMW</option>
-        <option value="volvo">볼보</option>
-        <option value="volkswagen">폭스바겐</option>
-        <option value="porsche">포르쉐</option>
-        <option value="etc2">기타</option>
-      `;
+    if (fromSelect.value === "국산") {
+    brandSelect.innerHTML = `
+        <option value="현대">현대</option>
+        <option value="제네시스">제네시스</option>
+        <option value="기아">기아</option>
+        <option value="쉐보레">쉐보레(GM대우)</option>
+        <option value="쌍용">쌍용</option>
+        <option value="국산기타">기타</option>
+        
+    `;
+  } else if (fromSelect.value === "수입") {
+    brandSelect.innerHTML = `
+    <option value="벤츠">벤츠</option>
+    <option value="아우디">아우디</option>
+    <option value="BMW">BMW</option>
+    <option value="볼보">볼보</option>
+    <option value="폭스바겐">폭스바겐</option>
+    <option value="포르쉐">포르쉐</option>
+    <option value="수입기타">기타</option>
+    `;
+  } else {
+    brandSelect.innerHTML = `
+      <option value="" selected>국산·수입 선택하세요</option>
+    `;
+  }
+  });
+  const transSelect = document.getElementById("trans");
+  transSelect.addEventListener("change", function() {
+    if (transSelect.value === "") {
+      // 전체를 선택한 경우, 다른 모든 옵션을 선택한 것과 같게 처리
+      transSelect.selectedIndex = 0;
     }
   });
+
+//   const lowPrice = document.querySelector('#lowprice').value;
+// const highPrice = document.querySelector('#highprice').value;
+// const shortMile = document.querySelector('#shortmile').value;
+// const longMile = document.querySelector('#longmile').value;
 </script>
