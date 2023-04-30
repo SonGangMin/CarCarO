@@ -90,6 +90,7 @@
       position: absolute;
       right: 0;
     }
+
 </style>
 <div class="findcar">
   <div class="bigbox" id="search">
@@ -220,35 +221,28 @@ lowpriceInput.addEventListener('blur', function() {
     <br />
     <ul>
       <% twits.forEach(function(twit) { %>
-      <li>
-        <% console.log('twit.user_id =') %>
-        <a href="/car/detail/<%= twit.carNum %>">
-          <div
-            class="listbox"
-            id="<%= isMine === twit.user_id ? 'highlight' : '' %>"
-          >
-          <!-- <div class="check"> -->
-            <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail" />
-            <div class="like">
-              <input type="checkbox">
-              <%= twit.likes_count %>
-            <!-- </div> -->
+        <li>
+          <a href="/car/detail/<%= twit.carNum %>">
+            <div class="listbox" id="<%= isMine === twit.user_id ? 'highlight' : '' %>">
+              <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail" />
+              <div class="like">
+                <form action="/car/carfind" method="post">
+                  <input type="hidden" name="carNum" value="<%= twit.carNum %>">
+                  <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
+                </form>
+                
+              </div>
+              <div class="text-box">
+                <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
+                <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
+                <div class="hash"><%= twit.hashtag %></div>
+                <div class="hash"><%= twit.hashtag %></div>
+                <div class="hash"><%= twit.hashtag %></div>
+                <div class="hash"><%= twit.hashtag %></div>
+              </div>
             </div>
-        
-            <div class="text-box">
-              <div> <%= twit.from %> <%= twit.brand %> <%= twit.model %> </div>
-      
-              <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
-              <div>  </div>
-              <div class="hash"><%= twit.hashtag %></div>
-              <div class="hash"><%= twit.hashtag %></div>
-              <div class="hash"><%= twit.hashtag %></div>
-              <div class="hash"><%= twit.hashtag %></div>
-            </div>
-           
-          </div>
-        </a>
-      </li>
+          </a>
+        </li>
       <% }) %>
     </ul>
 
@@ -274,7 +268,7 @@ lowpriceInput.addEventListener('blur', function() {
   </div>
 </div>
 
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
   const fromSelect = document.querySelector('#from');
   const brandSelect = document.querySelector('#brand');
@@ -311,13 +305,7 @@ lowpriceInput.addEventListener('blur', function() {
   const transSelect = document.getElementById("trans");
   transSelect.addEventListener("change", function() {
     if (transSelect.value === "") {
-      // 전체를 선택한 경우, 다른 모든 옵션을 선택한 것과 같게 처리
       transSelect.selectedIndex = 0;
     }
   });
-
-//   const lowPrice = document.querySelector('#lowprice').value;
-// const highPrice = document.querySelector('#highprice').value;
-// const shortMile = document.querySelector('#shortmile').value;
-// const longMile = document.querySelector('#longmile').value;
 </script>

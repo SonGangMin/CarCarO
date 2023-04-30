@@ -1,4 +1,4 @@
-const { cars, hashtags, users } = require("../models");
+const { cars, hashtags, users, likes } = require("../models");
 const moment = require("moment");
 const multer = require("multer");
 const path = require("path");
@@ -56,6 +56,20 @@ exports.renderFindcar = async (req, res, next) => {
     next(err);
   }
 };
+exports.carLike = async (req, res, next) => {
+  try {
+    await likes.create({
+      number: null,
+      car_num: req.body.carNum,
+      user_id: req.user.id,
+    });
+    res.redirect("/car/carfind");
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
 // 내차찾기 검색
 exports.renderCarSearch = async (req, res, next) => {
   try {
