@@ -278,9 +278,10 @@ lowpriceInput.addEventListener('blur', function() {
           <!-- <div class="check"> -->
             <img src="<%= car.picture[0].url %>" alt="" class="thumbnail" />
             <div class="like">
-              <input type="checkbox">
-              <%= car.likes_count %>
-            <!-- </div> -->
+              <form action="/car/carfind" method="post">
+                <input type="hidden" name="carNum" value="<%= car.carNum %>">
+                <button type="submit" class="heart">♥ <%= car.likes_count %></button>
+              </form>
             </div>
             <div class="text-box">
               <div> <%= car.from %> <%= car.brand %> <%= car.model %> </div>

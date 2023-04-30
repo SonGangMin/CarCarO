@@ -63,7 +63,7 @@ exports.carLike = async (req, res, next) => {
       car_num: req.body.carNum,
       user_id: req.user.id,
     });
-    res.redirect("/car/carfind");
+    res.redirect("back");
   } catch (err) {
     console.error(err);
     next(err);
