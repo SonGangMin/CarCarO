@@ -26,4 +26,11 @@ router.post("edit", isLoggedIn, mypageController.postModify);
 router.get("/mypage/edit", function (req, res) {
   res.send("edit page");
 });
+
+// 회원 탈퇴 페이지 렌더링
+router.get("/withdraw", mypageController.showWithdrawPage);
+
+// 회원 탈퇴 처리
+router.post("/withdraw", mypageController.withdraw);
+
 module.exports = router;

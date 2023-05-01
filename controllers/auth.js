@@ -40,7 +40,7 @@ exports.login = (req, res, next) => {
             return next(authError);
         }
 
-        
+
         if(!user){
             return res.redirect(`/login/?loginError=${info.message}`);
         }

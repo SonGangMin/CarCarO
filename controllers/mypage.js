@@ -143,3 +143,20 @@ exports.postModify = async (req, res, next) => {
     next(error);
   }
 };
+
+// 회원 탈퇴 처리
+exports.showWithdrawPage = (req, res) => {
+  res.render("withdraw", { title: "회원 탈퇴"});
+};
+
+exports.withdraw = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await models.users.destroy({ where: { id:id }});
+    req.logout();
+    res.redirect('/');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("서버 오류");
+  }
+};
