@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('carshashtags', {
+  return sequelize.define('carsHashtags', {
     carsId: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'carshashtags',
+    tableName: 'carsHashtags',
     timestamps: true,
     indexes: [
       {

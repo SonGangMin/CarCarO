@@ -215,12 +215,14 @@ exports.renderDetail = async (req, res, next) => {
       where: { carNum },
     });
     const isOwner = req.user && Cars.user_id === req.user.id;
+    const status2 = Cars.status === 2;
     // console.log("Cars.user_id====================", Cars.user_id);
     // console.log("users.id=======================", req.user.id);
     res.render("cardetail", {
       title: Cars.model,
       Cars,
       isOwner,
+      status2,
     });
   } catch (error) {
     console.error(error);
@@ -395,6 +397,20 @@ exports.listDelete = async (req, res, next) => {
       where: { carNum },
     });
     res.redirect("/car/carsale");
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+// 판매완료
+exports.saleComp = async (req, res, next) => {
+  const { carNum } = req.params;
+
+  try {
+    const Cars = await cars.update({ status: 2 }, { where: { carNum } });
+
+    res.redirect(`/car/detail/${carNum}`);
   } catch (error) {
     console.error(error);
     next(error);
