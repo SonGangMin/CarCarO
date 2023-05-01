@@ -4,6 +4,11 @@
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
     <div class="container">
+      <% if(status2){ %>
+        <div class="saleComplete">
+          <h1>판매완료</h1>
+        </div>
+      <% } %>
         <div class="contents">
             <h1 class="title"><%= Cars.brand %> <%= Cars.model %> <%= Cars.carNum %></h1>  
             <div class="viewDetail">
@@ -26,41 +31,44 @@
                             </ul>
                             <div id="bx-pager" class="bx-pager">
                               <% for (let i = 0; i < Cars.picture.length; i++) { %>
-                                <a data-slide-index="<%= i %>" href="" id="imgBox"><img src="<%= Cars.picture[i].url %>" id="slideImg" /></a>
+                                <a data-slide-index="<%= i %>" href="" id="imgBox" class="imgBox"><img src="<%= Cars.picture[i].url %>" id="slideImg" /></a>
                               <% } %>
                             </div>
                         </div>
                   </ul>
-                <a href="/car/carsale">목록으로</a>
+                  <div class="btn_area">
+                    <a href="/car/carsale">목록으로</a>
 
-                <% if (isOwner) { %>
-                    <a href="/car/caredit/<%= Cars.carNum %>">수정</a>
-                    <form action="/car/delete/<%= Cars.carNum %>" method="POST">
-                      <input type="submit" value="삭제" />
-                    </form>
-                <% } %>
+                    <% if (isOwner) { %>
+                        <a href="/car/caredit/<%= Cars.carNum %>">수정</a>
+                        <form action="/car/delete/<%= Cars.carNum %>" method="POST">
+                          <input type="submit" value="삭제" />
+                        </form>
+                        <form action="/car/saleComp/<%= Cars.carNum %>" method="post">
+                          <button type="submit" id="saleComp">판매완료등록</button>
+                        </form>  
+                    <% } %>
+                  </div>
             </div> 
         </div>
     </div>
     <script>
+        // 슬라이드용 js
         $(document).ready(function() {
           $('.bxslider').bxSlider({
             pagerCustom: '#bx-pager',
-            auto: true,
+            auto: false,
             pause: 3000 // 3초마다 슬라이드 이동
           });
         });
 
-        const imgBox = document.getElementById('imgBox');
+        const imgBox = document.querySelectorAll('.imgBox');
         const slideImg = document.querySelectorAll('#bx-pager img');
         const n = slideImg.length;
 
-        if (imgBox) {
-        slideImg.forEach((img) => {
-            imgBox.style.cssText += `width: calc(100% / ${n}); height: 50px; display: block;` ;
+        imgBox.forEach((img) => {
+            img.style.cssText += `max-width: 150px; width: calc(100% / ${n}); height: 100px; display: block; padding: 0 10px;` ;
         });
-        }
-
-      </script>
+    </script>
 </body>
 </html>
