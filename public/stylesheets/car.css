@@ -130,8 +130,30 @@
     display: flex;
     justify-content: center;
     width: 100%;
+    height: 100px;
+}
+.slider .imgBox.active{
+    border: 2px solid #000;
 }
 .slider .bx-pager img{
     width: 100%;
     height: 100%;
+}
+
+.saleComplete{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.5);
+}
+.saleComplete h1{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 50px;
+    border: 1px 0 1px #fff;
+    z-index: 999999;
 }

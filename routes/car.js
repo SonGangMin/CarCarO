@@ -9,6 +9,7 @@ const {
   carEdit,
   editBtn,
   listDelete,
+  saleComp
 } = require("../controllers/car");
 const { isLoggedIn } = require("../middlewares");
 const fs = require("fs");
@@ -33,9 +34,10 @@ router.post("/delete/:carNum", isLoggedIn, listDelete);
 router.get("/detail/:carNum", isLoggedIn, renderDetail);
 // 해시태그 검색 리스트 페이지
 router.get("/hashtag", isLoggedIn, renderHashtag);
+// 팔기완료 등록
+router.post("/saleComp/:carNum", saleComp);
 
 // 내차팔기 등록
-
 const upload = multer({
   storage: multer.diskStorage({
     destination(req, file, cb) {
@@ -76,9 +78,6 @@ const upload = multer({
 
 // 내차 등록 이미지 업로드
 router.post("/multiple-upload", upload.array("files"), uploadPost);
-
-// const upload2 = multer();
-// router.post("/carupload", uploadPost);
 
 // 페이지네이션
 const data = [
