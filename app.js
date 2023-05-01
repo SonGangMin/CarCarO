@@ -8,6 +8,7 @@ const ejs = require("ejs");
 const nuncjucks = require("nunjucks");
 const passport = require("passport");
 const multer = require("multer");
+const bodyParser = require("body-parser");
 
 dotenv.config();
 
@@ -50,6 +51,8 @@ app.use("/carImg", express.static(path.join(__dirname, "carImg")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(
   session({
     resave: false,

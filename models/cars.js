@@ -141,7 +141,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'cars',
-    timestamps: false,
+    timestamps: true,
     indexes: [
       {
         name: "PRIMARY",

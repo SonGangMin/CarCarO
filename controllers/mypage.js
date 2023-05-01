@@ -117,7 +117,7 @@ exports.checkPassword = async (req, res, next) => {
     const { password } = req.body;
     const user = req.session.user;
     const response = await axios.post(
-      "http://localhost:3006/api/checkPassword",
+      "http://localhost:3000/api/checkPassword",
       { id: user.id, password }
     );
     res.json({ result: response.data.result });
@@ -131,7 +131,7 @@ exports.postModify = async (req, res, next) => {
   try {
     const { password, tel, email, birth } = req.body;
     const user = req.session.user;
-    await axios.patch(`http://localhost:3006/api/mypage/${user.id}`, {
+    await axios.patch(`http://localhost:3000/api/mypage/${user.id}`, {
       password,
       tel,
       email,

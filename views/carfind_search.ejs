@@ -55,7 +55,7 @@
       padding: 10px 10px;
       text-align: center;
     }
-    .bigbox h1 {
+    h1 {
       text-align: center;
     }
     
@@ -85,6 +85,22 @@
     .check {
       border: 1px solid black;
       box-sizing: border-box;
+    }
+    .condition {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    }
+
+    .condition > div {
+      margin: 5px;
+      padding: 5px 10px;
+      border-radius: 20px;
+      background-color: #87ceeb;
+      font-size: 14px;
+      color: #fff;
     }
     .unit {
       position: absolute;
@@ -120,7 +136,7 @@
         <input type="number" class="highprice" name="highprice" value="10000000000" required onfocus="if(this.value=='10000000000') this.value='';" onblur="if(this.value=='') this.value='10000000000';">
         <span>만원 까지</span>
       </div>
-      변속기
+        변속기
         <select name="trans">
           <option value='' selected>전체</option>
           <option value="수동">수동</option>
@@ -215,34 +231,71 @@ lowpriceInput.addEventListener('blur', function() {
   }
 });
   </script> -->
+  <div><h1>선택한 검색조건</h1></div>
+  <div class="condition">
+    <% if (from) { %>
+      <div><%= from %></div>
+    <% } %>
+    <% if (brand) { %>
+      <div><%= brand %></div>
+    <% } %>
+    <% if (model) { %>
+      <div>모델명: <%= model %></div>
+    <% } %>
+
+    <div><%= lowprice %> 만원 ~
+    <%= highprice %> 만원 까지</div>
+
+    <% if (trans) { %>
+      <div><%= trans %></div>
+    <% } %>
+
+      <div><%= startyear %> 년식 ~
+      <%= endyear %> 년식 까지</div>
+
+    <% if (fuel) { %>
+      <div><%= fuel %></div>
+    <% } %>
+
+      <div><%= shortmile %> km ~
+      <%= longmile %> km 까지</div>
+
+  </div>
+  
 
   <div class="bigbox" id="list">
-    <h1>전체 차량</h1>
+    <h1>검색 결과</h1>
     <br />
     <ul>
-      <% twits.forEach(function(twit) { %>
-        <li>
-          <a href="/car/detail/<%= twit.carNum %>">
-            <div class="listbox" id="<%= isMine === twit.user_id ? 'highlight' : '' %>">
-              <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail" />
-              <div class="like">
-                <form action="/car/carfind" method="post">
-                  <input type="hidden" name="carNum" value="<%= twit.carNum %>">
-                  <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
-                </form>
-                
-              </div>
-              <div class="text-box">
-                <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
-                <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
-                <div class="hash"><%= twit.hashtag %></div>
-                <div class="hash"><%= twit.hashtag %></div>
-                <div class="hash"><%= twit.hashtag %></div>
-                <div class="hash"><%= twit.hashtag %></div>
-              </div>
+      <% Cars.forEach(function(car) { %>
+      <li>
+        <!-- <% console.log('car.price ===>', car.price) %> -->
+        <a href="/car/detail/<%= car.carNum %>">
+          <div
+            class="listbox"
+            id="<%= isMine === car.user_id ? 'highlight' : '' %>"
+          >
+          <!-- <div class="check"> -->
+            <img src="<%= car.picture[0].url %>" alt="" class="thumbnail" />
+            <div class="like">
+              <form action="/car/carfind" method="post">
+                <input type="hidden" name="carNum" value="<%= car.carNum %>">
+                <button type="submit" class="heart">♥ <%= car.likes_count %></button>
+              </form>
             </div>
-          </a>
-        </li>
+            <div class="text-box">
+              <div> <%= car.from %> <%= car.brand %> <%= car.model %> </div>
+      
+              <div><%= car.fuel %> <%= car.year %>년식 <%= car.price %>만원</div>
+              <div class="hash"><%= car.hashtag %></div>
+              <div class="hash"><%= car.hashtag %></div>
+              <div class="hash"><%= car.hashtag %></div>
+              <div class="hash"><%= car.hashtag %></div>
+            </div>
+           
+          </div>
+        </a>
+      </li>
       <% }) %>
     </ul>
 
@@ -276,7 +329,7 @@ lowpriceInput.addEventListener('blur', function() {
   fromSelect.addEventListener('change', () => {
     if (fromSelect.value === "국산") {
     brandSelect.innerHTML = `
-    <option value="">국산 전체</option>
+        <option value="">국산 전체</option>
         <option value="현대">현대</option>
         <option value="제네시스">제네시스</option>
         <option value="기아">기아</option>
@@ -305,7 +358,13 @@ lowpriceInput.addEventListener('blur', function() {
   const transSelect = document.getElementById("trans");
   transSelect.addEventListener("change", function() {
     if (transSelect.value === "") {
+      // 전체를 선택한 경우, 다른 모든 옵션을 선택한 것과 같게 처리
       transSelect.selectedIndex = 0;
     }
   });
+
+//   const lowPrice = document.querySelector('#lowprice').value;
+// const highPrice = document.querySelector('#highprice').value;
+// const shortMile = document.querySelector('#shortmile').value;
+// const longMile = document.querySelector('#longmile').value;
 </script>

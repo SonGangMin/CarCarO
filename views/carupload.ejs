@@ -15,7 +15,9 @@
                 <label for="">
                     <b>브랜드</b>
                     <!-- 국산 -->
-                    <select name="brand" id="brand" class="brand"></select>
+                    <select name="brand" id="brand" class="brand">
+                        <option value="" selected>국산·수입 선택하세요</option>
+                    </select>
                 </label>
 
                 <label for="">
@@ -30,7 +32,6 @@
                         <option value="스포츠카">화물차</option>
                         <option value="SUV">화물차</option>
                         <option value="승합차">화물차</option>
-                        <option value="화물차">화물차</option>
                         <option value="화물차">화물차</option>
                         <option value="버스">화물차</option>
                         <option value="리무진">화물차</option>
@@ -50,11 +51,13 @@
                 <label for="">
                     <b>연료방식</b>
                     <select id="fuel" type="text" name="fuel">
-                        <option value=""></option>
+                        <option value="" selected>전체</option>
                         <option value="휘발유">휘발유</option>
                         <option value="경유">경유</option>
-                        <option value="LPG">LPG</option>
                         <option value="전기">전기</option>
+                        <option value="수소">수소</option>
+                        <option value="하이브리드">하이브리드</option>
+                        <option value="기타">기타</option>
                     </select>
                 </label>
 

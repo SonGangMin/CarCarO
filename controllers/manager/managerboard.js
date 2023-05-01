@@ -67,7 +67,7 @@ exports.renderManagerBoardContent = async (req, res, next) => {
           as: "user",
         },
       ],
-      order: [["createdAt", "DESC"]],
+      order: [["createdAt", "ASC"]],
     });
     // const isOwner = req.user && board.user_id === req.user.id;
     res.render("manager/managerBoard_content", {
