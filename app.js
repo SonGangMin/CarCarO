@@ -21,9 +21,11 @@ const mypageRouter = require("./routes/mypage");
 // const myinquiryRouter = require("./routes/myinquiry");
 
 const managerPageRouter = require("./routes/Manager/managerpage");
+const managerUserRouter = require("./routes/Manager/managerUser");
 const managerBoardRouter = require("./routes/Manager/managerboard");
 const managerfaqRouter = require("./routes/Manager/managerfaq");
 const managerinquiryRouter = require("./routes/Manager/managerinquiry");
+const managerCarRouter = require("./routes/Manager/managerCar");
 
 const { sequelize } = require("./models");
 const passportConfig = require("./passport");
@@ -76,9 +78,11 @@ app.use("/mypage", mypageRouter);
 // app.use("/myinquiry", myinquiryRouter);
 
 app.use("/manager", managerPageRouter);
+app.use("/manager/managerUser", managerUserRouter);
 app.use("/manager/managerboard", managerBoardRouter);
 app.use("/manager/managerFaq", managerfaqRouter);
 app.use("/manager/managerinquiry", managerinquiryRouter);
+app.use("/manager/managerCar", managerCarRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
