@@ -408,10 +408,7 @@ exports.saleComp = async (req, res, next) => {
   const { carNum } = req.params;
 
   try {
-    const Cars = await cars.update(
-      { status: 2 },
-      { where: { carNum } }
-    );
+    const Cars = await cars.update({ status: 2 }, { where: { carNum } });
 
     res.redirect(`/car/detail/${carNum}`);
   } catch (error) {
