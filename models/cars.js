@@ -1,16 +1,30 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('cars', {
+    num: {
+      autoIncrement: true,
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      primaryKey: true
+    },
     carNum: {
       type: DataTypes.STRING(255),
       allowNull: false,
       unique: "cars_UN"
     },
-    from: {
+    user_id: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    },
+    brand: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    brand: {
+    from: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
@@ -102,27 +116,9 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    etc: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
     hashtag: {
       type: DataTypes.STRING(100),
       allowNull: true
-    },
-    num: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      primaryKey: true
-    },
-    user_id: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id'
-      }
     },
     likes_count: {
       type: DataTypes.INTEGER,
@@ -132,6 +128,15 @@ module.exports = function(sequelize, DataTypes) {
     price: {
       type: DataTypes.BIGINT,
       allowNull: false
+    },
+    etc: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1
     }
   }, {
     sequelize,
@@ -159,6 +164,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "user_id" },
+        ]
+      },
+      {
+        name: "cars_FK_2",
+        using: "BTREE",
+        fields: [
+          { name: "brand" },
         ]
       },
     ]
