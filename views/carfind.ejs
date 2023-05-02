@@ -102,9 +102,10 @@
     <form action="/car/carfind/search/:result" method="get">
       <div class="searchbox">
         <select class="select1" name="from" id="from">
-          <option value="" selected>국산·수입</option>
+          <option value="" selected>국산or수입</option>
           <option value="국산">국산</option>
           <option value="수입">수입</option>
+
         </select>
         <select class="select1" name="brand" id="brand">
           <option value="" selected>국산·수입 선택하세요</option>
@@ -121,7 +122,7 @@
         <span>만원 까지</span>
       </div>
       변속기
-        <select name="trans">
+        <select name="trans" id="trans">
           <option value='' selected>전체</option>
           <option value="수동">수동</option>
           <option value="자동">자동</option></select
@@ -226,10 +227,31 @@ lowpriceInput.addEventListener('blur', function() {
             <div class="listbox" id="<%= isMine === twit.user_id ? 'highlight' : '' %>">
               <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail" />
               <div class="like">
-                <form action="/car/carfind" method="post">
-                  <input type="hidden" name="carNum" value="<%= twit.carNum %>">
-                  <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
-                </form>
+                <% let count=0; %>
+                <% for(let i=0; i < twit.likes.length; i++) { %>
+                  <% if(twit.likes[i].user_id == isMine) { %>
+                    <% count++; %>
+                  <% } %>
+                <% } %>
+                <% console.log(isMine) %>
+                <% console.log(isMine === twit.user_id) %>
+                <% if (typeof isMine === 'undefined') { %>
+                  <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
+                <% } else if (isMine === twit.user_id) { %>
+                  <button class="Mine">♥ 내차<%= twit.likes_count %></button>
+                <% } else { %>
+                  <% if(!count) { %>
+                    <form action="/car/carfind" method="post" onsubmit="return confirm('관심차량 목록에 추가하시겠습니까?')">
+                      <input type="hidden" name="carNum" value="<%= twit.num %>">
+                      <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
+                    </form>
+                  <% } else { %>
+                    <form action="/car/carfind2" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
+                      <input type="hidden" name="carNum" value="<%= twit.num %>">
+                      <button type="submit" class="heart">○ <%= twit.likes_count %></button>
+                    </form>
+                  <% } %>
+                <% } %>
                 
               </div>
               <div class="text-box">
@@ -239,6 +261,7 @@ lowpriceInput.addEventListener('blur', function() {
                 <div class="hash"><%= twit.hashtag %></div>
                 <div class="hash"><%= twit.hashtag %></div>
                 <div class="hash"><%= twit.hashtag %></div>
+
               </div>
             </div>
           </a>
@@ -306,6 +329,18 @@ lowpriceInput.addEventListener('blur', function() {
   transSelect.addEventListener("change", function() {
     if (transSelect.value === "") {
       transSelect.selectedIndex = 0;
+    }
+  });
+  const fromSelect = document.getElementById("from");
+  fromSelect.addEventListener("change", function() {
+    if (fromSelect.value === "") {
+      fromSelect.selectedIndex = 0;
+    }
+  });
+  const brandSelect = document.getElementById("brand");
+  brandSelect.addEventListener("change", function() {
+    if (brandSelect.value === "") {
+      brandSelect.selectedIndex = 0;
     }
   });
 </script>
