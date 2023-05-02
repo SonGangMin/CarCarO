@@ -31,12 +31,17 @@ exports.renderFindcar = async (req, res, next) => {
           model: likes,
           as: "likes",
         },
+        {
+          attributes: ["cars_hashtag"],
+          model: hashtags,
+          as: "hashtags",
+        },
       ],
       order: [["num", "DESC"]],
       offset,
       limit: PAGE_SIZE,
     });
-    console.log(twits);
+    // console.log(twits);
     // res.json(twits);
     res.render("carfind", {
       title: "내차찾기",
@@ -145,18 +150,17 @@ exports.renderCarSearch = async (req, res, next) => {
           model: likes,
           as: "likes",
         },
+        {
+          attributes: ["cars_hashtag"],
+          model: hashtags,
+          as: "hashtags",
+        },
       ],
       order: [["num", "DESC"]],
       offset,
       limit: PAGE_SIZE,
     });
-    const test = await cars.findAll({
-      where: {
-        from: from,
-        brand: brand,
-      },
-    });
-    // res.json({ where });
+    res.json({ Cars });
     res.render("carfind_search", {
       Cars,
       title: "차량검색결과",
@@ -332,7 +336,10 @@ exports.uploadPost = async (req, res, next) => {
       const result = await Promise.all(
         Hashtags.map((tag) => {
           return hashtags.findOrCreate({
-            where: { cars_hashtag: tag.slice(1).toLowerCase() },
+            where: {
+              cars_hashtag: tag.slice(1).toLowerCase(),
+              cars_num: Cars.num,
+            },
           });
         })
       );

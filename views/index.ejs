@@ -15,7 +15,9 @@
                 <li>
                     <a href="/car/detail/<%= twit.carNum %>">
                         <div class="reccarlist" id="<%= isOwner === twit.user_id ? 'highlight' : '' %>">
-                            <img src="<%= twit.picture[0].url %>" alt=""/>
+                            <% if (twit.picture.length > 0) { %>
+                                <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail">
+                                <% } %>
                             <div>
                                 <form action="/car/carfind" method="post">
                                     <input type="hidden" name="carNum" value="<%= twit.carNum %>">
@@ -44,7 +46,9 @@
                 <li>
                     <a href="/car/detail/<%= twit.carNum %>">
                         <div class="popucarlist" id="<%= isOwner === twit.user_id ? 'highlight' : '' %>">
-                            <img src="<%= twit.picture[0].url %>" alt=""/>
+                            <% if (twit.picture.length > 0) { %>
+                                <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail">
+                                <% } %>
                             <div>
                                 <form action="/car/carfind" method="post">
                                     <input type="hidden" name="carNum" value="<%= twit.carNum %>">
