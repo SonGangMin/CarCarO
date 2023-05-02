@@ -7,20 +7,16 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    user_id: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
     car_num: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.BIGINT,
       allowNull: false,
       references: {
         model: 'cars',
-        key: 'carNum'
-      }
-    },
-    user_id: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-      references: {
-        model: 'users',
-        key: 'id'
+        key: 'num'
       }
     }
   }, {
@@ -35,13 +31,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "number" },
-        ]
-      },
-      {
-        name: "likes_FK_1",
-        using: "BTREE",
-        fields: [
-          { name: "user_id" },
         ]
       },
       {

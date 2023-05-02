@@ -38,8 +38,6 @@ function initModels(sequelize) {
   users.hasMany(comments, { as: "comments", foreignKey: "user_id"});
   inquirys.belongsTo(users, { as: "user", foreignKey: "user_id"});
   users.hasMany(inquirys, { as: "inquiries", foreignKey: "user_id"});
-  likes.belongsTo(users, { as: "user", foreignKey: "user_id"});
-  users.hasMany(likes, { as: "likes", foreignKey: "user_id"});
 
   return {
     boards,
