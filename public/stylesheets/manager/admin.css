@@ -51,6 +51,7 @@ body {
 
 .subtabs li {
   display: block;
+  background-color: #666666;
 }
 
 .subtabs a {
@@ -58,7 +59,7 @@ body {
   padding: 10px;
   text-decoration: none;
   color: #ffffff;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
   text-align: center;
 }
 
@@ -73,4 +74,27 @@ body {
 /* 페이지 컨텐츠 스타일 */
 main {
   margin: 20px;
+}
+
+
+/* 리스트 스타일(테이블) */
+table{
+  width: 100%;
+  border: 1px solid #fff;
+  border-spacing: 0;
+}
+table td,
+table th{
+  text-align: center;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+}
+table td:last-child,
+table th:last-child{
+  text-align: center;
+  border-right: none;
+}
+table tr:last-child th,
+table tr:last-child td{
+  border-bottom: none;
 }

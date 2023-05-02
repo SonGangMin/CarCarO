@@ -1,0 +1,64 @@
+.empty {
+    border: solid 1px black;
+    width: 600px;
+    height: 350px;
+    margin: 0 auto;
+}
+
+.hashtagsearch {
+    margin: 1% auto;
+    width: 250px;
+    /* border: solid 1px black; */
+}
+
+.hashtagsearchbox {
+    width: 200px;
+    height: 30px;
+}
+
+.reccar {
+    border: solid 1px black;
+    padding: 100px;
+    position: relative;
+    width: 100%;
+    display: block;
+    /* left: 15%; */
+}
+
+.reccar ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.reccar ul li {
+    width: 25%;
+    padding: 10px 10px;
+    text-align: center;
+}
+
+.reccar h1 {
+    text-align: center;
+}
+.popucar {
+    border: solid 1px black;
+    padding: 100px;
+    position: relative;
+    width: 100%;
+    display: block;
+    /* left: 15%; */
+}
+
+.popucar ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.popucar ul li {
+    width: 25%;
+    padding: 10px 10px;
+    text-align: center;
+}
+
+.popucar h1 {
+    text-align: center;
+}
