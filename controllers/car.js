@@ -24,24 +24,20 @@ exports.renderFindcar = async (req, res, next) => {
       },
     });
     const twits = await cars.findAll({
-      attributes: [
-        "carNum",
-        "model",
-        "brand",
-        "picture",
-        "year",
-        "mile",
-        "fuel",
-        "hashtag",
-        "from",
-        "user_id",
-        "likes_count",
-        "price",
+      nest: true,
+      include: [
+        {
+          attributes: ["user_id"],
+          model: likes,
+          as: "likes",
+        },
       ],
       order: [["num", "DESC"]],
       offset,
       limit: PAGE_SIZE,
     });
+    console.log(twits);
+    // res.json(twits);
     res.render("carfind", {
       title: "내차찾기",
       twits,
@@ -60,8 +56,19 @@ exports.carLike = async (req, res, next) => {
   try {
     await likes.create({
       number: null,
-      car_num: req.body.carNum,
       user_id: req.user.id,
+      car_num: req.body.carNum,
+    });
+    res.redirect("back");
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+exports.carDislike = async (req, res, next) => {
+  try {
+    await likes.destroy({
+      where: { car_num: req.body.carNum, user_id: req.user.id },
     });
     res.redirect("back");
   } catch (err) {
@@ -121,6 +128,7 @@ exports.renderCarSearch = async (req, res, next) => {
     }
     if (from) {
       where.from = from;
+      console.log("자동차 국내외 : ", from);
     }
     if (brand) {
       where.brand = brand;
@@ -131,11 +139,24 @@ exports.renderCarSearch = async (req, res, next) => {
 
     const Cars = await cars.findAll({
       where,
+      include: [
+        {
+          attributes: ["user_id"],
+          model: likes,
+          as: "likes",
+        },
+      ],
       order: [["num", "DESC"]],
       offset,
       limit: PAGE_SIZE,
     });
-
+    const test = await cars.findAll({
+      where: {
+        from: from,
+        brand: brand,
+      },
+    });
+    // res.json({ where });
     res.render("carfind_search", {
       Cars,
       title: "차량검색결과",
@@ -224,11 +245,13 @@ exports.renderDetail = async (req, res, next) => {
       isOwner,
       status2,
     });
+    
   } catch (error) {
     console.error(error);
     next(error);
   }
 };
+
 
 // 내차팔기 등록 페이지
 exports.renderCarup = (req, res) => {
