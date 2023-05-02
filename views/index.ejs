@@ -12,6 +12,7 @@
     <h1>추천 차량</h1>
     <ul>
         <% twits.forEach(function(twit) { %>
+            <% if (twit && twit.recommends === 1) { %>
                 <li>
                     <a href="/car/detail/<%= twit.carNum %>">
                         <div class="reccarlist" id="<%= isOwner === twit.user_id ? 'highlight' : '' %>">
@@ -33,6 +34,7 @@
                         </div>
                     </a>
                 </li>
+            <% } %>
         <% }) %>
     </ul>
 </div>
@@ -65,6 +67,13 @@
         <% }) %>
     </ul>
 </div>
+
+<script>
+connection.query('SELECT * FROM Cars ORDER BY likes_count ASC LIMIT 8', function (error, results, fields) {
+    if (error) throw error;
+    console.log(results);
+});
+</script>
 
 </body>
 </html>
