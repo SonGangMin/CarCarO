@@ -8,6 +8,7 @@
 }
 .viewImg{
     width: 100%;
+    padding: 0;
 }
 .viewImg li{
     display: flex;

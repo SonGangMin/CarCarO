@@ -247,11 +247,13 @@ exports.renderDetail = async (req, res, next) => {
       isOwner,
       status2,
     });
+    
   } catch (error) {
     console.error(error);
     next(error);
   }
 };
+
 
 // 내차팔기 등록 페이지
 exports.renderCarup = (req, res) => {
