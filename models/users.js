@@ -6,16 +6,22 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
+    no: {
+      autoIncrement: true,
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      unique: "users_UN2"
+    },
+    email: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
     name: {
       type: DataTypes.STRING(100),
       allowNull: false
     },
     password: {
       type: DataTypes.STRING(255),
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING(100),
       allowNull: false
     },
     tel: {
@@ -25,6 +31,11 @@ module.exports = function(sequelize, DataTypes) {
     birth: {
       type: DataTypes.STRING(10),
       allowNull: true
+    },
+    provider: {
+      type: DataTypes.ENUM('local','kakao'),
+      allowNull: false,
+      defaultValue: "local"
     },
     grade: {
       type: DataTypes.INTEGER,
@@ -51,6 +62,14 @@ module.exports = function(sequelize, DataTypes) {
         fields: [
           { name: "email" },
           { name: "tel" },
+        ]
+      },
+      {
+        name: "users_UN2",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "no" },
         ]
       },
     ]
