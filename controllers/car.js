@@ -53,6 +53,8 @@ exports.renderFindcar = async (req, res, next) => {
   }
 };
 exports.carLike = async (req, res, next) => {
+  console.log("ddddddddddddddddddddddddddddddd", req.body.carNum);
+
   try {
     await likes.create({
       number: null,
