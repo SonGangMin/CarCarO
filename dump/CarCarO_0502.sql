@@ -103,7 +103,7 @@ CREATE TABLE `cars` (
 
 LOCK TABLES `cars` WRITE;
 /*!40000 ALTER TABLE `cars` DISABLE KEYS */;
-INSERT INTO `cars` VALUES (61,'12가 1212','skmin0628','제네시스','국산','그랜저','5555','93','경유','수동','3','2','경차','전륜','ㅅㅅ','','[{\"url\": \"/carImg/logo_1682913397976.png\", \"filename\": \"logo_1682913397976.png\"}, {\"url\": \"/carImg/ì¤í¬ë¦°ì· 2023-02-07 09-09-17_1682913397980.png\", \"filename\": \"ì¤í¬ë¦°ì· 2023-02-07 09-09-17_1682913397980.png\"}, {\"url\": \"/carImg/ì¤í¬ë¦°ì· 2023-02-07 09-11-30_1682913397986.png\", \"filename\": \"ì¤í¬ë¦°ì· 2023-02-07 09-11-30_1682913397986.png\"}]','2','2','2','2','2','2','2','2','2','undefined','#13 #12 #55',0,123,'ㅅㅅ',2,0,'2023-05-01 03:56:37','2023-05-01 04:24:52'),(62,'2323','skmin0628','제네시스','국산','911','5555','93','경유','자동','3','2','경차','전륜','빨강','','[{\"url\": \"/carImg/logo_1682913803236.png\", \"filename\": \"logo_1682913803236.png\"}]','2','2','2','2','2','2','2','2','2','undefined','555 #13 #5555',0,333,'ㅇ',2,1,'2023-05-01 04:03:23','2023-05-02 01:45:47');
+INSERT INTO `cars` VALUES (61,'12가 1212','skmin0628','제네시스','국산','그랜저','5555','93','경유','수동','3','2','경차','전륜','ㅅㅅ','','[{\"url\": \"/carImg/logo_1682913397976.png\", \"filename\": \"logo_1682913397976.png\"}, {\"url\": \"/carImg/ì¤í¬ë¦°ì· 2023-02-07 09-09-17_1682913397980.png\", \"filename\": \"ì¤í¬ë¦°ì· 2023-02-07 09-09-17_1682913397980.png\"}, {\"url\": \"/carImg/ì¤í¬ë¦°ì· 2023-02-07 09-11-30_1682913397986.png\", \"filename\": \"ì¤í¬ë¦°ì· 2023-02-07 09-11-30_1682913397986.png\"}]','2','2','2','2','2','2','2','2','2','undefined','#13 #12 #55',1,123,'ㅅㅅ',2,0,'2023-05-01 03:56:37','2023-05-01 04:24:52'),(62,'2323','skmin0628','제네시스','국산','911','5555','93','경유','자동','3','2','경차','전륜','빨강','','[{\"url\": \"/carImg/logo_1682913803236.png\", \"filename\": \"logo_1682913803236.png\"}]','2','2','2','2','2','2','2','2','2','undefined','555 #13 #5555',0,333,'ㅇ',2,1,'2023-05-01 04:03:23','2023-05-02 01:45:47');
 /*!40000 ALTER TABLE `cars` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -285,14 +285,14 @@ DROP TABLE IF EXISTS `likes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `likes` (
   `number` bigint NOT NULL AUTO_INCREMENT,
-  `car_num` varchar(255) NOT NULL,
+  `car_num` bigint NOT NULL,
   `user_id` varchar(100) NOT NULL,
   PRIMARY KEY (`number`),
   KEY `likes_FK_1` (`user_id`),
   KEY `likes_FK` (`car_num`),
-  CONSTRAINT `likes_FK` FOREIGN KEY (`car_num`) REFERENCES `cars` (`carNum`),
+  CONSTRAINT `likes_FK` FOREIGN KEY (`car_num`) REFERENCES `cars` (`num`),
   CONSTRAINT `likes_FK_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -301,6 +301,7 @@ CREATE TABLE `likes` (
 
 LOCK TABLES `likes` WRITE;
 /*!40000 ALTER TABLE `likes` DISABLE KEYS */;
+INSERT INTO `likes` VALUES (8,61,'skm0628');
 /*!40000 ALTER TABLE `likes` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -313,7 +314,24 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `increment_likes_count` AFTER INSERT ON `likes` FOR EACH ROW BEGIN
-  UPDATE cars SET likes_count = likes_count + 1 WHERE carNum = NEW.car_num;
+  UPDATE cars SET likes_count = likes_count + 1 WHERE num = NEW.car_num;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `decrement_likes_count` AFTER DELETE ON `likes` FOR EACH ROW BEGIN 
+	UPDATE cars SET likes_count = likes_count -1 WHERE num = OLD.car_num;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -362,4 +380,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-02 11:01:19
+-- Dump completed on 2023-05-02 11:15:58
