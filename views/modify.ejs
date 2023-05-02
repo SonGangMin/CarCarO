@@ -42,10 +42,26 @@
         <input id="birth" type="number" name="birth" value="<%= user.birth %>" placeholder="나이를 입력해주세요"></label>
         <span id="birth_message"></span><br>
         <button type="button" onclick="checkForm()" class="edit_btn">정보 수정</button>
-        <form method="POST" action="/mypage/withdraw">
-            <button type="submit" class="withdraw_btn">탈퇴하기</button>
-        </form>
     </form>
+
+    <form id="withdrawForm" method="POST" action="/mypage/withdraw" style="float:left; width:50%">
+        <button type="submit" class="withdraw_btn" onclick="confirmWithdraw(event)">탈퇴하기</button>
+        <button type="button" class="cancel_btn" onclick="cancelWithdraw()">취소</button>
+      </form>
+      
+      <script>
+        function confirmWithdraw(event) {
+          // confirm 대화 상자를 띄움
+          if (!confirm('정말로 탈퇴하시겠습니까?')) {
+            event.preventDefault(); // 요청을 보내는 것을 중단함
+          }
+        }
+      
+        function cancelWithdraw() {
+          location.href = '/mypage'; // 마이페이지로 돌아감
+        }
+      </script>
+      
 
     <script>
         const edit_form = document.getElementById('editform');

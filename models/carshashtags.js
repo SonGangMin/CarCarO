@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('carsHashtag', {
+  return sequelize.define('carshashtags', {
     carsId: {
       type: DataTypes.BIGINT,
       allowNull: false,
@@ -10,7 +10,7 @@ module.exports = function(sequelize, DataTypes) {
         key: 'num'
       }
     },
-    hashtagsId: {
+    hashtagId: {
       type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
@@ -21,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'carsHashtag',
+    tableName: 'carshashtags',
     timestamps: true,
     indexes: [
       {
@@ -30,14 +30,14 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "carsId" },
-          { name: "hashtagsId" },
+          { name: "hashtagId" },
         ]
       },
       {
-        name: "carsHashtag_FK_1",
+        name: "carsHashtags_FK_1",
         using: "BTREE",
         fields: [
-          { name: "hashtagsId" },
+          { name: "hashtagId" },
         ]
       },
     ]

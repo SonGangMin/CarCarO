@@ -2,6 +2,8 @@ const express = require("express");
 const mypageController = require("../controllers/mypage");
 const { isLoggedIn, isMyId } = require("../middlewares");
 const { getRounds } = require("bcrypt");
+const users = require("../models/users");
+const models = require('../models')
 
 const router = express.Router();
 
@@ -27,10 +29,28 @@ router.get("/mypage/edit", function (req, res) {
   res.send("edit page");
 });
 
-// 회원 탈퇴 페이지 렌더링
-router.get("/withdraw", mypageController.showWithdrawPage);
-
-// 회원 탈퇴 처리
-router.post("/withdraw", mypageController.withdraw);
+// 회원 탈퇴
+// router.get("/withdraw", isLoggedIn, mypageController.renderWithdrawPage);
+router.post("/withdraw", async(req, res, next) => {
+  // console.log(req.body);
+  // users.findOneAndDelete({ where: req.user.id })
+  // .then(() => {
+  //   res.redirect('/'); // 탈퇴 성공 시 메인 페이지로 리다이렉트
+  // })
+  // .catch(err => next (err));
+  const myId = req.user.id;
+  console.log('ddddddddddddddddddddddd',myId)
+  try{
+    const withdraw = await models.users.findOne({where:{id:myId}});
+    if(!withdraw){
+      throw new Error('오류입니다.')
+    }
+    await models.users.destroy({where:{id:myId}});
+    res.redirect('/')
+  } catch(err){
+    console.error(err);
+    next(err);
+  }
+});
 
 module.exports = router;

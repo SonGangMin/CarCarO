@@ -2,16 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b5763d0e-74bf-4443-9f4b-374b4073ca35" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/CarCarO2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/CarCarO3.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/auth.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carImg/911_1682994925176.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carImg/911_1682996132177.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carImg/911_1682997910841.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/carImg/logo_1682994964585.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dump/CarCarO_0502_2.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/mypage.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/mypage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/cars.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/cars.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/carsHashtag.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/carsHashtags.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/carshashtags.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/init-models.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/init-models.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/users.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/mypage.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/mypage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/carfind.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/carfind.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/carfind_search.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/carfind_search.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/join.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/join.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/modify.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/modify.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/modify_password.ejs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/myaccount_delete" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/withdraw.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/withdraw.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,14 +35,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/pen/git/CarCarO3",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/pen/git/tourland_pjt&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -43,6 +53,8 @@
       <option name="presentableId" value="Default" />
       <updated>1682930143291</updated>
       <workItem from="1682930144299" duration="162000" />
+      <workItem from="1682993157618" duration="91000" />
+      <workItem from="1683011633536" duration="4000" />
     </task>
     <servers />
   </component>
