@@ -26,7 +26,11 @@
       <%} else {%>
       <div class="util">
         <a href="/mypage"><%= user.name %></a>
-        <a href="/auth/logout">로그아웃</a>
+        <% if(user.provider === 'local'){ %>
+          <a href="/auth/logout">로그아웃</a>
+        <% } else if(user.provider === 'kakao'){ %>
+        <a href="https://kauth.kakao.com/oauth/logout?client_id=<%= process.env.KAKAO_ID %>&logout_redirect_uri=http://localhost:3005/auth/logout">로그아웃</a>
+        <% } %>
         <a href="/mypage">마이페이지</a>
       </div>
       <% } %>

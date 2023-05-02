@@ -11,15 +11,25 @@ module.exports = () => {
         console.log('kakao profile', profile);
         try{
             const exUser = await users.findOne({
-                where: {snsId: profile.id, provider: 'kakao'},
+                where: {provider: 'kakao'},
             });
             if(exUser){
                 done(null, exUser);
             } else{
                 const newUser = await users.create({
-                    email: profile.
-                })
+                    email: 'kakao',
+                    name: profile.displayName,
+                    password: 'kakao',
+                    tel: 'kakao',
+                    birth: 'kakao',
+                    id: profile.id,
+                    provider: 'kakao',
+                });
+                done(null, newUser);
             }
+        } catch(error){
+            console.error(error);
+            done(error);
         }
-    }))
-}
+    }));
+};

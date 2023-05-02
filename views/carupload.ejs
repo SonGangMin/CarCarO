@@ -6,7 +6,7 @@
                 <label for=""><b>자동차 번호</b><input id="carNum" type="text" name="carNum" placeholder="ex) 00가 0000"></label>
                 <label for="">
                     <b>국산·수입</b>
-                    <select name="from" id="from">
+                    <select name="from" id="fromCar">
                         <option value="" selected>국산·수입</option>
                         <option value="국산">국산</option>
                         <option value="수입">수입</option>
@@ -27,15 +27,15 @@
                         <option value="경차">경차</option>
                         <option value="소형차">승합차</option>
                         <option value="준중형차">SUV</option>
-                        <option value="중형차">화물차</option>
-                        <option value="대형차">화물차</option>
-                        <option value="스포츠카">화물차</option>
-                        <option value="SUV">화물차</option>
-                        <option value="승합차">화물차</option>
+                        <option value="중형차">중형차</option>
+                        <option value="대형차">대형차</option>
+                        <option value="스포츠카">스포츠카</option>
+                        <option value="SUV">SUV</option>
+                        <option value="승합차">승합차</option>
                         <option value="화물차">화물차</option>
-                        <option value="버스">화물차</option>
-                        <option value="리무진">화물차</option>
-                        <option value="캠핑카">화물차</option>
+                        <option value="버스">버스</option>
+                        <option value="리무진">리무진</option>
+                        <option value="캠핑카">캠핑카</option>
                     </select>
                 </label>
 
@@ -199,7 +199,7 @@
   
         const form = document.querySelector('#carForm');
         const carNumInput = document.querySelector('#carNum');
-        const fromInput = document.querySelector('#from');
+        const fromInput = document.querySelector('#fromCar');
         const brandInput = document.querySelector('#brand');
         const typeInput = document.querySelector('#type');
         const modelInput = document.querySelector('#model');

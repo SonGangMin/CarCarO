@@ -36,6 +36,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 1
+    },
+    provider: {
+      type: DataTypes.ENUM('local','kakao'),
+      allowNull: false
     }
   }, {
     sequelize,
