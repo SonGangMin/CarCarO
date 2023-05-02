@@ -1,16 +1,20 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('users', {
-    no: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      unique: "users_UN"
-    },
     id: {
       type: DataTypes.STRING(100),
       allowNull: false,
       primaryKey: true
+    },
+    no: {
+      autoIncrement: true,
+      type: DataTypes.BIGINT,
+      allowNull: false,
+      unique: "users_UN2"
+    },
+    email: {
+      type: DataTypes.STRING(100),
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING(100),
@@ -20,17 +24,18 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    email: {
-      type: DataTypes.STRING(100),
-      allowNull: false
-    },
     tel: {
       type: DataTypes.STRING(13),
       allowNull: false
     },
     birth: {
       type: DataTypes.STRING(10),
-      allowNull: false
+      allowNull: true
+    },
+    provider: {
+      type: DataTypes.ENUM('local','kakao'),
+      allowNull: false,
+      defaultValue: "local"
     },
     grade: {
       type: DataTypes.INTEGER,
@@ -59,16 +64,16 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "no" },
+          { name: "email" },
+          { name: "tel" },
         ]
       },
       {
-        name: "users2_UN",
+        name: "users_UN2",
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "email" },
-          { name: "tel" },
+          { name: "no" },
         ]
       },
     ]
