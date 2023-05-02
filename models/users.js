@@ -1,12 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('users', {
-    no: {
-      autoIncrement: true,
-      type: DataTypes.BIGINT,
-      allowNull: false,
-      unique: "users_UN"
-    },
     id: {
       type: DataTypes.STRING(100),
       allowNull: false,
@@ -30,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     birth: {
       type: DataTypes.STRING(10),
-      allowNull: false
+      allowNull: true
     },
     grade: {
       type: DataTypes.INTEGER,
@@ -52,14 +46,6 @@ module.exports = function(sequelize, DataTypes) {
       },
       {
         name: "users_UN",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "no" },
-        ]
-      },
-      {
-        name: "users2_UN",
         unique: true,
         using: "BTREE",
         fields: [
