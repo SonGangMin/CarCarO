@@ -6,7 +6,7 @@
                 <label for=""><b>자동차 번호</b><input id="carNum" type="text" name="carNum" placeholder="ex) 00가 0000"></label>
                 <label for="">
                     <b>국산·수입</b>
-                    <select name="from" id="fromCar">
+                    <select name="from" id="from">
                         <option value="" selected>국산·수입</option>
                         <option value="국산">국산</option>
                         <option value="수입">수입</option>
@@ -199,7 +199,7 @@
   
         const form = document.querySelector('#carForm');
         const carNumInput = document.querySelector('#carNum');
-        const fromInput = document.querySelector('#fromCar');
+        const fromInput = document.querySelector('#from');
         const brandInput = document.querySelector('#brand');
         const typeInput = document.querySelector('#type');
         const modelInput = document.querySelector('#model');
