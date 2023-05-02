@@ -110,13 +110,13 @@ exports.renderCarSearch = async (req, res, next) => {
 
     const where = {
       price: {
-        [Op.between]: [lowprice, highprice],
+        [Op.between]: [parseInt(lowprice), parseInt(highprice)],
       },
       year: {
-        [Op.between]: [startyear, endyear],
+        [Op.between]: [parseInt(startyear), parseInt(endyear)],
       },
       mile: {
-        [Op.between]: [shortmile, longmile],
+        [Op.between]: [parseInt(shortmile), parseInt(longmile)],
       },
       model: {
         [Op.like]: [`%${model}%`],
@@ -245,13 +245,11 @@ exports.renderDetail = async (req, res, next) => {
       isOwner,
       status2,
     });
-    
   } catch (error) {
     console.error(error);
     next(error);
   }
 };
-
 
 // 내차팔기 등록 페이지
 exports.renderCarup = (req, res) => {
