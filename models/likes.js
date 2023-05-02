@@ -8,11 +8,11 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     car_num: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.BIGINT,
       allowNull: false,
       references: {
         model: 'cars',
-        key: 'carNum'
+        key: 'num'
       }
     },
     user_id: {
