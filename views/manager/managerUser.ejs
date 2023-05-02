@@ -1,76 +1,79 @@
 <%- include('../include/managerhead.ejs') %>
-
-<h1>회원관리</h1>
-<table>
-    <tr>
-        <th>No</th>
-        <th>이름</th>
-        <th>아이디</th>
-        <th>이메일</th>
-        <th>전화번호</th>
-        <th>나이</th>
-        <% if(user.grade === 3) { %>
-            <th>회원등급</th>
-            <th>등급수정</th>
-            <th>회원탈퇴</th>
-        <% } %>
-    </tr>
-    <% User.forEach(function(users) { %>
-        <% if(user.id === users.id || user.grade === 3) { %>
+<div class="container">
+  <div class="contents">
+    <h1>회원관리</h1>
+    <table>
         <tr>
-            <td><%= users.no %></td>
-            <td><%= users.name %></td>
-            <td><%= users.id %></td>
-            <td><%= users.email %></td>
-            <td><%= users.tel %></td>
-            <td><%= users.birth %></td>
+            <th>No</th>
+            <th>이름</th>
+            <th>아이디</th>
+            <th>이메일</th>
+            <th>전화번호</th>
+            <th>나이</th>
             <% if(user.grade === 3) { %>
-                <td><%= users.grade %></td>
-                <td>
-                    <form action="/manager/managerUser/edit/<%= users.id %>" method="post">
-                        <% if(users.grade === 1) { %>
-                            <button>등급승급</button>
-                        <% } else if(users.grade === 2) { %>
-                            <button>등급강등</button>
-                        <% } %>
-                    </form>
-                </td>
-                <td>
-                    <% if(users.grade === 1 || users.grade === 2) { %>
-                    <form action="/manager/managerUser/delete/<%= users.id %>" method="post">
-                        <button>탈퇴</button>
-                    </form>
-                    <% } else %>
-                </td>
+                <th>회원등급</th>
+                <th>등급수정</th>
+                <th>회원탈퇴</th>
             <% } %>
         </tr>
-        <% } %>
-    <% }); %>
-    <% if (totalPages > 1) { %>
-        <nav>
-          <ul class="pagination">
-            <% if (currentPage == 1) { %>
-              <li class="disabled"><span>&laquo;</span></li>
-            <% } else { %>
-              <li><a href="?page=<%= currentPage - 1 %>">&laquo;</a></li>
+        <% User.forEach(function(users) { %>
+            <% if(user.id === users.id || user.grade === 3) { %>
+            <tr>
+                <td><%= users.no %></td>
+                <td><%= users.name %></td>
+                <td><%= users.id %></td>
+                <td><%= users.email %></td>
+                <td><%= users.tel %></td>
+                <td><%= users.birth %></td>
+                <% if(user.grade === 3) { %>
+                    <td><%= users.grade %></td>
+                    <td>
+                        <form action="/manager/managerUser/edit/<%= users.id %>" method="post">
+                            <% if(users.grade === 1) { %>
+                                <button>등급승급</button>
+                            <% } else if(users.grade === 2) { %>
+                                <button>등급강등</button>
+                            <% } %>
+                        </form>
+                    </td>
+                    <td>
+                        <% if(users.grade === 1 || users.grade === 2) { %>
+                        <form action="/manager/managerUser/delete/<%= users.id %>" method="post">
+                            <button>탈퇴</button>
+                        </form>
+                        <% } else %>
+                    </td>
+                <% } %>
+            </tr>
             <% } %>
-      
-            <% for (let i = 1; i <= totalPages; i++) { %>
-              <% if (i == currentPage) { %>
-                <li class="active"><span><%= i %></span></li>
-              <% } else { %>
-                <li><a href="?page=<%= i %>"><%= i %></a></li>
-              <% } %>
-            <% } %>
-      
-            <% if (currentPage == totalPages) { %>
-              <li class="disabled"><span>&raquo;</span></li>
-            <% } else { %>
-              <li><a href="?page=<%= currentPage + 1 %>">&raquo;</a></li>
-            <% } %>
-          </ul>
-        </nav>
-      <% } %>
-</table>
+        <% }); %>
+        <% if (totalPages > 1) { %>
+            <nav>
+              <ul class="pagination">
+                <% if (currentPage == 1) { %>
+                  <li class="disabled"><span>&laquo;</span></li>
+                <% } else { %>
+                  <li><a href="?page=<%= currentPage - 1 %>">&laquo;</a></li>
+                <% } %>
+          
+                <% for (let i = 1; i <= totalPages; i++) { %>
+                  <% if (i == currentPage) { %>
+                    <li class="active"><span><%= i %></span></li>
+                  <% } else { %>
+                    <li><a href="?page=<%= i %>"><%= i %></a></li>
+                  <% } %>
+                <% } %>
+          
+                <% if (currentPage == totalPages) { %>
+                  <li class="disabled"><span>&raquo;</span></li>
+                <% } else { %>
+                  <li><a href="?page=<%= currentPage + 1 %>">&raquo;</a></li>
+                <% } %>
+              </ul>
+            </nav>
+          <% } %>
+    </table>
+  </div>
+</div>
 </body>
 </html>

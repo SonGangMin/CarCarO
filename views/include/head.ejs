@@ -14,7 +14,7 @@
   <body>
     <header id="hd">
       <div class="util">
-        <% if (user && user.grade === 2 || user.grade === 3) { %>
+        <% if (user && user.grade === 2 || user && user.grade === 3) { %>
         <a href="/manager">관리자 페이지</a>
         <% } %> <% if (!user || !user.id) {%>
 
