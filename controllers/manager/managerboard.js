@@ -91,14 +91,34 @@ exports.renderManagerBoardSearch = async (req, res, next) => {
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
     const total = await models.boards.count();
     const { limit, offset } = getPagination(page, 15);
-    const result = req.query.result;
+    let where = {};
+    const { searchType, result } = req.query;
+    if (result) {
+      if (searchType === "title") {
+        where = {
+          title: { [Op.like]: `%${result}%` },
+        };
+      } else if (searchType === "content") {
+        where = {
+          content: { [Op.like]: `%${result}%` },
+        };
+      } else if (searchType === "title_content") {
+        where = {
+          [Op.or]: [
+            { title: { [Op.like]: `%${result}%` } },
+            { content: { [Op.like]: `%${result}%` } },
+          ],
+        };
+      } else {
+        where = {
+          [Op.or]: [
+            { user_id: { [Op.like]: `%${result}%` } },
+            { "$user.name$": { [Op.like]: `%${result}%` } },
+          ],
+        };
+      }
+    }
     const listCount = await models.boards.findAndCountAll({
-      where: {
-        [Op.or]: [
-          { title: { [Op.like]: `%${result}%` } },
-          { content: { [Op.like]: `%${result}%` } },
-        ],
-      },
       include: [
         {
           attributes: ["name"],
@@ -106,6 +126,7 @@ exports.renderManagerBoardSearch = async (req, res, next) => {
           as: "user",
         },
       ],
+      where,
       order: [["createdAt", "DESC"]],
       offset,
       limit,

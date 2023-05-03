@@ -2,12 +2,23 @@
 
 <h1>검색 결과</h1>
 <ul>
-  <% results.forEach(function(result) { %>
-  <li>
-    <a href="/board/<%= result.postId %>"><%= result.title %></a>
-    내용: <%= result.content %>
-  </li>
-  <% }); %>
+  <% results.forEach(function(result) { %> <% if (result.grade === 2) { %>
+  <a
+    style="background-color: black; color: white; font-weight: bold"
+    href="/board/content/<%= result.postId %>"
+  >
+    <li style="background-color: black; color: white; font-weight: bold">
+      <%= result.title %> 작성자: <%= result.user.name %>(<%= result.user_id %>)
+    </li></a
+  >
+  <% } else { %>
+  <a href="/board/content/<%= result.postId %>">
+    <li>
+      <%= result.title %> 작성자: <%= result.user.name %>(<%= result.user_id %>)
+    </li>
+  </a>
+
+  <% } %> <% }); %>
 </ul>
 <script>
   function onPageClick(event, page) {
@@ -23,6 +34,12 @@
 <%- include('./include/pagination.ejs') %> <%-
 include('./include/pagination.ejs') %>
 <form action="/board/search/" method="get">
+  <select name="searchType">
+    <option value="title">제목</option>
+    <option value="content">내용</option>
+    <option value="title_content">제목+내용</option>
+    <option value="id">작성자</option>
+  </select>
   <input type="text" name="result" placeholder="검색어를 입력하세요." />
   <button type="submit">검색</button>
 </form>
