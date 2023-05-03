@@ -4,6 +4,7 @@ const models = require("../models");
 const bcrypt = require("bcrypt");
 const { hash } = require("bcrypt");
 const axios = require("axios");
+const { likes } = require("../models");
 
 exports.renderMypage = (req, res) => {
   res.render("mypage", {
@@ -145,34 +146,30 @@ exports.postModify = async (req, res, next) => {
 };
 
 exports.renderLikescar = async (req, res, next) => {
-  const car_num = req.params.likes;
+  const num = req.params.num;
   try {
     const PAGE_SIZE = 15;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
     const offset = (page - 1) * PAGE_SIZE;
-    const total = await models.likes.count();
+    const total = await likes.count({
+      where: { car_num: num },
+      include: [{ model: models.cars, as: "car_num" }],
+    });
     const totalPages = Math.ceil(total / PAGE_SIZE);
-    const twits = await models.likes.findAll({
-    where: { car_num },
-    include: [
-      {
-        attributes: ["다"],
-        model: models.Cars,
-        as: "car_num",
-      }
-    ],
-    offset,
-    limit: PAGE_SIZE,
+    const twits = await likes.findAll({
+      where: { car_num: num },
+      include: [{ model: models.cars, as: "car_num" }],
+      offset,
+      limit: PAGE_SIZE,
     });
-  // console.log("자료확인--", twits[0]);
     res.render("mylikescar", {
-        twits,
-        title: "관심차량",
-        totalPages,
-        currentPage: page,
+      twits,
+      title: "관심차량",
+      totalPages,
+      currentPage: page,
     });
-    } catch (err) {
-        console.error(err);
-        next(err);
-}
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 };
