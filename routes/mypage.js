@@ -13,6 +13,8 @@ router.post("/edit", isLoggedIn, mypageController.updateUserInfo);
 // 회원 정보 수정 페이지 라우터
 router.get("/modify", isLoggedIn, mypageController.modifyPage);
 
+router.get("/mylikescar/:user_id", isLoggedIn, mypageController.renderLikescar);
+
 router.get("/myinquiry/:user_id", isLoggedIn, mypageController.renderInquiry);
 
 // 마이페이지 들어가기 전 비밀번호 확인 페이지
