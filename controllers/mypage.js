@@ -162,35 +162,3 @@ exports.postModify = function(req, res, next) {
   models.query('UPDATE users SET name = ?, email = ?, password = ?, WHERE id = ?', [name, email, req.session.user_id], function(err, result) {
     res.render('withdraw');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             })
 }
-
-// // 회원 탈퇴
-// exports.renderWithdrawPage = (req, res) => {
-//   res.render("withdraw");
-
-
-// exports.withdraw = function (req, res) {
-//   const user_id = req.user.id; // 현재 로그인한 유저의 id
-//   const withdrawReason = req.body.withdrawReason // 회원 탈퇴 사유
-  
-
-//   // 회원 정보를 삭제하는 쿼리 실행
-//   models.query("DELETE FROM users WHERE id = ?", 
-//   [user_id], 
-//   (err, result) => {
-//     if (err) throw err;
-//     req.logout(); // 로그아웃
-//     res.redirect("/"); // 메인페이지로 리다이렉트
-//     });
-
-//   };
-// };
-  
-// const withdraw = function(req, res, next) {
-//   const user_id = req.session.user_id; // 세션에서 로그인한 사용자 ID를 가져옴
-//   models.users.findByIdAndDelete(user_id, function(err, user) {
-//     if (err) return next(err);
-//     req.logout();
-//     res.redirect('/');
-//     });
-//   };
-    

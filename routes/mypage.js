@@ -30,14 +30,7 @@ router.get("/mypage/edit", function (req, res) {
 });
 
 // 회원 탈퇴
-// router.get("/withdraw", isLoggedIn, mypageController.renderWithdrawPage);
 router.post("/withdraw", async(req, res, next) => {
-  // console.log(req.body);
-  // users.findOneAndDelete({ where: req.user.id })
-  // .then(() => {
-  //   res.redirect('/'); // 탈퇴 성공 시 메인 페이지로 리다이렉트
-  // })
-  // .catch(err => next (err));
   const myId = req.user.id;
   console.log('ddddddddddddddddddddddd',myId)
   try{
