@@ -1,7 +1,33 @@
 const models = require('../models');
 
-exports.renderMain = (req, res) => {
-  res.render("index", { title: "CarcarO"});
+exports.renderMain = async(req, res, next) => {
+  const isMine = req.user && req.user.id;
+  // const carNum = req.param
+  try {
+    const Cars = await models.cars.findAll({
+      include: [
+        {
+          attributes: ["user_id"],
+          model: models.likes,
+          as: "likes",
+        },
+      ],
+    });
+    const isOwner = req.user && Cars.user_id === req.user.id;
+    const status2 = Cars.status === 2;
+    console.log("1111111111111111", Cars);
+    res.render("index", {
+      title: "CarCarO",
+      twits: Cars,
+      isOwner,
+      status2,
+      isMine,
+    });
+    
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
 };
 // exports.renderMain = (req, res) => {
 //   const usergrade = req.user && req.user.grade === 2;
@@ -20,7 +46,6 @@ exports.renderJoin = async(req, res) => {
 exports.renderLogin = (req, res) => {
   res.render("login", { title: "로그인" });
 };
-
 // 마이페이지
 
 

@@ -12,7 +12,7 @@
 </style>
 <h1><%= board.title %></h1>
 <p><%= board.content %></p>
-<p>작성자: <%= board.user.name %></p>
+<p>작성자: <%= board.user.name %>(<%= board.user_id %>)</p>
 <p>최초 작성일: <%= board.createdAt %></p>
 <p>최종 수정일: <%= board.updatedAt %></p>
 
@@ -88,9 +88,14 @@
     });
   });
 </script>
-
-<% if (isUser) { %>
-<form action="/board/<%= board.postId %>" method="post">
+<script>
+  function onPageClick(event, page) {
+    location.href = "/board/content/<%= board.postId %>?page=" + page;
+    console.info(page + " (from options)");
+  }
+</script>
+<%- include('./include/pagination.ejs') %> <% if (isUser) { %>
+<form action="/board/content/<%= board.postId %>" method="post">
   <input type="text" name="content" />
   <input type="submit" value="등록" />
 </form>

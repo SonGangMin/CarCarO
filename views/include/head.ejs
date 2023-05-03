@@ -8,13 +8,14 @@
     <link rel="stylesheet" href="/stylesheets/mypage.css" />
     <link rel="stylesheet" href="/stylesheets/faqSearch.css" />
     <link rel="stylesheet" href="/stylesheets/car.css" />
+    <link rel="stylesheet" href="/stylesheets/index.css" />
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <header id="hd">
       <div class="util">
-        <% if (user &&user.grade === 2) { %>
+        <% if (user && user.grade === 2 || user && user.grade === 3) { %>
         <a href="/manager">관리자 페이지</a>
         <% } %> <% if (!user || !user.id) {%>
 
@@ -25,7 +26,11 @@
       <%} else {%>
       <div class="util">
         <a href="/mypage"><%= user.name %></a>
-        <a href="/auth/logout">로그아웃</a>
+        <% if(user.provider === 'local'){ %>
+          <a href="/auth/logout">로그아웃</a>
+        <% } else if(user.provider === 'kakao'){ %>
+        <a href="https://kauth.kakao.com/oauth/logout?client_id=<%= process.env.KAKAO_ID %>&logout_redirect_uri=http://localhost:3005/auth/logout">로그아웃</a>
+        <% } %>
         <a href="/mypage">마이페이지</a>
       </div>
       <% } %>

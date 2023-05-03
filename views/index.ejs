@@ -1,4 +1,115 @@
 <%- include('./include/head.ejs') %>
 
+<div class="empty" algin="center">
+    <h1 align="center">empty</h1>
+</div>
+<div class="hashtagsearch">
+    <input class="hashtagsearchbox" placeholder="해쉬태그 검색">
+    <button type="submit">검색</button>
+</div>
+
+<div class="reccar">
+    <h1>추천 차량</h1>
+    <ul>
+        <% twits.filter(twit => twit && twit.recommends === 1).slice(0, 8).forEach(function(twit) { %>
+            <li>
+                <a href="/car/detail/<%= twit.carNum %>">
+                    <div class="reccarlist" id="<%= isOwner === twit.user_id ? 'highlight' : '' %>">
+                        <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail"/>
+                        <div class="like">
+                            <% let count=0; %>
+                            <% for(let i=0; i < twit.likes.length; i++) { %>
+                                <% if(twit.likes[i].user_id == isMine) { %>
+                                <% count++; %>
+                                <% } %>
+                            <% } %>
+                            <% console.log(isMine) %>
+                            <% console.log(isMine === twit.user_id) %>
+                            <% if (typeof isMine === 'undefined') { %>
+                                <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
+                            <% } else if (isMine === twit.user_id) { %>
+                                <button class="Mine">♥ 내차<%= twit.likes_count %></button>
+                            <% } else { %>
+                                <% if(!count) { %>
+                                <form action="/car/carfind" method="post" onsubmit="return confirm('관심차량 목록에 추가하시겠습니까?')">
+                                    <input type="hidden" name="carNum" value="<%= twit.num %>">
+                                    <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
+                                </form>
+                                <% } else { %>
+                                <form action="/car/carfind2" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
+                                    <input type="hidden" name="carNum" value="<%= twit.num %>">
+                                    <button type="submit" class="heart">○ <%= twit.likes_count %></button>
+                                </form>
+                            <% } %>
+                            <% } %>
+                        </div>
+                        <div>
+                            <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
+                            <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
+                            <div class="hash"><%= twit.hashtag %></div>
+                            <div class="hash"><%= twit.hashtag %></div>
+                            <div class="hash"><%= twit.hashtag %></div>
+                            <div class="hash"><%= twit.hashtag %></div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        <% }) %>
+    </ul>
+</div>
+
+
+<div class="popucar">
+    <h1>인기 차량</h1>
+    <ul>
+        <% twits.sort((a, b) => b.likes_count - a.likes_count).slice(0, 8).forEach(function(twit) { %>
+                <li>
+                    <a href="/car/detail/<%= twit.carNum %>">
+                        <div class="popucarlist" id="<%= isOwner === twit.user_id ? 'highlight' : '' %>">
+                            <% if (twit.picture.length > 0) { %>
+                                <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail">
+                                <% } %>
+                            <div class="like">
+                                <% let count=0; %>
+                                <% for(let i=0; i < twit.likes.length; i++) { %>
+                                    <% if(twit.likes[i].user_id == isMine) { %>
+                                    <% count++; %>
+                                    <% } %>
+                                <% } %>
+                                <% console.log(isMine) %>
+                                <% console.log(isMine === twit.user_id) %>
+                                <% if (typeof isMine === 'undefined') { %>
+                                    <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
+                                <% } else if (isMine === twit.user_id) { %>
+                                    <button class="Mine">♥ 내차<%= twit.likes_count %></button>
+                                <% } else { %>
+                                    <% if(!count) { %>
+                                    <form action="/car/carfind" method="post" onsubmit="return confirm('관심차량 목록에 추가하시겠습니까?')">
+                                        <input type="hidden" name="carNum" value="<%= twit.num %>">
+                                        <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
+                                    </form>
+                                    <% } else { %>
+                                    <form action="/car/carfind2" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
+                                        <input type="hidden" name="carNum" value="<%= twit.num %>">
+                                        <button type="submit" class="heart">○ <%= twit.likes_count %></button>
+                                    </form>
+                                <% } %>
+                                <% } %>
+                            </div>
+                            <div>
+                                <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
+                                <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
+                                <div class="hash"><%= twit.hashtag %></div>
+                                <div class="hash"><%= twit.hashtag %></div>
+                                <div class="hash"><%= twit.hashtag %></div>
+                                <div class="hash"><%= twit.hashtag %></div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+        <% }) %>
+    </ul>
+</div>
+
 </body>
 </html>

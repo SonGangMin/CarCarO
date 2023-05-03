@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <link rel="stylesheet" href="stylesheets/auth.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="stylesheets/auth.css" />
+</head>
 
   <body>
-
     <form action="/auth/join" id="joinform" method="post" class="form">
       <h1 class="title">회원가입</h1>
       <label for=""
-        ><span>아이디</span><input id="id" type="text" name="id"
-      /> &nbsp;&nbsp;&nbsp;
-      <button onclick="checkedid()" id="checkid" name="checkid" style="width: 100px;">중복 확인</button></label>
+        ><span>아이디</span
+        ><input id="id" type="text" name="id" /> &nbsp;&nbsp;&nbsp;
+        <button
+          onclick="checkedid()"
+          id="checkid"
+          name="checkid"
+          style="width: 100px"
+        >
+          중복 확인
+        </button></label>
+      >
       <label for=""
         ><span>비밀번호</span><input id="pw" type="password" name="password"
       /></label>
       <label for=""
-        ><span>비밀번호 확인</span><input id="checkpw" type="password" name="checkpassword"
+        ><span>비밀번호 확인</span
+        ><input id="checkpw" type="password" name="checkpassword"
       /></label>
       <label for=""
         ><span>이름</span><input id="name" type="text" name="name"
@@ -43,9 +51,11 @@
       <!-- <button id="submit" type="submit" onclick="checkForm()" class="join_btn">회원가입</button> -->
     </form>
     <script>
-        document.querySelector("#checkid").addEventListener("click", function (event) {
-      event.preventDefault(); // 폼 전송 막기
-  });
+      document
+        .querySelector("#checkid")
+        .addEventListener("click", function (event) {
+          event.preventDefault(); // 폼 전송 막기
+        });
       const join_form = document.getElementById("joinform");
       const id = document.getElementById("id");
       const checkid = document.getElementById("checkid");
@@ -56,12 +66,13 @@
       const email = document.getElementById("email");
       const birth = document.getElementById("birth");
 
-      function checkForm() {
-        if (id.value === "") {
-          alert("아이디를 입력해주세요");
-          id.focus();
-          return false;
-        }
+
+  function checkForm() {
+    if (id.value === "") {
+      alert("아이디를 입력해주세요");
+      id.focus();
+      return false;
+    }
 
         const idCheck = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}$/;
         if (!idCheck.test(id.value)) {
@@ -74,7 +85,7 @@
           pw.focus();
           return false;
         }
-        
+
         const pwCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
         if (!pwCheck.test(pw.value)) {
           alert(
@@ -83,7 +94,7 @@
           pw.focus();
           return false;
         }
-        
+
         if (checkpw.value === "") {
           alert("비밀번호를 확인해주세요");
           checkpw.focus();
@@ -96,19 +107,18 @@
           return false;
         }
 
-
         if (name.value === "") {
           alert("이름을 입력해주세요");
           name.focus();
           return false;
         }
-        
+
         if (tel.value === "") {
           alert("휴대폰 번호를 입력해주세요");
           tel.focus();
           return false;
         }
-        
+
         if (birth.value === "") {
           alert("나이를 입력해주세요");
           birth.focus();
@@ -116,7 +126,7 @@
         }
         join_form.submit();
       }
-
     </script>
   </body>
+
 </html>

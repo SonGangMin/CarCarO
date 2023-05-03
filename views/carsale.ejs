@@ -3,10 +3,10 @@
         <div class="contents">
             <h1 class="title">판매목록</h1>  
             <h3 class="counting">총 <span><%= totalCount %></span>개</h3>
-            <form action="/car/hashtag">
+            <!-- <form action="/car/hashtag">
                 <input type="text" name="hashtag">
                 <button class="btn">검색</button>
-            </form>
+            </form> -->
             <ul class="viewImg">
               <% Cars.forEach(function(carList) { %>
               <li onclick="location.href='/car/detail/<%= carList.carNum %>'">

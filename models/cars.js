@@ -20,11 +20,11 @@ module.exports = function(sequelize, DataTypes) {
         key: 'id'
       }
     },
-    brand: {
+    from: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
-    from: {
+    brand: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
@@ -33,11 +33,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     mile: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     year: {
-      type: DataTypes.STRING(255),
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     fuel: {
@@ -116,6 +116,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(255),
       allowNull: false
     },
+    etc: {
+      type: DataTypes.STRING(255),
+      allowNull: true
+    },
     hashtag: {
       type: DataTypes.STRING(100),
       allowNull: true
@@ -129,14 +133,15 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.BIGINT,
       allowNull: false
     },
-    etc: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
     status: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 1
+    },
+    recommends: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     }
   }, {
     sequelize,
@@ -164,13 +169,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "user_id" },
-        ]
-      },
-      {
-        name: "cars_FK_2",
-        using: "BTREE",
-        fields: [
-          { name: "brand" },
         ]
       },
     ]
