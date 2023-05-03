@@ -11,7 +11,7 @@ exports.getPagingData = (data, page, limit) => {
 
 exports.getPagingDataCount = (totalItems, page, limit) => {
   const currentPage = page ? page : 0;
-  const totalPages = Math.floor(totalItems / limit);
+  const totalPages = Math.ceil(totalItems / limit);
   const pnStart = (Math.ceil(page / limit) - 1) * limit + 1; // NOTE: 현재 페이지의 페이지네이션 시작 번호.
   let pnEnd = pnStart + limit; // NOTE: 현재 페이지의 페이지네이션 끝 번호.
   if (pnEnd > totalPages) pnEnd = totalPages; // NOTE: 페이지네이션의 끝 번호가 페이지네이션 전체 카운트보다 높을 경우.

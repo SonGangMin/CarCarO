@@ -88,9 +88,14 @@
     });
   });
 </script>
-
-<% if (isUser) { %>
-<form action="/board/<%= board.postId %>" method="post">
+<script>
+  function onPageClick(event, page) {
+    location.href = "/board/content/<%= board.postId %>?page=" + page;
+    console.info(page + " (from options)");
+  }
+</script>
+<%- include('./include/pagination.ejs') %> <% if (isUser) { %>
+<form action="/board/content/<%= board.postId %>" method="post">
   <input type="text" name="content" />
   <input type="submit" value="등록" />
 </form>

@@ -25,7 +25,7 @@ exports.renderFindcar = async (req, res, next) => {
       },
     });
     const { limit, offset } = getPagination(page, 16);
-    const listCount = await cars.findAndCountAll({
+    const listCount = await cars.findAll({
       nest: true,
       include: [
         {
@@ -43,8 +43,8 @@ exports.renderFindcar = async (req, res, next) => {
       offset,
       limit,
     });
-
-    const { count: totalItems, rows: twits } = listCount;
+    const totalItems = total;
+    const twits = listCount;
     const pagingData = getPagingDataCount(totalItems, page, limit);
 
     // console.log("111111111111->", pagingData);
@@ -203,7 +203,7 @@ exports.renderCarSearch = async (req, res, next) => {
       where.fuel = fuel;
     }
 
-    const Cars = await cars.findAll({
+    const listCount = await cars.findAndCountAll({
       where,
       include: [
         {
@@ -219,14 +219,14 @@ exports.renderCarSearch = async (req, res, next) => {
       ],
       order: [["num", "DESC"]],
       offset,
-      limit: PAGE_SIZE,
+      limit,
     });
+    const { count: totalItems, rows: Cars } = listCount;
+    const pagingData = getPagingDataCount(totalItems, page, limit);
     // res.json({ Cars });
     res.render("carfind_search", {
       Cars,
       title: "차량검색결과",
-      totalPages,
-      currentPage: page,
       isMine,
       total,
       recenttotal,
@@ -241,6 +241,8 @@ exports.renderCarSearch = async (req, res, next) => {
       fuel,
       shortmile,
       longmile,
+      pagingData,
+      totalItems,
     });
   } catch (err) {
     console.error(err);

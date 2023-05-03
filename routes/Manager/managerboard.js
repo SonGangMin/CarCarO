@@ -16,8 +16,8 @@ const { isManager } = require("../../middlewares/index");
 
 // 게시판관리
 router.get("/", isManager, renderManagerBoard);
-router.get("/:postId", isManager, renderManagerBoardContent);
-router.get("/search/:result", isManager, renderManagerBoardSearch);
+router.get("/content/:postId", isManager, renderManagerBoardContent);
+router.get("/search/", isManager, renderManagerBoardSearch);
 router.get("/edit/:postId", isManager, renderManagerBoardEdit);
 router.post("/edit/:postId", isManager, editManagerBoard);
 router.post("/delete/:postId", isManager, deleteManagerPost);

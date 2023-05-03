@@ -100,7 +100,7 @@
       &nbsp;&nbsp;&nbsp;&nbsp; <%= recenttotal %>대
     </div>
     국산●수입차
-    <form action="/car/carfind/search/:result" method="get">
+    <form action="/car/carfind/search/" method="get">
       <div class="searchbox">
         <select class="select1" name="from" id="from">
           <option value="" selected>국산or수입</option>
@@ -310,9 +310,6 @@
                 <% for(i=0; i<twit.hashtags.length; i++) { %>
                   <div class="hash">#<%= twit.hashtags[i].cars_hashtag %></div>
                 <% } %>
-
-
-
               </div>
             </div>
           </a>
@@ -321,6 +318,12 @@
     </ul>
   </div>
 </div>
+<script>
+  function onPageClick(event, page) {
+    location.href='/car/carfind?page='+ page;
+    console.info(page + " (from options)");
+  }
+</script>
 <%- include('./include/pagination.ejs') %>
 
 <script>

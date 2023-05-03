@@ -1,5 +1,10 @@
 const models = require("../../models");
 const { Op } = require("sequelize");
+const {
+  getPagingDataCount,
+  getPagination,
+  getPagingData,
+} = require("../pagination");
 
 exports.renderManager = (req, res) => {
   res.render("manager/managerpage", { title: "관리자페이지" });
@@ -7,13 +12,10 @@ exports.renderManager = (req, res) => {
 
 exports.renderManagerBoard = async (req, res, next) => {
   try {
-    const PAGE_SIZE = 15;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
-    const offset = (page - 1) * PAGE_SIZE;
     const total = await models.boards.count();
-    const totalPages = Math.ceil(total / PAGE_SIZE);
-
-    const twits = await models.boards.findAll({
+    const { limit, offset } = getPagination(page, 15);
+    const listCount = await models.boards.findAndCountAll({
       nest: true,
       include: [
         {
@@ -27,14 +29,16 @@ exports.renderManagerBoard = async (req, res, next) => {
         ["createdAt", "DESC"],
       ],
       offset,
-      limit: PAGE_SIZE,
+      limit,
     });
-    // console.log("자료확인--", twits[0]);
+    const { count: totalItems, rows: twits } = listCount;
+    const pagingData = getPagingDataCount(totalItems, page, limit);
     res.render("manager/managerBoard", {
       twits,
       title: "커뮤니티",
-      totalPages,
-      currentPage: page,
+      total,
+      pagingData,
+      totalItems,
     });
   } catch (err) {
     console.error(err);
@@ -83,22 +87,16 @@ exports.renderManagerBoardContent = async (req, res, next) => {
 };
 
 exports.renderManagerBoardSearch = async (req, res, next) => {
-  const query = req.query.result;
-
-  if (!query) {
-    return res.redirect("/");
-  }
   try {
-    const PAGE_SIZE = 15;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
-    const offset = (page - 1) * PAGE_SIZE;
     const total = await models.boards.count();
-    const totalPages = Math.ceil(total / PAGE_SIZE);
-    const results = await models.boards.findAll({
+    const { limit, offset } = getPagination(page, 15);
+    const result = req.query.result;
+    const listCount = await models.boards.findAndCountAll({
       where: {
         [Op.or]: [
-          { title: { [Op.like]: `%${query}%` } },
-          { content: { [Op.like]: `%${query}%` } },
+          { title: { [Op.like]: `%${result}%` } },
+          { content: { [Op.like]: `%${result}%` } },
         ],
       },
       include: [
@@ -110,15 +108,16 @@ exports.renderManagerBoardSearch = async (req, res, next) => {
       ],
       order: [["createdAt", "DESC"]],
       offset,
-      limit: PAGE_SIZE,
+      limit,
     });
-
+    const { count: totalItems, rows: results } = listCount;
+    const pagingData = getPagingDataCount(totalItems, page, limit);
     res.render("manager/managerBoard_search", {
       results,
-      query,
-      title: `검색 결과: ${query}`,
-      totalPages,
-      currentPage: page,
+      title: `검색 결과: ${result}`,
+      total,
+      pagingData,
+      totalItems,
     });
   } catch (err) {
     console.error(err);

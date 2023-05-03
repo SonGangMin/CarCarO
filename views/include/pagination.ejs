@@ -34,10 +34,7 @@
         activeClass : "active",
         disabledClass : "disabled",
         anchorClass : "page-link",
-        onPageClick: function (event, page) {
-          location.href='/car/carfind?page='+ page;
-          console.info(page + " (from options)");
-        },
+        onPageClick: onPageClick,
       })
       .on("page", function (event, page) {
         console.info(page + " (from event listening)");

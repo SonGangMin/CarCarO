@@ -1,14 +1,17 @@
 const models = require("../models");
 const { Op } = require("sequelize");
+const {
+  getPagingDataCount,
+  getPagination,
+  getPagingData,
+} = require("./pagination");
 
 exports.renderBoard = async (req, res, next) => {
   try {
-    const PAGE_SIZE = 15;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
-    const offset = (page - 1) * PAGE_SIZE;
     const total = await models.boards.count();
-    const totalPages = Math.ceil(total / PAGE_SIZE);
-    const twits = await models.boards.findAll({
+    const { limit, offset } = getPagination(page, 15);
+    const listCount = await models.boards.findAndCountAll({
       nest: true,
       include: [
         {
@@ -22,14 +25,17 @@ exports.renderBoard = async (req, res, next) => {
         ["createdAt", "DESC"],
       ],
       offset,
-      limit: PAGE_SIZE,
+      limit,
     });
+    const { count: totalItems, rows: twits } = listCount;
+    const pagingData = getPagingDataCount(totalItems, page, limit);
     // console.log("자료확인--", twits[0]);
     res.render("board", {
       twits,
       title: "커뮤니티",
-      totalPages,
-      currentPage: page,
+      total,
+      pagingData,
+      totalItems,
     });
   } catch (err) {
     console.error(err);
@@ -75,11 +81,13 @@ exports.renderBoardContent = async (req, res, next) => {
     if (!board) {
       return res.status(404).send("해당 게시글을 찾을 수 없습니다.");
     }
-    // console.log("========================", req.user && req.user.id);
     const user = req.user && req.user.id;
     const isUser = user !== undefined;
-    // console.log(isUser);
-    const comments = await models.comments.findAll({
+
+    const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+    const total = await models.boards.count();
+    const { limit, offset } = getPagination(page, 5);
+    const listCount = await models.comments.findAndCountAll({
       where: { post_id: req.params.postId },
       include: [
         {
@@ -89,10 +97,13 @@ exports.renderBoardContent = async (req, res, next) => {
         },
       ],
       order: [["createdAt", "ASC"]],
+      offset,
+      limit,
     });
+    const { count: totalItems, rows: comments } = listCount;
+    const pagingData = getPagingDataCount(totalItems, page, limit);
     const isboardOwner = req.user && board.user_id === req.user.id;
     const userId = req.user && req.user.id;
-    console.log(userId);
     res.render("board_content", {
       board,
       isboardOwner,
@@ -100,6 +111,8 @@ exports.renderBoardContent = async (req, res, next) => {
       comments,
       isUser,
       userId,
+      pagingData,
+      totalItems,
     });
   } catch (err) {
     console.error(err);
@@ -108,22 +121,16 @@ exports.renderBoardContent = async (req, res, next) => {
 };
 
 exports.renderSearch = async (req, res, next) => {
-  const query = req.query.result;
-
-  if (!query) {
-    return res.redirect("/board");
-  }
   try {
-    const PAGE_SIZE = 15;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
-    const offset = (page - 1) * PAGE_SIZE;
     const total = await models.boards.count();
-    const totalPages = Math.ceil(total / PAGE_SIZE);
-    const results = await models.boards.findAll({
+    const { limit, offset } = getPagination(page, 15);
+    const result = req.query.result;
+    const listCount = await models.boards.findAndCountAll({
       where: {
         [Op.or]: [
-          { title: { [Op.like]: `%${query}%` } },
-          { content: { [Op.like]: `%${query}%` } },
+          { title: { [Op.like]: `%${result}%` } },
+          { content: { [Op.like]: `%${result}%` } },
         ],
       },
       include: [
@@ -135,13 +142,16 @@ exports.renderSearch = async (req, res, next) => {
       ],
       order: [["createdAt", "DESC"]],
       offset,
-      limit: PAGE_SIZE,
+      limit,
     });
+    const { count: totalItems, rows: results } = listCount;
+    const pagingData = getPagingDataCount(totalItems, page, limit);
     res.render("board_search", {
       results,
-      title: `검색 결과: ${query}`,
-      totalPages,
-      currentPage: page,
+      title: `검색 결과: ${result}`,
+      total,
+      pagingData,
+      totalItems,
     });
   } catch (err) {
     console.error(err);
@@ -216,7 +226,7 @@ exports.createComment = async (req, res, next) => {
       user_id: req.user.id,
       post_id: req.params.postId,
     });
-    res.redirect(`/board/${postId}`);
+    res.redirect(`/board/content/${postId}`);
   } catch (err) {
     console.error(err);
     next(err);

@@ -115,7 +115,7 @@
       &nbsp;&nbsp;&nbsp;&nbsp; <%= recenttotal %>대
     </div>
     국산●수입차
-    <form action="/car/carfind/search/:result" method="get">
+    <form action="/car/carfind/search/" method="get">
       <div class="searchbox">
         <select class="select1" name="from" id="from">
           <option value="" selected>국산or수입</option>
@@ -367,29 +367,21 @@
       </li>
       <% }) %>
     </ul>
-
-    <% if (totalPages > 1) { %>
-    <div>
-      <% let start = Math.ceil(currentPage / 10) * 10 - 9; let end =
-      Math.min(start + 9, totalPages); %> <% if (start > 1) { %>
-      <a href="/car/carfind?page=1">첫 페이지</a>
-      <% } %> <% if (currentPage > 10) { %>
-      <a href="/car/carfind?page=<%= start - 1 %>">이전</a>
-      <% } %> <% for(let i=start; i<=end; i++) { %> <% if(i === currentPage) {
-      %>
-      <strong style="font-size: 30px"><%= i %></strong>
-      <% } else { %>
-      <a href="/car/carfind?page=<%= i %>"><%= i %></a>
-      <% } %> <% } %> <% if (end < totalPages) { %>
-      <a href="/car/carfind?page=<%= end + 1 %>">다음</a>
-      <% } %> <% if (end < totalPages - 9) { %>
-      <a href="/car/carfind?page=<%= totalPages %>">마지막 페이지</a>
-      <% } %>
-    </div>
-    <% } %>
   </div>
 </div>
 
+<script>
+function onPageClick(event, page) {
+  const queryParams = new URLSearchParams(window.location.search);
+  queryParams.set('page', page); // 현재 페이지 설정
+
+  const queryString = queryParams.toString();
+  const searchUrl = `/car/carfind/search/?${queryString}`;
+
+  location.href = searchUrl;
+}
+</script>
+<%- include('./include/pagination.ejs') %>
 
 <script>
   const fromSelect = document.querySelector('#from');
