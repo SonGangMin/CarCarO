@@ -33,11 +33,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     mile: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false
     },
     year: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.BIGINT,
       allowNull: false
     },
     fuel: {
