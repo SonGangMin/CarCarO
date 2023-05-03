@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <link rel="stylesheet" href="stylesheets/auth.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="stylesheets/auth.css" />
+</head>
 
   <body>
     <form action="/auth/join" id="joinform" method="post" class="form">
@@ -21,7 +21,7 @@
           style="width: 100px"
         >
           중복 확인
-        </button></label
+        </button></label>
       >
       <label for=""
         ><span>비밀번호</span><input id="pw" type="password" name="password"
@@ -66,12 +66,13 @@
       const email = document.getElementById("email");
       const birth = document.getElementById("birth");
 
-      function checkForm() {
-        if (id.value === "") {
-          alert("아이디를 입력해주세요");
-          id.focus();
-          return false;
-        }
+
+  function checkForm() {
+    if (id.value === "") {
+      alert("아이디를 입력해주세요");
+      id.focus();
+      return false;
+    }
 
         const idCheck = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}$/;
         if (!idCheck.test(id.value)) {
@@ -127,4 +128,5 @@
       }
     </script>
   </body>
+
 </html>
