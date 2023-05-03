@@ -262,8 +262,6 @@ exports.renderCarup = (req, res) => {
 
 // 내차팔기 db 등록
 exports.uploadPost = async (req, res, next) => {
-  console.log("333333333333333333", req.body.disp);
-  console.log("2222222222222222222222222222222222->", req.body.leather);
   const {
     carNum,
     from,
@@ -434,7 +432,6 @@ exports.listDelete = async (req, res, next) => {
 // 판매완료
 exports.saleComp = async (req, res, next) => {
   const { carNum } = req.params;
-
   try {
     const Cars = await cars.update({ status: 2 }, { where: { carNum } });
 
