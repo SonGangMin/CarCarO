@@ -160,7 +160,7 @@ exports.renderCarSearch = async (req, res, next) => {
       offset,
       limit: PAGE_SIZE,
     });
-    res.json({ Cars });
+    // res.json({ Cars });
     res.render("carfind_search", {
       Cars,
       title: "차량검색결과",

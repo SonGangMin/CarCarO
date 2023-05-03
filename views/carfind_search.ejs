@@ -357,10 +357,9 @@
               <div> <%= car.from %> <%= car.brand %> <%= car.model %> </div>
       
               <div><%= car.fuel %> <%= car.year %>년식 <%= car.price %>만원</div>
-              <div class="hash"><%= car.hashtag %></div>
-              <div class="hash"><%= car.hashtag %></div>
-              <div class="hash"><%= car.hashtag %></div>
-              <div class="hash"><%= car.hashtag %></div>
+              <% for(i=0; i<car.hashtags.length; i++) { %>
+                <div class="hash">#<%= car.hashtags[i].cars_hashtag %></div>
+              <% } %>
             </div>
            
           </div>
