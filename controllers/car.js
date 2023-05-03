@@ -31,12 +31,17 @@ exports.renderFindcar = async (req, res, next) => {
           model: likes,
           as: "likes",
         },
+        {
+          attributes: ["cars_hashtag"],
+          model: hashtags,
+          as: "hashtags",
+        },
       ],
       order: [["num", "DESC"]],
       offset,
       limit: PAGE_SIZE,
     });
-    console.log(twits);
+    // console.log(twits);
     // res.json(twits);
     res.render("carfind", {
       title: "내차찾기",
@@ -145,18 +150,17 @@ exports.renderCarSearch = async (req, res, next) => {
           model: likes,
           as: "likes",
         },
+        {
+          attributes: ["cars_hashtag"],
+          model: hashtags,
+          as: "hashtags",
+        },
       ],
       order: [["num", "DESC"]],
       offset,
       limit: PAGE_SIZE,
     });
-    const test = await cars.findAll({
-      where: {
-        from: from,
-        brand: brand,
-      },
-    });
-    // res.json({ where });
+    // res.json({ Cars });
     res.render("carfind_search", {
       Cars,
       title: "차량검색결과",
@@ -245,13 +249,11 @@ exports.renderDetail = async (req, res, next) => {
       isOwner,
       status2,
     });
-    
   } catch (error) {
     console.error(error);
     next(error);
   }
 };
-
 
 // 내차팔기 등록 페이지
 exports.renderCarup = (req, res) => {
@@ -260,8 +262,6 @@ exports.renderCarup = (req, res) => {
 
 // 내차팔기 db 등록
 exports.uploadPost = async (req, res, next) => {
-  console.log("333333333333333333", req.body.disp);
-  console.log("2222222222222222222222222222222222->", req.body.leather);
   const {
     carNum,
     from,
@@ -334,7 +334,10 @@ exports.uploadPost = async (req, res, next) => {
       const result = await Promise.all(
         Hashtags.map((tag) => {
           return hashtags.findOrCreate({
-            where: { cars_hashtag: tag.slice(1).toLowerCase() },
+            where: {
+              cars_hashtag: tag.slice(1).toLowerCase(),
+              cars_num: Cars.num,
+            },
           });
         })
       );
@@ -429,7 +432,6 @@ exports.listDelete = async (req, res, next) => {
 // 판매완료
 exports.saleComp = async (req, res, next) => {
   const { carNum } = req.params;
-
   try {
     const Cars = await cars.update({ status: 2 }, { where: { carNum } });
 

@@ -12,7 +12,7 @@
 </style>
 <h1><%= board.title %></h1>
 <p><%= board.content %></p>
-<p>작성자: <%= board.user.name %></p>
+<p>작성자: <%= board.user.name %>(<%= board.user_id %>)</p>
 <p>최초 작성일: <%= board.createdAt %></p>
 <p>최종 수정일: <%= board.updatedAt %></p>
 

@@ -4,7 +4,7 @@ const models = require("../models");
 const bcrypt = require("bcrypt");
 const { hash } = require("bcrypt");
 const axios = require("axios");
-const { likes } = require("../models");
+const { likes, cars } = require("../models");
 
 exports.renderMypage = (req, res) => {
   res.render("mypage", {
@@ -54,7 +54,7 @@ exports.modifyPage = (req, res) => {
 
 exports.renderInquiry = async (req, res, next) => {
   const myinquiry = req.params.user_id;
-  console.log("1111111111111111 => ", myinquiry);
+  // console.log("1111111111111111 => ", myinquiry);
   try {
     const PAGE_SIZE = 15;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
@@ -146,30 +146,65 @@ exports.postModify = async (req, res, next) => {
 };
 
 exports.renderLikescar = async (req, res, next) => {
-  const num = req.params.num;
+  const mylikescar = req.params.num;
+  const isMine = req.user && req.user.id;
+  // console.log("1111111111111111 => ", myinquiry);
   try {
     const PAGE_SIZE = 15;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
     const offset = (page - 1) * PAGE_SIZE;
-    const total = await likes.count({
-      where: { car_num: num },
-      include: [{ model: models.cars, as: "car_num" }],
-    });
+    const total = await models.cars.count();
     const totalPages = Math.ceil(total / PAGE_SIZE);
     const twits = await likes.findAll({
-      where: { car_num: num },
-      include: [{ model: models.cars, as: "car_num" }],
+      include: [{
+        model: cars,
+        as: "car_num_car",
+      }],
+      where: { "user_id": req.user.id },
+      order: [["number", "DESC"]],
       offset,
       limit: PAGE_SIZE,
     });
+    const isOwner = req.user && likes.user_id === req.user.id;
     res.render("mylikescar", {
       twits,
-      title: "관심차량",
+      title: "관심 차량",
+      isOwner,
       totalPages,
       currentPage: page,
+      isMine
     });
   } catch (err) {
     console.error(err);
     next(err);
   }
+};
+
+
+exports.getModifyPage = function (req, res, next) {
+  models.query(
+    "SELECT * FROM users WHERE id = ?",
+    [req.session.user_id],
+    function (err, results) {
+      if (err) {
+        console.error(err);
+        next(err);
+        return;
+      }
+
+      res.render("modify", { user: results[0] });
+    }
+  );
+};
+
+exports.postModify = function (req, res, next) {
+  const { name, email, password } = req.body;
+
+  models.query(
+    "UPDATE users SET name = ?, email = ?, password = ?, WHERE id = ?",
+    [name, email, req.session.user_id],
+    function (err, result) {
+      res.render("withdraw");
+    }
+  );
 };

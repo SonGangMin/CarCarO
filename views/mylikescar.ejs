@@ -1,5 +1,92 @@
 <%- include ./include/head.ejs %>
 
+<style>
+/* .searchbox {
+    border: solid 1px black;
+    padding: 30px;
+} */
+.select1 {
+    margin: 0;
+    padding: 20px;
+    align-items: center;
+    size: 150px;
+}
+.search {
+    margin: 0;
+    padding-top: 18px;
+    padding-bottom: 40px;
+    align-items: center;
+}
+.thumbnail {
+    width: 100%;
+    height: 150px;
+}
+.listbox {
+    border: 1px solid black;
+  /* background-color: red; */
+    width: 100%;
+  /* margin: 0 5%; */
+}
+li {
+    display: inline-block;
+}
+.bigbox {
+    /* border: solid 1px black; */
+    position: relative;
+    width: 100%;
+    display: block;
+    margin: 0%;
+    /* left: 15%; */
+}
+.statistics {
+    text-align: right;
+    width: 100%;
+}
+.searchbox {
+    width: 100%;
+}
+.bigbox ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+.bigbox ul li {
+    width: 25%;
+    padding: 10px 10px;
+    text-align: center;
+}
+.bigbox h1 {
+    text-align: center;
+}
+
+.text-box{
+    margin-bottom: 10px;
+    margin-top: -20px;
+}
+.hash {
+    width: 25%;
+    display: flex;
+    display: inline;
+    margin: 5%;
+}
+.like {
+    position: relative;
+    right: -35%;
+    top: -40px;
+    /* border: solid 1px black; */
+}
+#highlight {
+    background-color: lightcoral;
+}
+.check {
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+.unit {
+    position: absolute;
+    right: 0;
+}
+</style>
+
 <div class="container" style="float: left; width: 30%;">
     <section class="box">
         <aside class="mypage_left_area">
@@ -18,56 +105,24 @@
     </section>
 </div>
 
-<div style="border: solid 1px black; float: left; width: 50%;">
-    <h1 alibn="center">관심차량</h1><br><br><br>
-    <div align="center">
-        <ul>
-            <% twits.forEach(function(twit) { %>
-                <li>
-                    <li>
-                <a href="/car/detail/<%= twit.carNum %>">
-                    <div class="reccarlist" id="<%= isOwner === twit.user_id ? 'highlight' : '' %>">
-                        <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail"/>
-                        <div class="like">
-                            <% let count=0; %>
-                            <% for(let i=0; i < twit.likes.length; i++) { %>
-                                <% if(twit.likes[i].user_id == isMine) { %>
-                                <% count++; %>
-                                <% } %>
-                            <% } %>
-                            <% console.log(isMine) %>
-                            <% console.log(isMine === twit.user_id) %>
-                            <% if (typeof isMine === 'undefined') { %>
-                                <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
-                            <% } else if (isMine === twit.user_id) { %>
-                                <button class="Mine">♥ 내차<%= twit.likes_count %></button>
-                            <% } else { %>
-                                <% if(!count) { %>
-                                <form action="/car/carfind" method="post" onsubmit="return confirm('관심차량 목록에 추가하시겠습니까?')">
-                                    <input type="hidden" name="carNum" value="<%= twit.num %>">
-                                    <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
-                                </form>
-                                <% } else { %>
-                                <form action="/car/carfind2" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
-                                    <input type="hidden" name="carNum" value="<%= twit.num %>">
-                                    <button type="submit" class="heart">○ <%= twit.likes_count %></button>
-                                </form>
-                            <% } %>
-                            <% } %>
-                        </div>
-                        <div>
-                            <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
-                            <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
-                            <div class="hash"><%= twit.hashtag %></div>
-                            <div class="hash"><%= twit.hashtag %></div>
-                            <div class="hash"><%= twit.hashtag %></div>
-                            <div class="hash"><%= twit.hashtag %></div>
-                        </div>
+<div class="bigbox" id="list" style="float: left; width: 50%;">
+    <h1>관심차량</h1>
+    <br />
+    <ul>
+        <% twits.forEach(function(twit) { %>
+        <% if(isOwner === twit.userid) %>
+            <li>
+                <a href="/car/detail/<%= twit.car_num_car.carNum %>">
+                    <div class="listbox">
+                        <% if (twit.car_num_car.picture.length > 0) { %>
+                            <img src="<%= twit.car_num_car.picture[0].url %>" alt="" class="thumbnail">
+                            <% } %><br><br>
+                            <div class="text-box">
+                                <div><%= twit.car_num_car.from %> <%= twit.car_num_car.brand %> <%= twit.car_num_car.model %></div>
+                                <div><%= twit.car_num_car.fuel %> <%= twit.car_num_car.year %>년식 <%= twit.car_num_car.price %>만원</div>
+                            </div>
                     </div>
                 </a>
             </li>
-                </li>
-            <% }) %>
-        </ul>
-    </div>
-</div>
+        <% }) %>
+    </ul>
