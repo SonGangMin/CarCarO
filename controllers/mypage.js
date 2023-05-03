@@ -143,3 +143,36 @@ exports.postModify = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.renderLikescar = async (req, res, next) => {
+  const car_num = req.params.likes;
+  try {
+    const PAGE_SIZE = 15;
+    const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+    const offset = (page - 1) * PAGE_SIZE;
+    const total = await models.likes.count();
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+    const twits = await models.likes.findAll({
+    where: { car_num },
+    include: [
+      {
+        attributes: ["다"],
+        model: models.Cars,
+        as: "car_num",
+      }
+    ],
+    offset,
+    limit: PAGE_SIZE,
+    });
+  // console.log("자료확인--", twits[0]);
+    res.render("mylikescar", {
+        twits,
+        title: "관심차량",
+        totalPages,
+        currentPage: page,
+    });
+    } catch (err) {
+        console.error(err);
+        next(err);
+}
+};
