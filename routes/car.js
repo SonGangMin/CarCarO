@@ -23,6 +23,7 @@ const router = express.Router();
 
 // 내차찾기 페이지
 router.get("/carfind", renderFindcar);
+
 router.post("/carfind", carLike);
 router.post("/carfind2", carDislike);
 // 내차찾기 검색

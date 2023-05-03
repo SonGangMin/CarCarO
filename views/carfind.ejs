@@ -91,6 +91,7 @@
       right: 0;
     }
 
+
 </style>
 <div class="findcar">
   <div class="bigbox" id="search">
@@ -318,29 +319,9 @@
         </li>
       <% }) %>
     </ul>
-
-    <% if (totalPages > 1) { %>
-    <div>
-      <% let start = Math.ceil(currentPage / 10) * 10 - 9; let end =
-      Math.min(start + 9, totalPages); %> <% if (start > 1) { %>
-      <a href="/car/carfind?page=1">첫 페이지</a>
-      <% } %> <% if (currentPage > 10) { %>
-      <a href="/car/carfind?page=<%= start - 1 %>">이전</a>
-      <% } %> <% for(let i=start; i<=end; i++) { %> <% if(i === currentPage) {
-      %>
-      <strong style="font-size: 30px"><%= i %></strong>
-      <% } else { %>
-      <a href="/car/carfind?page=<%= i %>"><%= i %></a>
-      <% } %> <% } %> <% if (end < totalPages) { %>
-      <a href="/car/carfind?page=<%= end + 1 %>">다음</a>
-      <% } %> <% if (end < totalPages - 9) { %>
-      <a href="/car/carfind?page=<%= totalPages %>">마지막 페이지</a>
-      <% } %>
-    </div>
-    <% } %>
   </div>
 </div>
-
+<%- include('./include/pagination.ejs') %>
 
 <script>
   const fromSelect = document.querySelector('#from');
@@ -376,3 +357,6 @@
   }
   });
 </script>
+
+
+
