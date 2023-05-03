@@ -10,6 +10,7 @@ exports.renderCar = async (req, res) => {
     
         // 전체 데이터 수 구하기
         const countResult = await cars.findAndCountAll({
+          where: {status: 1},
         });
         const totalCount = countResult.count;
     
@@ -17,11 +18,47 @@ exports.renderCar = async (req, res) => {
     
         const Cars = await cars.findAll({
           order: [["num", "DESC"]],
+          where: {status: 1},
           offset: offset,
           limit: limit,
         });
     
         res.render("manager/managerCar", {
+          title: "내차팔기",
+          Cars,
+          currentPage: pageNum,
+          totalPages,
+          totalCount, // 전체 데이터 수 추가
+        });
+      } catch (error) {
+        console.error(error);
+        next(error);
+      }
+};
+
+// 판매완료 리스트
+exports.renderSaleComp = async (req, res) => {
+    try {
+        const pageNum = parseInt(req.query.page) || 1;
+        const limit = 5;
+        const offset = (pageNum - 1) * limit;
+    
+        // 전체 데이터 수 구하기
+        const countResult = await cars.findAndCountAll({
+          where: {status: 2},
+        });
+        const totalCount = countResult.count;
+    
+        const totalPages = Math.ceil(totalCount / limit);
+    
+        const Cars = await cars.findAll({
+          order: [["num", "DESC"]],
+          where: {status: 2},
+          offset: offset,
+          limit: limit,
+        });
+    
+        res.render("manager/managerSaleComp", {
           title: "내차팔기",
           Cars,
           currentPage: pageNum,
