@@ -177,7 +177,6 @@ exports.carDislike = async (req, res, next) => {
 exports.renderCarSearch = async (req, res, next) => {
   try {
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
-    const total = await cars.count();
     const isMine = req.user && req.user.id;
     const twentyFourHoursAgo = moment().subtract(24, "hours").toDate();
     const recenttotal = await cars.count({
@@ -230,8 +229,18 @@ exports.renderCarSearch = async (req, res, next) => {
     if (fuel) {
       where.fuel = fuel;
     }
+    const total = await cars.count({
+      where,
+      include: [
+        {
+          attributes: ["user_id"],
+          model: likes,
+          as: "likes",
+        },
+      ],
+    });
 
-    const listCount = await cars.findAndCountAll({
+    const listCount = await cars.findAll({
       where,
       include: [
         {
@@ -249,7 +258,8 @@ exports.renderCarSearch = async (req, res, next) => {
       offset,
       limit,
     });
-    const { count: totalItems, rows: Cars } = listCount;
+    const totalItems = total;
+    const Cars = listCount;
     const pagingData = getPagingDataCount(totalItems, page, limit);
     // res.json({ Cars });
     res.render("carfind_search", {
