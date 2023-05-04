@@ -88,12 +88,13 @@
                 password_confirm_feedback.textContent = "비밀번호가 일치 합니다";
                 passwordFeedback.style.color = 'green';
             }else{
-                password_confirm_feedback.textContent = "비밀번호 맞지 않습니다";
+                password_confirm_feedback.textContent = "비밀번호가 일치하지 않습니다";
                 passwordFeedback.style.color = 'red';
             }
         }
 
         function checkForm() {
+
             if(pw.value === ''){
                 pw.focus()
                 return false;
@@ -118,22 +119,35 @@
                 tel.focus()
                 return false;
             }
+
+            if (!checkTel()) { // 전화번호 유효성 검사를 수행
+                tel.focus();
+                return false;
+            }
+
+
             if(email.value === ''){
                 alert('이메일을 입력해주세요')
                 email.focus()
                 return false;
             }
+
+            if (!checkEmail()) { // 이메일 유효성 검사를 수행
+                pw.focus();
+                return false;
+            }
+
             if(birth.value === ''){
                 alert('나이를 입력해주세요');
                 birth.focus()
                 return false;
             }
-            edit_form.submit();
 
-            // 모든 조건을 만족하면 true 반환
-            return true;
+            edit_form.submit();
         }
 
+
+        // 비밀번호 유효성 검사
         function checkPassword() {
             const passwordFeedback = document.getElementById('password_feedback');
             const pw = document.getElementById('pw');
@@ -151,8 +165,8 @@
         }
 
             // 전화번호 유효성 검사
-            tel.addEventListener('input', checkTel);
-            function checkTel() {
+        tel.addEventListener('input', checkTel);
+        function checkTel() {
             const telValue = tel.value;
             const telRegex = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
 
