@@ -26,6 +26,8 @@ function initModels(sequelize) {
   boards.hasMany(comments, { as: "comments", foreignKey: "post_id"});
   carshashtags.belongsTo(cars, { as: "car", foreignKey: "carsId"});
   cars.hasMany(carshashtags, { as: "carshashtags", foreignKey: "carsId"});
+  hashtags.belongsTo(cars, { as: "cars_num_car", foreignKey: "cars_num"});
+  cars.hasMany(hashtags, { as: "hashtags", foreignKey: "cars_num"});
   likes.belongsTo(cars, { as: "car_num_car", foreignKey: "car_num"});
   cars.hasMany(likes, { as: "likes", foreignKey: "car_num"});
   carshashtags.belongsTo(hashtags, { as: "hashtag", foreignKey: "hashtagId"});

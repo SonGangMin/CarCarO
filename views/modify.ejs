@@ -7,9 +7,9 @@
         <ul class="left_area_box">
             <li class="left_area_list"><a href="#">내차찾기 신청관리</a></li>
             <li class="left_area_list"><a href="#">내차팔기 신청관리</a></li>
-            <li class="left_area_list"><a href="#">관심차량</a></li>
+            <li class="left_area_list"><a href="/mypage/mylikescar/<%= user.id %>">관심차량</a></li>
             <li class="left_area_list">
-            <a href="/mypage/myinquiry/<%= user.id %>"> 내 문의</a>
+            <a href="/mypage/myinquiry/<%= user.id %>">내 문의</a>
             </li>
             <li class="left_area_list">
             <a href="/mypage/password/<%= user.id %>">회원정보</a>
@@ -43,6 +43,25 @@
         <span id="birth_message"></span><br>
         <button type="button" onclick="checkForm()" class="edit_btn">정보 수정</button>
     </form>
+
+    <form id="withdrawForm" method="POST" action="/mypage/withdraw" style="float:left; width:50%">
+        <button type="submit" class="withdraw_btn" onclick="confirmWithdraw(event)">탈퇴하기</button>
+        <button type="button" class="cancel_btn" onclick="cancelWithdraw()">취소</button>
+      </form>
+      
+      <script>
+        function confirmWithdraw(event) {
+          // confirm 대화 상자를 띄움
+          if (!confirm('정말로 탈퇴하시겠습니까?')) {
+            event.preventDefault(); // 요청을 보내는 것을 중단함
+          }
+        }
+      
+        function cancelWithdraw() {
+          location.href = '/mypage'; // 마이페이지로 돌아감
+        }
+      </script>
+      
 
     <script>
         const edit_form = document.getElementById('editform');
@@ -83,7 +102,7 @@
                 pw.focus();
                 return false;
             }
-            
+
             if(!pw_confirm.value === ''){
                 alert('비밀번호 확인을 입력해주세요');
                 pw_confirm.focus()
@@ -108,9 +127,9 @@
                 alert('나이를 입력해주세요');
                 birth.focus()
                 return false;
-            } 
+            }
             edit_form.submit();
-            
+
             // 모든 조건을 만족하면 true 반환
             return true;
         }
@@ -119,7 +138,7 @@
             const passwordFeedback = document.getElementById('password_feedback');
             const pw = document.getElementById('pw');
             const pwCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
-        
+
             if (!pwCheck.test(pw.value)) {
                 passwordFeedback.textContent = '비밀번호는 영문 + 숫자 + 특수문자 조합으로 8~20자리로 설정하셔야 합니다';
                 passwordFeedback.style.color = 'red';
@@ -129,31 +148,30 @@
                 passwordFeedback.style.color = 'green';
                 return true;
             }
-        
         }
 
             // 전화번호 유효성 검사
-        tel.addEventListener('input', checkTel);
-        function checkTel() {
+            tel.addEventListener('input', checkTel);
+            function checkTel() {
             const telValue = tel.value;
-            const telRegex = /^[0-9]{10,11}$/;
+            const telRegex = /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
 
             if (!telRegex.test(telValue)) {
                 telFeedback.textContent = '올바른 전화번호가 아닙니다';
                 telFeedback.style.color = 'red'
-                return false;  
+                return false;
             } else {
                 telFeedback.textContent = '올바른 전화번호입니다';
                 telFeedback.style.color = 'green';
                 return true;
             }
         }
-    
+
         // 이메일 유효성 검사
         email.addEventListener('input', checkEmail);
         function checkEmail() {
             const emailValue = email.value;
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-a-zA-Z.-]+\.[a-zA-Z]{2,}$/;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-a-zA-Z.-]+\.[a-zA-Z]{2,}$/i;
 
             if (!emailRegex.test(emailValue)) {
                 emailFeedback.textContent = '올바른 이메일 주소가 아닙니다';

@@ -118,9 +118,10 @@
     <form action="/car/carfind/search/:result" method="get">
       <div class="searchbox">
         <select class="select1" name="from" id="from">
-          <option value="" selected>국산·수입</option>
+          <option value="" selected>국산or수입</option>
           <option value="국산">국산</option>
           <option value="수입">수입</option>
+
         </select>
         <select class="select1" name="brand" id="brand">
           <option value="" selected>국산·수입 선택하세요</option>
@@ -130,18 +131,64 @@
       </div>
       <div class="price-input">
         차량 가격 
-        <input type="number" class="lowprice" name="lowprice" value="0" required onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
-        <span>만원</span>
+        <select name="lowprice">
+          <option value="0" selected>0 만원</option>
+          <option value="100">100 만원</option>
+          <option value="200">200 만원</option>
+          <option value="300">300 만원</option>
+          <option value="400">400 만원</option>
+          <option value="500">500 만원</option>
+          <option value="600">600 만원</option>
+          <option value="700">700 만원</option>
+          <option value="800">800 만원</option>
+          <option value="900">900 만원</option>
+          <option value="1000">1000 만원</option>
+          <option value="2000">2000 만원</option>
+          <option value="3000">3000 만원</option>
+          <option value="4000">4000 만원</option>
+          <option value="5000">5000 만원</option>
+          <option value="6000">6000 만원</option>
+        </select>
         ~
-        <input type="number" class="highprice" name="highprice" value="10000000000" required onfocus="if(this.value=='10000000000') this.value='';" onblur="if(this.value=='') this.value='10000000000';">
-        <span>만원 까지</span>
+        <select name="highprice">
+          <option value="50000">5 억원</option>
+          <option value="20000">2 억원</option>
+          <option value="10000">1 억원</option>
+          <option value="8000">8000 만원</option>
+          <option value="6000">6000 만원</option>
+          <option value="5000">5000 만원</option>
+          <option value="4000">4000 만원</option>
+          <option value="3000">3000 만원</option>
+          <option value="2000">2000 만원</option>
+          <option value="1000">1000 만원</option>
+          <option value="900">900 만원</option>
+          <option value="800">800 만원</option>
+          <option value="700">700 만원</option>
+          <option value="600">600 만원</option>
+          <option value="500">500 만원</option>
+          <option value="400">400 만원</option>
+          <option value="300">300 만원</option>
+          <option value="200">200 만원</option>
+          <option value="100">100 만원</option>
+          <option value="0">0 만원</option>
+        </select>
       </div>
-        변속기
-        <select name="trans">
+      변속기
+        <select name="trans" id="trans">
           <option value='' selected>전체</option>
           <option value="수동">수동</option>
           <option value="자동">자동</option></select
-        ><br />
+        >
+        사용 연료
+        <select name="fuel">
+          <option value="" selected>전체</option>
+          <option value="휘발유">휘발유</option>
+          <option value="경유">경유</option>
+          <option value="전기">전기</option>
+          <option value="수소">수소</option>
+          <option value="하이브리드">하이브리드</option>
+          <option value="기타">기타</option>
+        </select><br>
         차량 연식
         <select name="startyear">
           <option value="0" selected>2000년 이전</option>
@@ -196,20 +243,35 @@
           <option value="2023" selected>2023년</option>
         </select>
         까지 &nbsp;&nbsp;&nbsp;&nbsp; 
-        사용 연료
-        <select name="fuel">
-          <option value="" selected>전체</option>
-          <option value="휘발유">휘발유</option>
-          <option value="경유">경유</option>
-          <option value="전기">전기</option>
-          <option value="수소">수소</option>
-          <option value="하이브리드">하이브리드</option>
-          <option value="기타">기타</option>
-        </select><br>
+
         주행거리
-        <input type="number" class="shortmile" name="shortmile" value="0" required onfocus="if(this.value=='0') this.value='';" onblur="if(this.value=='') this.value='0';">
-        km ~
-        <input type="number" class="longmile" name="longmile" value="5000000" required onfocus="if(this.value=='10000000000') this.value='';" onblur="if(this.value=='') this.value='10000000000';">km
+        <select name="shortmile">
+          <option value="0" selected>0 km</option>
+          <option value="100" >100 km</option>
+          <option value="500" >500 km</option>
+          <option value="1000" >1,000 km</option>
+          <option value="5000" >5,000 km</option>
+          <option value="10000" >10,000km</option>
+          <option value="20000" >20,000 km</option>
+          <option value="50000" >50,000 km</option>
+          <option value="100000" >100,000 km</option>
+          <option value="200000" >200,000 km</option>
+          <option value="500000" >500,000 km</option>
+        </select>
+         ~
+         <select name="longmile">
+           <option value="500000" selected>500,000 km</option>
+           <option value="200000" >200,000 km</option>
+           <option value="100000" >100,000 km</option>
+           <option value="50000" >50,000 km</option>
+           <option value="20000" >20,000 km</option>
+           <option value="10000" >10,000km</option>
+           <option value="5000" >5,000 km</option>
+           <option value="1000" >1,000 km</option>
+           <option value="500" >500 km</option>
+           <option value="100" >100 km</option>
+          <option value="0" >0 km</option>
+        </select>
 <br>
         <button type="submit" class="search">검색</button><br />
       </div>
@@ -261,7 +323,9 @@
             id="<%= isMine === car.user_id ? 'highlight' : '' %>"
           >
           <!-- <div class="check"> -->
-            <img src="<%= car.picture[0].url %>" alt="" class="thumbnail" />
+            <% if (car.picture.length > 0) { %>
+              <img src="<%= car.picture[0].url %>" alt="" class="thumbnail">
+              <% } %>
             <div class="like">
               <% let count=0; %>
               <% for(let i=0; i < car.likes.length; i++) { %>
@@ -284,7 +348,7 @@
                 <% } else { %>
                   <form action="/car/carfind2" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
                     <input type="hidden" name="carNum" value="<%= car.num %>">
-                    <button type="submit" class="heart">○ <%= car.likes_count %></button>
+                    <button type="submit" class="heart">♡ <%= car.likes_count %></button>
                   </form>
                 <% } %>
               <% } %>
@@ -293,10 +357,9 @@
               <div> <%= car.from %> <%= car.brand %> <%= car.model %> </div>
       
               <div><%= car.fuel %> <%= car.year %>년식 <%= car.price %>만원</div>
-              <div class="hash"><%= car.hashtag %></div>
-              <div class="hash"><%= car.hashtag %></div>
-              <div class="hash"><%= car.hashtag %></div>
-              <div class="hash"><%= car.hashtag %></div>
+              <% for(i=0; i<car.hashtags.length; i++) { %>
+                <div class="hash">#<%= car.hashtags[i].cars_hashtag %></div>
+              <% } %>
             </div>
            
           </div>

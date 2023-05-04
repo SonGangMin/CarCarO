@@ -8,6 +8,7 @@ const {
   renderFindcar,
   renderHeader,
 } = require("../controllers/page");
+const {  carLike, carDislike} = require('../controllers/car')
 
 const router = express.Router();
 
@@ -26,5 +27,7 @@ router.get("/join", isNotLoggedIn, renderJoin);
 router.get("/login", isNotLoggedIn, renderLogin);
 
 router.get("/", renderMain);
+router.post("/", carLike);
+router.post("/2", carDislike);
 
 module.exports = router;

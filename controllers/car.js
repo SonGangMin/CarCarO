@@ -24,24 +24,25 @@ exports.renderFindcar = async (req, res, next) => {
       },
     });
     const twits = await cars.findAll({
-      attributes: [
-        "carNum",
-        "model",
-        "brand",
-        "picture",
-        "year",
-        "mile",
-        "fuel",
-        "hashtag",
-        "from",
-        "user_id",
-        "likes_count",
-        "price",
+      nest: true,
+      include: [
+        {
+          attributes: ["user_id"],
+          model: likes,
+          as: "likes",
+        },
+        {
+          attributes: ["cars_hashtag"],
+          model: hashtags,
+          as: "hashtags",
+        },
       ],
       order: [["num", "DESC"]],
       offset,
       limit: PAGE_SIZE,
     });
+    // console.log(twits);
+    // res.json(twits);
     res.render("carfind", {
       title: "내차찾기",
       twits,
@@ -60,8 +61,19 @@ exports.carLike = async (req, res, next) => {
   try {
     await likes.create({
       number: null,
-      car_num: req.body.carNum,
       user_id: req.user.id,
+      car_num: req.body.carNum,
+    });
+    res.redirect("back");
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+exports.carDislike = async (req, res, next) => {
+  try {
+    await likes.destroy({
+      where: { car_num: req.body.carNum, user_id: req.user.id },
     });
     res.redirect("back");
   } catch (err) {
@@ -103,13 +115,13 @@ exports.renderCarSearch = async (req, res, next) => {
 
     const where = {
       price: {
-        [Op.between]: [lowprice, highprice],
+        [Op.between]: [parseInt(lowprice), parseInt(highprice)],
       },
       year: {
-        [Op.between]: [startyear, endyear],
+        [Op.between]: [parseInt(startyear), parseInt(endyear)],
       },
       mile: {
-        [Op.between]: [shortmile, longmile],
+        [Op.between]: [parseInt(shortmile), parseInt(longmile)],
       },
       model: {
         [Op.like]: [`%${model}%`],
@@ -121,6 +133,7 @@ exports.renderCarSearch = async (req, res, next) => {
     }
     if (from) {
       where.from = from;
+      console.log("자동차 국내외 : ", from);
     }
     if (brand) {
       where.brand = brand;
@@ -131,11 +144,23 @@ exports.renderCarSearch = async (req, res, next) => {
 
     const Cars = await cars.findAll({
       where,
+      include: [
+        {
+          attributes: ["user_id"],
+          model: likes,
+          as: "likes",
+        },
+        {
+          attributes: ["cars_hashtag"],
+          model: hashtags,
+          as: "hashtags",
+        },
+      ],
       order: [["num", "DESC"]],
       offset,
       limit: PAGE_SIZE,
     });
-
+    // res.json({ Cars });
     res.render("carfind_search", {
       Cars,
       title: "차량검색결과",
@@ -237,8 +262,6 @@ exports.renderCarup = (req, res) => {
 
 // 내차팔기 db 등록
 exports.uploadPost = async (req, res, next) => {
-  console.log("333333333333333333", req.body.disp);
-  console.log("2222222222222222222222222222222222->", req.body.leather);
   const {
     carNum,
     from,
@@ -311,7 +334,10 @@ exports.uploadPost = async (req, res, next) => {
       const result = await Promise.all(
         Hashtags.map((tag) => {
           return hashtags.findOrCreate({
-            where: { cars_hashtag: tag.slice(1).toLowerCase() },
+            where: {
+              cars_hashtag: tag.slice(1).toLowerCase(),
+              cars_num: Cars.num,
+            },
           });
         })
       );
@@ -406,7 +432,6 @@ exports.listDelete = async (req, res, next) => {
 // 판매완료
 exports.saleComp = async (req, res, next) => {
   const { carNum } = req.params;
-
   try {
     const Cars = await cars.update({ status: 2 }, { where: { carNum } });
 

@@ -1,10 +1,17 @@
 const models = require('../models');
 
 exports.renderMain = async(req, res, next) => {
+  const isMine = req.user && req.user.id;
   // const carNum = req.param
   try {
     const Cars = await models.cars.findAll({
-
+      include: [
+        {
+          attributes: ["user_id"],
+          model: models.likes,
+          as: "likes",
+        },
+      ],
     });
     const isOwner = req.user && Cars.user_id === req.user.id;
     const status2 = Cars.status === 2;
@@ -14,6 +21,7 @@ exports.renderMain = async(req, res, next) => {
       twits: Cars,
       isOwner,
       status2,
+      isMine,
     });
     
   } catch (error) {

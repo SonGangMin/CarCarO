@@ -8,12 +8,14 @@
     href="/board/<%= twit.postId %>"
   >
     <li style="background-color: black; color: white; font-weight: bold">
-      <%= twit.title %> 작성자: <%= twit.user.name %>
+      <%= twit.title %> 작성자: <%= twit.user.name %>(<%= twit.user_id %>)
     </li></a
   >
   <% } else { %>
   <a href="/board/<%= twit.postId %>">
-    <li><%= twit.title %> 작성자: <%= twit.user.name %></li>
+    <li>
+      <%= twit.title %> 작성자: <%= twit.user.name %>(<%= twit.user_id %>)
+    </li>
   </a>
 
   <% } %> <% }); %>

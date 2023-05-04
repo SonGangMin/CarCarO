@@ -2,6 +2,8 @@ const express = require("express");
 const mypageController = require("../controllers/mypage");
 const { isLoggedIn, isMyId } = require("../middlewares");
 const { getRounds } = require("bcrypt");
+const users = require("../models/users");
+const models = require('../models')
 
 const router = express.Router();
 
@@ -12,6 +14,8 @@ router.get("/edit/:id", isLoggedIn, mypageController.renderEditPage);
 router.post("/edit", isLoggedIn, mypageController.updateUserInfo);
 // 회원 정보 수정 페이지 라우터
 router.get("/modify", isLoggedIn, mypageController.modifyPage);
+
+router.get("/mylikescar/:user_id", isLoggedIn, mypageController.renderLikescar);
 
 router.get("/myinquiry/:user_id", isLoggedIn, mypageController.renderInquiry);
 
@@ -26,4 +30,22 @@ router.post("edit", isLoggedIn, mypageController.postModify);
 router.get("/mypage/edit", function (req, res) {
   res.send("edit page");
 });
+
+// 회원 탈퇴
+router.post("/withdraw", async(req, res, next) => {
+  const myId = req.user.id;
+  console.log('ddddddddddddddddddddddd',myId)
+  try{
+    const withdraw = await models.users.findOne({where:{id:myId}});
+    if(!withdraw){
+      throw new Error('오류입니다.')
+    }
+    await models.users.destroy({where:{id:myId}});
+    res.redirect('/')
+  } catch(err){
+    console.error(err);
+    next(err);
+  }
+});
+
 module.exports = router;
