@@ -1,6 +1,13 @@
 <%- include('./include/head.ejs') %>
 
 <h1>게시글 목록</h1>
+<% if(user && user.id !== 'undefined') { %>
+<button
+  onclick="location.href='/board/search/?searchType=id&result=<%= user.id %>'"
+>
+  내 글 보기
+</button>
+<% } %>
 <ul>
   <% twits.forEach(function(twit) { %> <% if (twit.grade === 2) { %>
   <a
