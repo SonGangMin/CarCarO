@@ -39,8 +39,8 @@
             <label for=""><span>나이</span>
             <input id="birth" type="number" name="birth" value="<%= user.birth %>" placeholder="나이를 입력해주세요"></label>
             <span id="birth_message"></span><br>
-            <button type="button" onclick="checkForm()" class="edit_btn">정보 수정</button>
             <button type="button" class="cancel_btn" onclick="cancel()">취소</button>
+            <button type="button" onclick="checkForm()" class="edit_btn">정보 수정</button>
         </form>
     </section>
     <form id="withdrawForm" method="POST" action="/mypage/withdraw" style="float:left; width:50%">

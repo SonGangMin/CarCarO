@@ -28,9 +28,12 @@
       <div class="util">
         <a href="/mypage"><%= user.name %></a>
         <% if(user.provider === 'local'){ %>
-          <a href="/auth/logout">로그아웃</a>
+        <a href="/auth/logout">로그아웃</a>
         <% } else if(user.provider === 'kakao'){ %>
-        <a href="https://kauth.kakao.com/oauth/logout?client_id=<%= process.env.KAKAO_ID %>&logout_redirect_uri=http://localhost:3005/auth/logout">로그아웃</a>
+        <a
+          href="https://kauth.kakao.com/oauth/logout?client_id=<%= process.env.KAKAO_ID %>&logout_redirect_uri=http://localhost:3005/auth/logout"
+          >로그아웃</a
+        >
         <% } %>
         <a href="/mypage">마이페이지</a>
       </div>
@@ -38,7 +41,7 @@
       <div class="hd_menu">
         <div class="hd_lt">
           <h1 class="logo">
-            <a href="/"><img src="/images/user_logo.jpg" alt="" /></a>
+            <a href="/"><img src="/images/userlogo.png" alt="" /></a>
           </h1>
           <ul class="nav">
             <li>

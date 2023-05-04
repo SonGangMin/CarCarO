@@ -25,8 +25,7 @@
                                 <% count++; %>
                                 <% } %>
                             <% } %>
-                            <% console.log(isMine) %>
-                            <% console.log(isMine === twit.user_id) %>
+
                             <% if (typeof isMine === 'undefined') { %>
                                 <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
                             <% } else if (isMine === twit.user_id) { %>
@@ -77,8 +76,6 @@
                                     <% count++; %>
                                     <% } %>
                                 <% } %>
-                                <% console.log(isMine) %>
-                                <% console.log(isMine === twit.user_id) %>
                                 <% if (typeof isMine === 'undefined') { %>
                                     <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
                                 <% } else if (isMine === twit.user_id) { %>

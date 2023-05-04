@@ -47,7 +47,8 @@ exports.login = (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      return res.redirect("/");
+      const previousUrl = req.headers.referer;
+      return res.redirect(previousUrl);
     });
   })(req, res, next);
 };

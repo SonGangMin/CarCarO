@@ -12,9 +12,21 @@
 </style>
 <h1><%= board.title %></h1>
 <p><%= board.content %></p>
+<br />
 <p>작성자: <%= board.user.name %>(<%= board.user_id %>)</p>
-<p>최초 작성일: <%= board.createdAt %></p>
-<p>최종 수정일: <%= board.updatedAt %></p>
+<p>
+  최초 작성일: <%= board.createdAt.getFullYear() %>년 <%=
+  (board.createdAt.getMonth() + 1) %>월 <%= board.createdAt.getDate() %>일 (<%=
+  ["일", "월", "화", "수", "목", "금", "토"][board.createdAt.getDay()] %>) <%=
+  board.createdAt.getHours() %>시 <%= board.createdAt.getMinutes() %>분
+</p>
+
+<p>
+  최종 수정일: <%= board.updatedAt.getFullYear() %>년 <%=
+  (board.updatedAt.getMonth() + 1) %>월 <%= board.updatedAt.getDate() %>일 (<%=
+  ["일", "월", "화", "수", "목", "금", "토"][board.updatedAt.getDay()] %>) <%=
+  board.updatedAt.getHours() %>시 <%= board.updatedAt.getMinutes() %>분
+</p>
 
 <div class="comment">
   <% if (isboardOwner) { %>
