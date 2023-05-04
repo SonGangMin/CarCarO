@@ -7,6 +7,7 @@ const {
   renderSalecar,
   renderFindcar,
   renderHeader,
+  hashtagsearch,
 } = require("../controllers/page");
 const {  carLike, carDislike} = require('../controllers/car')
 
@@ -29,5 +30,6 @@ router.get("/login", isNotLoggedIn, renderLogin);
 router.get("/", renderMain);
 router.post("/", carLike);
 router.post("/2", carDislike);
+router.get("/hashtagsearch/:hashtag", hashtagsearch);
 
 module.exports = router;

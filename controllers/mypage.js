@@ -4,6 +4,7 @@ const models = require("../models");
 const bcrypt = require("bcrypt");
 const { hash } = require("bcrypt");
 const axios = require("axios");
+const { likes, cars } = require("../models");
 
 exports.renderMypage = (req, res) => {
   res.render("mypage", {
@@ -53,7 +54,7 @@ exports.modifyPage = (req, res) => {
 
 exports.renderInquiry = async (req, res, next) => {
   const myinquiry = req.params.user_id;
-  console.log("1111111111111111 => ", myinquiry);
+  // console.log("1111111111111111 => ", myinquiry);
   try {
     const PAGE_SIZE = 15;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
@@ -145,37 +146,41 @@ exports.postModify = async (req, res, next) => {
 };
 
 exports.renderLikescar = async (req, res, next) => {
-  const car_num = req.params.likes;
+  const mylikescar = req.params.num;
+  const isMine = req.user && req.user.id;
+  // console.log("1111111111111111 => ", myinquiry);
   try {
     const PAGE_SIZE = 15;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
     const offset = (page - 1) * PAGE_SIZE;
-    const total = await models.likes.count();
+    const total = await models.cars.count();
     const totalPages = Math.ceil(total / PAGE_SIZE);
-    const twits = await models.likes.findAll({
-      where: { car_num },
-      include: [
-        {
-          attributes: ["다"],
-          model: models.Cars,
-          as: "car_num",
-        },
-      ],
+    const twits = await likes.findAll({
+      include: [{
+        model: cars,
+        as: "car_num_car",
+      }],
+      where: { "user_id": req.user.id },
+      order: [["number", "DESC"]],
       offset,
       limit: PAGE_SIZE,
     });
-    // console.log("자료확인--", twits[0]);
+    const isOwner = req.user && likes.user_id === req.user.id;
     res.render("mylikescar", {
       twits,
-      title: "관심차량",
+      title: "관심 차량",
+      isOwner,
       totalPages,
       currentPage: page,
+      isMine
     });
   } catch (err) {
     console.error(err);
     next(err);
   }
 };
+
+
 exports.getModifyPage = function (req, res, next) {
   models.query(
     "SELECT * FROM users WHERE id = ?",

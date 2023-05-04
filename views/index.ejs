@@ -4,8 +4,10 @@
     <h1 align="center">empty</h1>
 </div>
 <div class="hashtagsearch">
-    <input class="hashtagsearchbox" placeholder="해쉬태그 검색">
-    <button type="submit">검색</button>
+    <form action="/index/hashtagsearch/:hashtag" method="get">
+        <input class="hashtagsearchbox" placeholder="해쉬태그 검색 ex) #제네시스 #G80">
+        <button type="submit">검색</button>
+    </form>
 </div>
 
 <div class="reccar">
@@ -46,10 +48,9 @@
                         <div>
                             <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
                             <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
-                            <div class="hash"><%= twit.hashtag %></div>
-                            <div class="hash"><%= twit.hashtag %></div>
-                            <div class="hash"><%= twit.hashtag %></div>
-                            <div class="hash"><%= twit.hashtag %></div>
+                            <% for(i=0; i<twit.hashtags.length; i++) { %>
+                                <div class="hash">#<%= twit.hashtags[i].cars_hashtag %></div>
+                            <% } %>
                         </div>
                     </div>
                 </a>
@@ -99,10 +100,9 @@
                             <div>
                                 <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
                                 <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
-                                <div class="hash"><%= twit.hashtag %></div>
-                                <div class="hash"><%= twit.hashtag %></div>
-                                <div class="hash"><%= twit.hashtag %></div>
-                                <div class="hash"><%= twit.hashtag %></div>
+                                <% for(i=0; i<twit.hashtags.length; i++) { %>
+                                    <div class="hash">#<%= twit.hashtags[i].cars_hashtag %></div>
+                                <% } %>
                             </div>
                         </div>
                     </a>

@@ -1,4 +1,6 @@
 const models = require('../models');
+const {hashtags} = require('../models')
+const { Op } = require("sequelize");
 
 exports.renderMain = async(req, res, next) => {
   const isMine = req.user && req.user.id;
@@ -11,7 +13,13 @@ exports.renderMain = async(req, res, next) => {
           model: models.likes,
           as: "likes",
         },
+        {
+          attributes: ["cars_hashtag"],
+          model: hashtags,
+          as: "hashtags",
+        },
       ],
+      order: [['createdAt','desc']],
     });
     const isOwner = req.user && Cars.user_id === req.user.id;
     const status2 = Cars.status === 2;
@@ -48,4 +56,36 @@ exports.renderLogin = (req, res) => {
 };
 // 마이페이지
 
-
+exports.hashtagsearch =  async (req, res, next) => {
+  const query = req.query.hashtag;
+  if (!query) {
+    return res.redirect("/page");
+  }
+  try {
+    const PAGE_SIZE = 15;
+    const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+    const offset = (page - 1) * PAGE_SIZE;
+    const total = await models.cars.count();
+    const totalPages = Math.ceil(total / PAGE_SIZE);
+    const results = await models.cars.findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${query}%` } },
+          { content: { [Op.like]: `%${query}%` } },
+        ],
+      },
+      order: [["createdAt", "DESC"]],
+      offset,
+      limit: PAGE_SIZE,
+    });
+    res.render("hashtagsearch", {
+      results,
+      title: `검색 결과: ${query}`,
+      totalPages,
+      currentPage: page,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
