@@ -3,7 +3,7 @@
 <div class="container">
     <div class="contents">
         <h1>차량관리</h1>
-        <h2 class="title">판매목록</h2>  
+        <h2 class="title">판매완료목록</h2>  
         <h3 class="counting">총 <span><%= totalCount %></span>개</h3>
         <!-- <form action="/car/hashtag">
             <input type="text" name="hashtag">
@@ -11,7 +11,7 @@
         </form> -->
         <ul class="viewImg">
           <% Cars.forEach(function(carList) { %>
-          <li onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'">
+          <li  data-carnum="<%= carList.carNum %>">
               <% if (carList.picture.length > 0) { %>
               <img src="<%= carList.picture[0].url %>" alt="" class="thumbnail">
               <% } %>
@@ -24,8 +24,8 @@
                   <span><%= carList.hashtag %></span>
                 </div>
               </div>
-              <div class="buttonBox">
-                <button id="cancleBtn">판매완료취소</button>
+              <div class="buttonBox" style="z-index: 99;">
+                <button id="cancleBtn" value="<%= carList.carNum %>">판매완료취소</button>
               </div>
           </li>
           <% }); %>
@@ -60,6 +60,20 @@
 </div>
 </body>
 <script>
-
+  const cancleBtnList = document.querySelectorAll('#cancleBtn');
+  cancleBtnList.forEach((cancleBtn) => {
+    cancleBtn.addEventListener('click', async (e) => {
+      const carNum = e.target.value;
+      const li = e.target.closest('li'); // 선택한 버튼에 가장 가까운 li 요소를 찾습니다.
+      try {
+        const response = await axios.post('/manager/managerCar/saleCancle/' + carNum);
+        if (response.status === 200) {
+          li.remove(); // 선택한 li 요소를 제거합니다.
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  });
 </script>
 </html>
