@@ -4,6 +4,8 @@ const from = document.getElementById("from");
 const fromSelect = document.getElementById("from");
 const brandSelect = document.getElementById("brand");
 
+
+// 수정페이지 select에 value 값나오게하기
 fromSelect.addEventListener("change", () => {
   brandSelect.innerHTML = "";
   if (fromSelect.value === "국산") {
@@ -33,8 +35,19 @@ fromSelect.addEventListener("change", () => {
   }
 });
 
+// 슬라이드 미리보기이미지
 img.addEventListener("change", () => {
   if (img.value) {
     preview.style.display = "flex";
   }
 });
+
+// 해시태그 갯수제한
+const hashtag = document.getElementById("hashtag");
+hashtag.addEventListener('input', (e) => {
+  const value = e.target.value;
+  const hashCount = (value.match(/#/g) || []).length;
+  if (hashCount > 4) {
+    e.target.value = value.slice(0, -1);
+  }
+})

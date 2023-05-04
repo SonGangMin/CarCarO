@@ -5,6 +5,14 @@
     margin: 0 auto;
 }
 
+.bx-wrapper{
+    width: 100%;
+    max-width: 100% !important;
+}
+.bx-viewport{
+    width: 100%;
+}
+
 .hashtagsearch {
     margin: 1% auto;
     width: 250px;

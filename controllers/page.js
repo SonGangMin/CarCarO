@@ -1,5 +1,5 @@
-const models = require('../models');
-const {hashtags, likes} = require('../models')
+const models = require("../models");
+const { hashtags, likes, advertises } = require("../models");
 const { Op } = require("sequelize");
 const {
   getPagingDataCount,
@@ -7,7 +7,7 @@ const {
   getPagingData,
 } = require("./pagination");
 
-exports.renderMain = async(req, res, next) => {
+exports.renderMain = async (req, res, next) => {
   const isMine = req.user && req.user.id;
   // const carNum = req.param
   try {
@@ -24,19 +24,21 @@ exports.renderMain = async(req, res, next) => {
           as: "hashtags",
         },
       ],
-      order: [['createdAt','desc']],
+      order: [["createdAt", "desc"]],
     });
     const isOwner = req.user && Cars.user_id === req.user.id;
     const status2 = Cars.status === 2;
-    console.log("1111111111111111", Cars);
+
+    const Adver = await advertises.findAll({});
+
     res.render("index", {
       title: "CarCarO",
       twits: Cars,
       isOwner,
       status2,
       isMine,
+      Adver,
     });
-    
   } catch (error) {
     console.error(error);
     next(error);
@@ -48,11 +50,11 @@ exports.renderMain = async(req, res, next) => {
 //   res.render("index", { title: "CarcarO", usergrade });
 // };
 // 로그인, 회원가입
-exports.renderJoin = async(req, res) => {
+exports.renderJoin = async (req, res) => {
   const users = await models.users.findAll({
-    attributes: ["id"]
+    attributes: ["id"],
   });
-  res.render("join", { users,title: "회원가입"});
+  res.render("join", { users, title: "회원가입" });
   // res.json(users);
 };
 
@@ -61,7 +63,7 @@ exports.renderLogin = (req, res) => {
 };
 // 마이페이지
 
-exports.hashtagsearch =  async (req, res, next) => {
+exports.hashtagsearch = async (req, res, next) => {
   const query = req.query.hashtag;
   if (!query) {
     return res.redirect("/index");
@@ -72,11 +74,9 @@ exports.hashtagsearch =  async (req, res, next) => {
     const isMine = req.user && req.user.id;
     const totalItems = await models.cars.count({
       where: {
-        [Op.or]: [
-          { hashtag: { [Op.like]: `%${query}%` } },
-        ],
+        [Op.or]: [{ hashtag: { [Op.like]: `%${query}%` } }],
       },
-    })
+    });
     const Cars = await models.cars.findAll({
       include: [
         {
@@ -91,9 +91,7 @@ exports.hashtagsearch =  async (req, res, next) => {
         },
       ],
       where: {
-        [Op.or]: [
-          { hashtag: { [Op.like]: `%${query}%` } },
-        ],
+        [Op.or]: [{ hashtag: { [Op.like]: `%${query}%` } }],
       },
       order: [["createdAt", "DESC"]],
       offset,

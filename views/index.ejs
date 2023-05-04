@@ -1,7 +1,13 @@
 <%- include('./include/head.ejs') %>
 
-<div class="empty" algin="center">
-    <h1 align="center">empty</h1>
+<div class="bxslider">
+    <% Adver.forEach(function(advers) { %>
+        <div>
+            <a href="<%= advers.href %>">
+                <img src="<%= advers.img[0].url %>"/>
+            </a>
+        </div>
+    <% }); %>
 </div>
 <div class="hashtagsearch">
     <form action="/hashtagsearch/" method="get">
@@ -112,4 +118,13 @@
 </div>
 
 </body>
+<script>
+    $(function(){
+        $('.bxslider').bxSlider({
+        mode: 'horizontal',
+        captions: true,
+        slideWidth: 600
+        });
+    });
+</script>
 </html>
