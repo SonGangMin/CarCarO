@@ -26,6 +26,7 @@ const managerBoardRouter = require("./routes/Manager/managerboard");
 const managerfaqRouter = require("./routes/Manager/managerfaq");
 const managerinquiryRouter = require("./routes/Manager/managerinquiry");
 const managerCarRouter = require("./routes/Manager/managerCar");
+const advertiseRouter = require("./routes/Manager/advertise");
 
 const { sequelize } = require("./models");
 const passportConfig = require("./passport");
@@ -50,6 +51,7 @@ app.set("view engine", "ejs");
 app.use(morgan("dev"));
 app.use("/", express.static(path.join(__dirname, "public")));
 app.use("/carImg", express.static(path.join(__dirname, "carImg")));
+app.use("/img", express.static(path.join(__dirname, "adverImg")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -83,6 +85,7 @@ app.use("/manager/managerboard", managerBoardRouter);
 app.use("/manager/managerFaq", managerfaqRouter);
 app.use("/manager/managerinquiry", managerinquiryRouter);
 app.use("/manager/managerCar", managerCarRouter);
+app.use("/manager/advertise", advertiseRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

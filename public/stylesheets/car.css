@@ -160,3 +160,8 @@
     border-top: 2px solid #fff;
     border-bottom: 2px solid #fff;
 }
+
+/* 매니저 차량관리 */
+.viewImg li.recommended{
+    border: 1px solid #ff5f5f;
+}

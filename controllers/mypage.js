@@ -16,12 +16,12 @@ exports.renderMypage = (req, res) => {
 exports.renderEditPage = async (req, res) => {
   try {
     const id = req.params.id; // 사용자 아이디
-    console.log("ee=========ee", id);
+    // console.log("ee=========ee", id);
     const user = await models.users.findOne({ where: { id: id } }); // 사용자 정보 조회
     // console.log(user[0]);
     res.render("modify", { title: "회원정보수정" }); // modify.ejs 뷰에 사용자 정보 전달
 
-    console.log("ddd=========dd", id);
+    // console.log("ddd=========dd", id);
   } catch (err) {
     console.error(err);
     // res.status(500).send('서버 오류');

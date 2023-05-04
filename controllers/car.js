@@ -392,7 +392,6 @@ exports.uploadPost = async (req, res, next) => {
     price,
     hashtag,
   } = req.body;
-  console.log("req.files ==============", req.files);
   try {
     const files = [];
     for (const file of req.files) {
@@ -519,7 +518,6 @@ exports.editBtn = async (req, res, next) => {
 exports.listDelete = async (req, res, next) => {
   try {
     const carNum = req.params.carNum;
-    console.log("lllllllll->", req.params.carNum);
     await cars.destroy({
       where: { carNum },
     });

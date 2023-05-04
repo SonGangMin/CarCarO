@@ -1,4 +1,5 @@
 var DataTypes = require("sequelize").DataTypes;
+var _advertises = require("./advertises");
 var _boards = require("./boards");
 var _cars = require("./cars");
 var _carshashtags = require("./carshashtags");
@@ -10,6 +11,7 @@ var _likes = require("./likes");
 var _users = require("./users");
 
 function initModels(sequelize) {
+  var advertises = _advertises(sequelize, DataTypes);
   var boards = _boards(sequelize, DataTypes);
   var cars = _cars(sequelize, DataTypes);
   var carshashtags = _carshashtags(sequelize, DataTypes);
@@ -44,6 +46,7 @@ function initModels(sequelize) {
   users.hasMany(likes, { as: "likes", foreignKey: "user_id"});
 
   return {
+    advertises,
     boards,
     cars,
     carshashtags,

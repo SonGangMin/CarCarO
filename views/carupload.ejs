@@ -164,7 +164,7 @@
                     <textarea id="etc" name="etc" rows="5"></textarea>
                 </label>
                 
-                <label for=""><b>해시태그</b><input id="hashtag" type="text" name="hashtag"></label>
+                <label for=""><b>해시태그</b><input id="hashtag" type="text" name="hashtag" placeholder="ex) #ㅇㅇㅇ 최대 4개 까지 가능합니다."></label>
 
                 <label for=""><b>연락처</b><input id="tel" type="number" name="tel"></label>
 
@@ -292,7 +292,6 @@
             for (const file of fileInput.files) {
             formData.append('files', file);
             }
-            console.log(formData);
 
             try {
                 const response = await axios.post('/car/multiple-upload', formData, {
@@ -305,8 +304,6 @@
                     confirm('등록하시겠습니까?');
                     return(location.href="/car/carsale");
                 }
-                console.log("111", response.status);
-                console.log("222", response.data);
             } catch (error) {
                 console.error(error);
             }

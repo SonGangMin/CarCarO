@@ -11,7 +11,7 @@
         </form> -->
         <ul class="viewImg">
           <% Cars.forEach(function(carList) { %>
-          <li onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'">
+          <li onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'"  <% if (carList.recommends === 1) { %>class="recommended"<% } %>>
               <% if (carList.picture.length > 0) { %>
               <img src="<%= carList.picture[0].url %>" alt="" class="thumbnail">
               <% } %>

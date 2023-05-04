@@ -1,5 +1,5 @@
 const models = require('../models');
-const {hashtags} = require('../models')
+const {hashtags, advertises} = require('../models')
 const { Op } = require("sequelize");
 
 exports.renderMain = async(req, res, next) => {
@@ -23,13 +23,18 @@ exports.renderMain = async(req, res, next) => {
     });
     const isOwner = req.user && Cars.user_id === req.user.id;
     const status2 = Cars.status === 2;
-    console.log("1111111111111111", Cars);
+    
+    const Adver = await advertises.findAll({
+
+    })
+
     res.render("index", {
       title: "CarCarO",
       twits: Cars,
       isOwner,
       status2,
       isMine,
+      Adver
     });
     
   } catch (error) {

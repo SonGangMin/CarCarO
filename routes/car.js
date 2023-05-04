@@ -52,8 +52,6 @@ const upload = multer({
       cb(null, "carImg/");
     },
     filename(req, file, done) {
-      console.log("333333333333333333333333333333333333");
-      console.log("filename", file);
       const ext = path.extname(file.originalname);
       const fileName = `${path.basename(
         file.originalname,
