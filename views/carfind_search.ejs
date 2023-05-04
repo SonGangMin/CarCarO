@@ -355,7 +355,7 @@
               <div> <%= car.from %> <%= car.brand %> <%= car.model %> </div>
       
               <div><%= car.fuel %> <%= car.year %>년식 <%= car.price %>만원</div>
-              <% for(i=0; i<Math.min(twit.hashtags.length,4); i++) { %>
+              <% for(i=0; i<Math.min(car.hashtags.length,4); i++) { %>
                 <div class="hash">#<%= car.hashtags[i].cars_hashtag %></div>
               <% } %>
             </div>
@@ -366,20 +366,21 @@
       <% }) %>
     </ul>
   </div>
+  <script>
+    function onPageClick(event, page) {
+      const queryParams = new URLSearchParams(window.location.search);
+      queryParams.set('page', page); // 현재 페이지 설정
+    
+      const queryString = queryParams.toString();
+      const searchUrl = `/car/carfind/search/?${queryString}`;
+    
+      location.href = searchUrl;
+    }
+    </script>
+    <%- include('./include/pagination.ejs') %>
 </div>
 
-<script>
-function onPageClick(event, page) {
-  const queryParams = new URLSearchParams(window.location.search);
-  queryParams.set('page', page); // 현재 페이지 설정
 
-  const queryString = queryParams.toString();
-  const searchUrl = `/car/carfind/search/?${queryString}`;
-
-  location.href = searchUrl;
-}
-</script>
-<%- include('./include/pagination.ejs') %>
 
 <script>
   const fromSelect = document.querySelector('#from');
