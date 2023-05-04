@@ -56,6 +56,7 @@
       </button>
       <!-- <button id="submit" type="submit" onclick="checkForm()" class="join_btn">회원가입</button> -->
     </form>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
       document
         .querySelector("#checkid")
@@ -87,10 +88,10 @@
 
         if(pw.value === checkpw.value) {
         passwordConfirmFeedback.textContent = "비밀번호가 일치 합니다";
-        passwordFeedback.style.color = 'green';
+        passwordConfirmFeedback.style.color = 'green';
       } else {
         passwordConfirmFeedback.textContent = "비밀번호가 맞지 않습니다";
-        passwordFeedback.style.color = 'red';
+        passwordConfirmFeedback.style.color = 'red';
       }
     }
 
@@ -103,7 +104,7 @@
 
         const idCheck = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}$/;
         if (!idCheck.test(id.value)) {
-          alert("아이디는 영문 + 숫자 조합으로 8~20자리로 설정하셔야 합니다.");
+          alert("아이디는 영문 + 숫자 조합으로 8~16자리로 설정하셔야 합니다.");
           pw.focus();
           return false;
         }
@@ -146,6 +147,22 @@
           return false;
         }
 
+        if (!checkTel()) { // 휴대폰 번호 유효성 검사를 수행
+          tel.focus();
+          return false;
+        }
+
+        if (email.value === "") {
+          alert("이메일을 입력해주세요")
+          email.focus()
+          return false;
+        }
+        
+        if (!checkEmail()) { // 이메일 유효성 검사를 수행
+          email.focus();
+          return false;
+        }
+
         if (birth.value === "") {
           alert("나이를 입력해주세요");
           birth.focus();
@@ -153,10 +170,33 @@
         }
         join_form.submit();
       }      
+      
+      // 중복된 아이디 확인
+      const idInput = document.getElementById('id');
+      const idFeedBack = document.getElementById('id-feedback');
+
+      id.addEventListener('input', checkId);
+
+      function checkId() {
+        const idValue = id.value;
+
+        axios.get(`/check-id?id=${idValue}`)
+        .then(response => {
+          if (response.data.isDuplicate) {
+            idFeedBack.textContent = '중복된 아이디입니다';
+            idFeedBack.style.color = 'red';
+          } else {
+            idFeedBack.textContent = '사용 가능한 아이디입니다';
+            idFeedBack.style.color = 'color';
+          }
+        })
+        .catch(error => console.error(error));
+      }
 
       // 비밀번호 유효성 검사
+      pw.addEventListener('input', checkPassword);
       function checkPassword() {
-        const passwordFeedback = document.getElementById('passwordFeedback');
+        const passwordFeedback = document.getElementById('password_feedback');
         const pw = document.getElementById('pw')
         const pwCheck = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/;
 
@@ -167,6 +207,7 @@
         } else {
           passwordFeedback.textContent = '사용 가능한 비밀번호입니다';
           passwordFeedback.style.color = 'green';
+          return true;
         }
       }
 

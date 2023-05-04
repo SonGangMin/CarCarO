@@ -78,10 +78,10 @@
 
             if(pw.value === pw_confirm.value) {
                 password_confirm_feedback.textContent = "비밀번호가 일치 합니다";
-                passwordFeedback.style.color = 'green';
+                password_confirm_feedback.style.color = 'green';
             }else{
                 password_confirm_feedback.textContent = "비밀번호가 일치하지 않습니다";
-                passwordFeedback.style.color = 'red';
+                password_confirm_feedback.style.color = 'red';
             }
         }
 
@@ -107,12 +107,12 @@
                 return false;
             }
             if(tel.value === ''){
-                alert('전화번호를 입력해주세요')
+                alert('휴대폰 번호를 입력해주세요')
                 tel.focus()
                 return false;
             }
 
-            if (!checkTel()) { // 전화번호 유효성 검사를 수행
+            if (!checkTel()) { // 휴대폰 번호 유효성 검사를 수행
                 tel.focus();
                 return false;
             }
