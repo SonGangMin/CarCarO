@@ -33,7 +33,7 @@
                                 <button class="Mine">♥ 내차<%= twit.likes_count %></button>
                             <% } else { %>
                                 <% if(!count) { %>
-                                <form action="/car/carfind" method="post" onsubmit="return confirm('관심차량 목록에 추가하시겠습니까?')">
+                                <form action="/car/carfind" method="post">
                                     <input type="hidden" name="carNum" value="<%= twit.num %>">
                                     <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
                                 </form>
@@ -85,7 +85,7 @@
                                     <button class="Mine">♥ 내차<%= twit.likes_count %></button>
                                 <% } else { %>
                                     <% if(!count) { %>
-                                    <form action="/car/carfind" method="post" onsubmit="return confirm('관심차량 목록에 추가하시겠습니까?')">
+                                    <form action="/car/carfind" method="post">
                                         <input type="hidden" name="carNum" value="<%= twit.num %>">
                                         <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
                                     </form>

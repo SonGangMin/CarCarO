@@ -283,9 +283,11 @@
     <% if (from) { %>
       <div><%= from %></div>
     <% } %>
+
     <% if (brand) { %>
       <div><%= brand %></div>
     <% } %>
+
     <% if (model) { %>
       <div>모델명: <%= model %></div>
     <% } %>
@@ -297,32 +299,28 @@
       <div><%= trans %></div>
     <% } %>
 
-      <div><%= startyear %> 년식 ~
-      <%= endyear %> 년식 까지</div>
+    <div><%= startyear %> 년식 ~
+    <%= endyear %> 년식 까지</div>
 
     <% if (fuel) { %>
       <div><%= fuel %></div>
     <% } %>
 
-      <div><%= shortmile %> km ~
-      <%= longmile %> km 까지</div>
-
+    <div><%= shortmile %> km ~
+    <%= longmile %> km 까지</div>
   </div>
   
-
   <div class="bigbox" id="list">
     <h1>검색 결과 총 <%= total %> 건</h1>
     <br />
     <ul>
       <% Cars.forEach(function(car) { %>
       <li>
-        <!-- <% console.log('car.price ===>', car.price) %> -->
         <a href="/car/detail/<%= car.carNum %>">
           <div
             class="listbox"
             id="<%= isMine === car.user_id ? 'highlight' : '' %>"
           >
-          <!-- <div class="check"> -->
             <% if (car.picture.length > 0) { %>
               <img src="<%= car.picture[0].url %>" alt="" class="thumbnail">
               <% } %>
@@ -341,7 +339,7 @@
                 <button class="Mine">♥ 내차<%= car.likes_count %></button>
               <% } else { %>
                 <% if(!count) { %>
-                  <form action="/car/carfind" method="post" onsubmit="return confirm('관심차량 목록에 추가하시겠습니까?')">
+                  <form action="/car/carfind" method="post">
                     <input type="hidden" name="carNum" value="<%= car.num %>">
                     <button type="submit" class="heart">♥ <%= car.likes_count %></button>
                   </form>
@@ -390,25 +388,25 @@ function onPageClick(event, page) {
   fromSelect.addEventListener('change', () => {
     if (fromSelect.value === "국산") {
     brandSelect.innerHTML = `
-        <option value="">국산 전체</option>
-        <option value="현대">현대</option>
-        <option value="제네시스">제네시스</option>
-        <option value="기아">기아</option>
-        <option value="쉐보레">쉐보레(GM대우)</option>
-        <option value="쌍용">쌍용</option>
-        <option value="국산기타">기타</option>
+      <option value="">국산 전체</option>
+      <option value="현대">현대</option>
+      <option value="제네시스">제네시스</option>
+      <option value="기아">기아</option>
+      <option value="쉐보레">쉐보레(GM대우)</option>
+      <option value="쌍용">쌍용</option>
+      <option value="국산기타">기타</option>
         
     `;
   } else if (fromSelect.value === "수입") {
     brandSelect.innerHTML = `
-    <option value="">수입 전체</option>
-    <option value="벤츠">벤츠</option>
-    <option value="아우디">아우디</option>
-    <option value="BMW">BMW</option>
-    <option value="볼보">볼보</option>
-    <option value="폭스바겐">폭스바겐</option>
-    <option value="포르쉐">포르쉐</option>
-    <option value="수입기타">기타</option>
+      <option value="">수입 전체</option>
+      <option value="벤츠">벤츠</option>
+      <option value="아우디">아우디</option>
+      <option value="BMW">BMW</option>
+      <option value="볼보">볼보</option>
+      <option value="폭스바겐">폭스바겐</option>
+      <option value="포르쉐">포르쉐</option>
+      <option value="수입기타">기타</option>
     `;
   } else {
     brandSelect.innerHTML = `
@@ -416,16 +414,4 @@ function onPageClick(event, page) {
     `;
   }
   });
-  // const transSelect = document.getElementById("trans");
-  // transSelect.addEventListener("change", function() {
-  //   if (transSelect.value === "") {
-  //     // 전체를 선택한 경우, 다른 모든 옵션을 선택한 것과 같게 처리
-  //     transSelect.selectedIndex = 0;
-  //   }
-  // });
-
-//   const lowPrice = document.querySelector('#lowprice').value;
-// const highPrice = document.querySelector('#highprice').value;
-// const shortMile = document.querySelector('#shortmile').value;
-// const longMile = document.querySelector('#longmile').value;
 </script>

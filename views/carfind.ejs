@@ -306,7 +306,7 @@
                   <button class="Mine" onclick="alert ('자신의 차는 추천할 수 없습니다.')">♥ 내차<%= twit.likes_count %></button>
                 <% } else { %>
                   <% if(!count) { %>
-                    <form action="/car/carfind" method="post" onsubmit="return confirm('관심차량 목록에 추가하시겠습니까?')">
+                    <form action="/car/carfind" method="post">
                       <input type="hidden" name="carNum" value="<%= twit.num %>">
                       <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
                     </form>
@@ -333,15 +333,19 @@
     </ul>
   </div>
 </div>
-<% console.log('dddddddddddddddddddddddddddddddddddd',sortOption); %>
+
 <script>
   function onPageClick(event, page) {
-    location.href='/car/carfind?page='+ page;
-    console.info(page + " (from options)");
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set('page', page); // 현재 페이지 설정
+  
+    const queryString = queryParams.toString();
+    const searchUrl = `/car/carfind?${queryString}`;
+  
+    location.href = searchUrl;
   }
 </script>
 <%- include('./include/pagination.ejs') %>
-
 <script>
   const fromSelect = document.querySelector('#from');
   const brandSelect = document.querySelector('#brand');
