@@ -266,6 +266,22 @@
 
   <div class="bigbox" id="list">
     <h1>전체 차량</h1>
+    <select name="sort" onchange="sortCars(this.value)">
+      <option value="" selected>정렬</option>
+      <option value="createdAt_desc">최근 등록순</option>
+      <option value="year_desc">최근 연식순</option>
+      <option value="year_asc">오래된 연식순</option>
+      <option value="mile_asc">적은 주행거리순</option>
+      <option value="mile_desc">많은 주행거리순</option>
+      <option value="price_asc">낮은 가격순</option>
+      <option value="price_desc">높은 가격순</option>
+    </select>
+    <script>
+      function sortCars(sort) {
+        const url = `/car/carfind${sort ? `?sort=${sort}` : ""}`;
+        window.location.href = url;
+      }
+    </script>
     <br />
     <ul>
       <% twits.forEach(function(twit) { %>
@@ -306,7 +322,6 @@
               <div class="text-box">
                 <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
                 <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
-                <% console.log('ssssssss==', twit.hashtags.length) %>
                 <% for(i=0; i<twit.hashtags.length; i++) { %>
                   <div class="hash">#<%= twit.hashtags[i].cars_hashtag %></div>
                 <% } %>
@@ -318,6 +333,7 @@
     </ul>
   </div>
 </div>
+<% console.log('dddddddddddddddddddddddddddddddddddd',sortOption); %>
 <script>
   function onPageClick(event, page) {
     location.href='/car/carfind?page='+ page;

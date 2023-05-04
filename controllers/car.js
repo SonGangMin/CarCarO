@@ -16,6 +16,33 @@ exports.renderFindcar = async (req, res, next) => {
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
     const isMine = req.user && req.user.id;
     const total = await cars.count();
+    const sortOption = req.query.sort || "createdAt_desc";
+    let order;
+    switch (sortOption) {
+      case "createdAt_desc":
+        order = [["createdAt", "DESC"]];
+        break;
+      case "year_asc":
+        order = [["year", "ASC"]];
+        break;
+      case "year_desc":
+        order = [["year", "DESC"]];
+        break;
+      case "mileage_asc":
+        order = [["mile", "ASC"]];
+        break;
+      case "mileage_desc":
+        order = [["mile", "DESC"]];
+        break;
+      case "price_asc":
+        order = [["price", "ASC"]];
+        break;
+      case "price_desc":
+        order = [["price", "DESC"]];
+        break;
+      default:
+        order = [["createdAt", "DESC"]]; // 최근 등록순
+    }
     const twentyFourHoursAgo = moment().subtract(24, "hours").toDate();
     const recenttotal = await cars.count({
       where: {
@@ -39,7 +66,7 @@ exports.renderFindcar = async (req, res, next) => {
           as: "hashtags",
         },
       ],
-      order: [["num", "DESC"]],
+      order,
       offset,
       limit,
     });
@@ -59,6 +86,7 @@ exports.renderFindcar = async (req, res, next) => {
       totalItems,
       isMine,
       recenttotal,
+      sortOption,
     });
   } catch (err) {
     console.error(err);

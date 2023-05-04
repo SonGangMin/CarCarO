@@ -1,12 +1,59 @@
 <%- include('../include/managerhead.ejs') %>
 <h1>검색 결과</h1>
 <ul>
-  <% results.forEach(function(result) { %>
-  <li>
-    <a href="/manager/managerboard/<%= result.postId %>"><%= result.title %></a>
-    내용: <%= result.content %>
+  <% results.forEach(function(twit) { %> <% if (twit.grade === 2) { %>
+  <li style="background-color: black; color: white; font-weight: bold">
+    <a
+      style="background-color: black; color: white; font-weight: bold"
+      href="/manager/managerboard/content/<%= twit.postId %>"
+      ><%= twit.title %> 작성자: <%= twit.user.name %>(<%= twit.user_id %>)
+      내용: <%= twit.content %></a
+    >
+    <br />
+    <button>
+      <a href="/manager/managerboard/edit/<%= twit.postId %>/">수정</a>
+    </button>
+    <form
+      action="/manager/managerboard/delete/<%= twit.postId %>"
+      method="POST"
+    >
+      <input type="submit" value="삭제" />
+    </form>
+    <form
+      action="/manager/managerboard/editgradedown/<%= twit.postId %>"
+      method="POST"
+    >
+      <input type="submit" value="공지내리기" />
+    </form>
   </li>
-  <% }); %>
+  <% } else { %>
+  <li>
+    <a
+      href="/manager/managerboard/content/<%= twit.postId %>"
+      style="color: white"
+    >
+      <%= twit.title %> 작성자: <%= twit.user.name %>(<%= twit.user_id %>) 내용:
+      <%= twit.content %>
+    </a>
+
+    <br />
+    <button>
+      <a href="/manager/managerboard/edit/<%= twit.postId %>">수정</a>
+    </button>
+    <form
+      action="/manager/managerboard/delete/<%= twit.postId %>"
+      method="POST"
+    >
+      <input type="submit" value="삭제" />
+    </form>
+    <form
+      action="/manager/managerboard/editgradeup/<%= twit.postId %>"
+      method="POST"
+    >
+      <input type="submit" value="공지로등록" />
+    </form>
+  </li>
+  <% } %> <% }); %>
 </ul>
 <script>
   function onPageClick(event, page) {
