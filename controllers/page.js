@@ -1,6 +1,11 @@
 const models = require('../models');
-const {hashtags} = require('../models')
+const {hashtags, likes} = require('../models')
 const { Op } = require("sequelize");
+const {
+  getPagingDataCount,
+  getPagination,
+  getPagingData,
+} = require("./pagination");
 
 exports.renderMain = async(req, res, next) => {
   const isMine = req.user && req.user.id;
@@ -10,7 +15,7 @@ exports.renderMain = async(req, res, next) => {
       include: [
         {
           attributes: ["user_id"],
-          model: models.likes,
+          model: likes,
           as: "likes",
         },
         {
@@ -59,30 +64,49 @@ exports.renderLogin = (req, res) => {
 exports.hashtagsearch =  async (req, res, next) => {
   const query = req.query.hashtag;
   if (!query) {
-    return res.redirect("/page");
+    return res.redirect("/index");
   }
   try {
-    const PAGE_SIZE = 15;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
-    const offset = (page - 1) * PAGE_SIZE;
-    const total = await models.cars.count();
-    const totalPages = Math.ceil(total / PAGE_SIZE);
-    const results = await models.cars.findAll({
+    const { limit, offset } = getPagination(page, 16);
+    const isMine = req.user && req.user.id;
+    const totalItems = await models.cars.count({
       where: {
         [Op.or]: [
-          { title: { [Op.like]: `%${query}%` } },
-          { content: { [Op.like]: `%${query}%` } },
+          { hashtag: { [Op.like]: `%${query}%` } },
+        ],
+      },
+    })
+    const Cars = await models.cars.findAll({
+      include: [
+        {
+          attributes: ["user_id"],
+          model: likes,
+          as: "likes",
+        },
+        {
+          attributes: ["cars_hashtag"],
+          model: hashtags,
+          as: "hashtags",
+        },
+      ],
+      where: {
+        [Op.or]: [
+          { hashtag: { [Op.like]: `%${query}%` } },
         ],
       },
       order: [["createdAt", "DESC"]],
       offset,
-      limit: PAGE_SIZE,
+      limit,
     });
+    const pagingData = getPagingDataCount(totalItems, page, limit);
+    // res.json(Cars)
     res.render("hashtagsearch", {
-      results,
+      Cars,
       title: `검색 결과: ${query}`,
-      totalPages,
-      currentPage: page,
+      totalItems,
+      pagingData,
+      isMine,
     });
   } catch (err) {
     console.error(err);
