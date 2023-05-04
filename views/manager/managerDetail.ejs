@@ -5,7 +5,7 @@
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
     <div class="container">
-      <% if(status2){ %>
+      <% if(Cars.status === 2){ %>
         <div class="saleComplete">
           <h1>판매완료</h1>
         </div>
@@ -39,16 +39,13 @@
                   </ul>
                   <div class="btn_area">
                     <a href="/car/carsale">목록으로</a>
-
-                    <% if (isOwner) { %>
-                        <a href="/car/caredit/<%= Cars.carNum %>">수정</a>
-                        <form action="/car/delete/<%= Cars.carNum %>" method="POST">
-                          <input type="submit" value="삭제" />
-                        </form>
-                        <form action="/car/saleComp/<%= Cars.carNum %>" method="post">
-                          <button type="submit" id="saleComp">판매완료등록</button>
-                        </form>  
-                    <% } %>
+                    <a href="/car/caredit/<%= Cars.carNum %>">수정</a>
+                    <form action="/car/delete/<%= Cars.carNum %>" method="POST">
+                      <input type="submit" value="삭제" />
+                    </form>
+                    <form action="/manager/managerCar/saleComp/<%= Cars.carNum %>" method="post">
+                      <button type="submit" id="saleComp">판매완료등록</button>
+                    </form>  
                   </div>
             </div> 
         </div>

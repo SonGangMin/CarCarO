@@ -17,7 +17,10 @@ exports.renderCar = async (req, res) => {
         const totalPages = Math.ceil(totalCount / limit);
     
         const Cars = await cars.findAll({
-          order: [["num", "DESC"]],
+          order: [
+            ["recommends", "DESC"],
+            ["num", "DESC"]
+          ],
           where: {status: 1},
           offset: offset,
           limit: limit,
@@ -79,7 +82,7 @@ exports.renderDetail = async (req, res, next) => {
       where: { carNum },
     });
     const isOwner = req.user && Cars.user_id === req.user.id;
-    const status2 = Cars.status === 2;
+    const status2 = cars.status === 2;
     // console.log("Cars.user_id====================", Cars.user_id);
     // console.log("users.id=======================", req.user.id);
     res.render("manager/managerDetail", {
@@ -106,6 +109,32 @@ exports.addRecommend = async (req, res, next) => {
     }
     res.redirect('/manager/managerCar');
   } catch(error){
+    console.error(error);
+    next(error);
+  }
+};
+
+// 판매완료
+exports.saleComp = async (req, res, next) => {
+  const { carNum } = req.params;
+  try {
+    const Cars = await cars.update({ status: 2 }, { where: { carNum } });
+
+    res.redirect(`/manager/managerCar/saleComp`);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
+
+
+// 판매완료 취소처리
+exports.saleCancle = async (req, res, next) => {
+  const { carNum } = req.params;
+  try {
+    await cars.update({ status: 1 }, { where: { carNum } });
+    res.status(200).send({ success: true });
+  } catch (error) {
     console.error(error);
     next(error);
   }

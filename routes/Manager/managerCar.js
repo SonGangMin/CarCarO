@@ -5,7 +5,9 @@ const {
     renderCar,
     renderDetail,
     addRecommend,
-    renderSaleComp
+    renderSaleComp,
+    saleComp,
+    saleCancle
 } = require('../../controllers/manager/managerCar');
 
 // 차량관리 페이지
@@ -16,5 +18,9 @@ router.get('/saleComp', isManager, renderSaleComp);
 router.get('/detail/:carNum', isManager, renderDetail);
 // 추천차량등록
 router.post('/recommend/:carNum', isManager, addRecommend);
+// 판매완료
+router.post('/saleComp/:carNum', isManager, saleComp);
+// 판매완료 취소
+router.post('/saleCancle/:carNum', isManager, saleCancle);
 
 module.exports = router;
