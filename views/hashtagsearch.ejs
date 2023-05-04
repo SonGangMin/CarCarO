@@ -1,1 +1,61 @@
 <%- include('./include/head.ejs') %>
+
+<div class="resultbox" id="list">
+    <h1>검색 결과 총 <%= totalItems %> 건</h1>
+    <br />
+    <ul>
+      <% Cars.forEach(function(car) { %>
+      <li>
+        <!-- <% console.log('car.price ===>', car.price) %> -->
+        <a href="/car/detail/<%= car.carNum %>">
+          <div
+            class="listbox"
+            id="<%= isMine === car.user_id ? 'highlight' : '' %>"
+          >
+          <!-- <div class="check"> -->
+            <% if (car.picture.length > 0) { %>
+              <img src="<%= car.picture[0].url %>" alt="" class="thumbnail">
+              <% } %>
+            <div class="like">
+              <% let count=0; %>
+              <% for(let i=0; i < car.likes.length; i++) { %>
+                <% if(car.likes[i].user_id == isMine) { %>
+                  <% count++; %>
+                <% } %>
+              <% } %>
+              <% console.log(isMine) %>
+              <% console.log(isMine === car.user_id) %>
+              <% if (typeof isMine === 'undefined') { %>
+                <button class="notLoggedIn">♥ 로그인안함<%= car.likes_count %></button>
+              <% } else if (isMine === car.user_id) { %>
+                <button class="Mine">♥ 내차<%= car.likes_count %></button>
+              <% } else { %>
+                <% if(!count) { %>
+                  <form action="/car/carfind" method="post" onsubmit="return confirm('관심차량 목록에 추가하시겠습니까?')">
+                    <input type="hidden" name="carNum" value="<%= car.num %>">
+                    <button type="submit" class="heart">♥ <%= car.likes_count %></button>
+                  </form>
+                <% } else { %>
+                  <form action="/car/carfind2" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
+                    <input type="hidden" name="carNum" value="<%= car.num %>">
+                    <button type="submit" class="heart">♡ <%= car.likes_count %></button>
+                  </form>
+                <% } %>
+              <% } %>
+            </div>
+            <div class="text-box">
+              <div> <%= car.from %> <%= car.brand %> <%= car.model %> </div>
+      
+              <div><%= car.fuel %> <%= car.year %>년식 <%= car.price %>만원</div>
+              <% for(i=0; i<car.hashtags.length; i++) { %>
+                <div class="hash">#<%= car.hashtags[i].cars_hashtag %></div>
+              <% } %>
+            </div>
+           
+          </div>
+        </a>
+      </li>
+      <% }) %>
+    </ul>
+  </div>
+</div>
