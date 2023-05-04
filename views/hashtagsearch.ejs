@@ -6,7 +6,7 @@
     <ul>
       <% Cars.forEach(function(car) { %>
       <li>
-        <!-- <% console.log('car.price ===>', car.price) %> -->
+
         <a href="/car/detail/<%= car.carNum %>">
           <div
             class="listbox"
@@ -23,8 +23,6 @@
                   <% count++; %>
                 <% } %>
               <% } %>
-              <% console.log(isMine) %>
-              <% console.log(isMine === car.user_id) %>
               <% if (typeof isMine === 'undefined') { %>
                 <button class="notLoggedIn">♥ 로그인안함<%= car.likes_count %></button>
               <% } else if (isMine === car.user_id) { %>
