@@ -48,7 +48,7 @@
                         <div>
                             <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
                             <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
-                            <% for(i=0; i<twit.hashtags.length; i++) { %>
+                            <% for(i=0; i<Math.min(twit.hashtags.length,4); i++) { %>
                                 <div class="hash">#<%= twit.hashtags[i].cars_hashtag %></div>
                             <% } %>
                         </div>
@@ -100,7 +100,7 @@
                             <div>
                                 <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
                                 <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
-                                <% for(i=0; i<twit.hashtags.length; i++) { %>
+                                <% for(i=0; i<Math.min(twit.hashtags.length,4); i++) { %>
                                     <div class="hash">#<%= twit.hashtags[i].cars_hashtag %></div>
                                 <% } %>
                             </div>
