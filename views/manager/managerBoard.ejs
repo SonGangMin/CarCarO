@@ -9,18 +9,22 @@
       내용: <%= twit.content %></a
     >
     <br />
-    <button>
+    <button
+      onclick="return confirm ('<%= twit.user.name %> 님의 공지글을 수정하시겠습니까?')"
+    >
       <a href="/manager/managerboard/edit/<%= twit.postId %>/">수정</a>
     </button>
     <form
       action="/manager/managerboard/delete/<%= twit.postId %>"
       method="POST"
+      onsubmit="return confirm('<%= twit.user.name %> 님의 공지글을 정말로 삭제하시겠습니까?')"
     >
       <input type="submit" value="삭제" />
     </form>
     <form
       action="/manager/managerboard/editgradedown/<%= twit.postId %>"
       method="POST"
+      onsubmit="return confirm('<%= twit.user.name %> 님의 공지글을 정말로 일반게시글로 내리시겠습니까?')"
     >
       <input type="submit" value="공지내리기" />
     </form>
@@ -36,18 +40,22 @@
     </a>
 
     <br />
-    <button>
+    <button
+      onclick="return confirm ('<%= twit.user.name %> 님의 게시글을 수정하시겠습니까?')"
+    >
       <a href="/manager/managerboard/edit/<%= twit.postId %>">수정</a>
     </button>
     <form
       action="/manager/managerboard/delete/<%= twit.postId %>"
       method="POST"
+      onsubmit="return confirm('<%= twit.user.name %> 님의 게시글을 정말로 삭제하시겠습니까?')"
     >
       <input type="submit" value="삭제" />
     </form>
     <form
       action="/manager/managerboard/editgradeup/<%= twit.postId %>"
       method="POST"
+      onsubmit="return confirm('<%= twit.user.name %> 님의 게시글을 정말로 공지글로 등록하시겠습니까?')"
     >
       <input type="submit" value="공지로등록" />
     </form>

@@ -16,12 +16,15 @@
 <p>최초 작성일: <%= board.createdAt %></p>
 <p>최종 수정일: <%= board.updatedAt %></p>
 <div class="comment">
-  <button>
+  <button
+    onclick="return confirm ('<%= board.user.name %> 님의 게시글을 수정하시겠습니까?')"
+  >
     <a href="/manager/managerboard/edit/<%= board.postId %>">수정</a>
   </button>
   <form
     action="/manager/managerboard/delete/<%= board.postId %>/"
     method="POST"
+    onsubmit="return confirm('<%= board.user.name %> 님의 게시글을 정말로 삭제하시겠습니까?')"
   >
     <input type="submit" value="삭제" />
   </form>
@@ -54,9 +57,19 @@
       />
       <input class="input" type="submit" value="적용" />
     </form>
-    <button class="txt" id="edit">수정</button>
+    <button
+      class="txt"
+      id="edit"
+      onclick="return confirm ('<%= comment.user.name %> 님의 댓글을 수정하시겠습니까?')"
+    >
+      수정
+    </button>
 
-    <form action="/board/comment/delete/<%= comment.number %>" method="POST">
+    <form
+      action="/board/comment/delete/<%= comment.number %>"
+      method="POST"
+      onsubmit="return confirm('<%= comment.user.name %> 님의 댓글을 정말로 삭제하시겠습니까?')"
+    >
       <input type="submit" value="삭제" />
     </form>
   </li>
