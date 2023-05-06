@@ -71,13 +71,7 @@
       />
       <input class="input" type="submit" value="적용" />
     </form>
-    <button
-      class="txt"
-      id="edit"
-      onclick="return confirm ('댓글을 수정하시겠습니까?')"
-    >
-      수정
-    </button>
+    <button class="txt" id="edit">수정</button>
 
     <form
       action="/board/comment/delete/<%= comment.number %>"
