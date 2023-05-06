@@ -5,8 +5,8 @@
     <a
       style="background-color: black; color: white; font-weight: bold"
       href="/manager/managerboard/content/<%= twit.postId %>"
-      ><%= twit.title %> 작성자: <%= twit.user.name %>(<%= twit.user_id %>)
-      내용: <%= twit.content %></a
+      ><%= twit.title %>[<%= twit.count %>] 작성자: <%= twit.user.name %>(<%=
+      twit.user_id %>) 내용: <%= twit.content %></a
     >
     <br />
     <button
@@ -35,8 +35,8 @@
       href="/manager/managerboard/content/<%= twit.postId %>"
       style="color: white"
     >
-      <%= twit.title %> 작성자: <%= twit.user.name %>(<%= twit.user_id %>) 내용:
-      <%= twit.content %>
+      <%= twit.title %>[<%= twit.count %>] 작성자: <%= twit.user.name %>(<%=
+      twit.user_id %>) 내용: <%= twit.content %>
     </a>
 
     <br />

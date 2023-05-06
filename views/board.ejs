@@ -15,13 +15,15 @@
     href="/board/content/<%= twit.postId %>"
   >
     <li style="background-color: black; color: white; font-weight: bold">
-      <%= twit.title %> 작성자: <%= twit.user.name %>(<%= twit.user_id %>)
+      <%= twit.title %>[<%= twit.count %>] 작성자: <%= twit.user.name %>(<%=
+      twit.user_id %>)
     </li></a
   >
   <% } else { %>
   <a href="/board/content/<%= twit.postId %>">
     <li>
-      <%= twit.title %> 작성자: <%= twit.user.name %>(<%= twit.user_id %>)
+      <%= twit.title %>[<%= twit.count %>] 작성자: <%= twit.user.name %>(<%=
+      twit.user_id %>)
     </li>
   </a>
 
