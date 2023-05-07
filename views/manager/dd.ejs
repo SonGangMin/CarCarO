@@ -1,30 +1,27 @@
-<%- include('../include/managerhead.ejs') %> 게시판관리
+<%- include('../include/managerhead.ejs') %>
+<h1>검색 결과</h1>
 <ul>
-  <% twits.forEach(function(twit) { %> <% if (twit.grade === 2) { %>
+  <% results.forEach(function(twit) { %> <% if (twit.grade === 2) { %>
   <li style="background-color: black; color: white; font-weight: bold">
     <a
       style="background-color: black; color: white; font-weight: bold"
       href="/manager/managerboard/content/<%= twit.postId %>"
-      ><%= twit.title %>[<%= twit.count %>] 작성자: <%= twit.user.name %>(<%=
-      twit.user_id %>) 내용: <%= twit.content %></a
+      ><%= twit.title %> 작성자: <%= twit.user.name %>(<%= twit.user_id %>)
+      내용: <%= twit.content %></a
     >
     <br />
-    <button
-      onclick="return confirm ('<%= twit.user.name %> 님의 공지글을 수정하시겠습니까?')"
-    >
+    <button>
       <a href="/manager/managerboard/edit/<%= twit.postId %>/">수정</a>
     </button>
     <form
       action="/manager/managerboard/delete/<%= twit.postId %>"
       method="POST"
-      onsubmit="return confirm('<%= twit.user.name %> 님의 공지글을 정말로 삭제하시겠습니까?')"
     >
       <input type="submit" value="삭제" />
     </form>
     <form
       action="/manager/managerboard/editgradedown/<%= twit.postId %>"
       method="POST"
-      onsubmit="return confirm('<%= twit.user.name %> 님의 공지글을 정말로 일반게시글로 내리시겠습니까?')"
     >
       <input type="submit" value="공지내리기" />
     </form>
@@ -35,27 +32,23 @@
       href="/manager/managerboard/content/<%= twit.postId %>"
       style="color: white"
     >
-      <%= twit.title %>[<%= twit.count %>] 작성자: <%= twit.user.name %>(<%=
-      twit.user_id %>) 내용: <%= twit.content %>
+      <%= twit.title %> 작성자: <%= twit.user.name %>(<%= twit.user_id %>) 내용:
+      <%= twit.content %>
     </a>
 
     <br />
-    <button
-      onclick="return confirm ('<%= twit.user.name %> 님의 게시글을 수정하시겠습니까?')"
-    >
+    <button>
       <a href="/manager/managerboard/edit/<%= twit.postId %>">수정</a>
     </button>
     <form
       action="/manager/managerboard/delete/<%= twit.postId %>"
       method="POST"
-      onsubmit="return confirm('<%= twit.user.name %> 님의 게시글을 정말로 삭제하시겠습니까?')"
     >
       <input type="submit" value="삭제" />
     </form>
     <form
       action="/manager/managerboard/editgradeup/<%= twit.postId %>"
       method="POST"
-      onsubmit="return confirm('<%= twit.user.name %> 님의 게시글을 정말로 공지글로 등록하시겠습니까?')"
     >
       <input type="submit" value="공지로등록" />
     </form>
@@ -64,8 +57,13 @@
 </ul>
 <script>
   function onPageClick(event, page) {
-    location.href = "/manager/managerboard?page=" + page;
-    console.info(page + " (from options)");
+    const queryParams = new URLSearchParams(window.location.search);
+    queryParams.set("page", page); // 현재 페이지 설정
+
+    const queryString = queryParams.toString();
+    const searchUrl = `/manager/managerboard/search/?${queryString}`;
+
+    location.href = searchUrl;
   }
 </script>
 <%- include('../include/pagination.ejs') %>
