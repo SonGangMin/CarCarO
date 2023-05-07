@@ -4,6 +4,7 @@ exports.isLoggedIn = (req, res, next) => {
   } else {
     res.status(403).send(`
       <script>
+        sessionStorage.loginRedirectUrl = '${req.originalUrl}';
         alert('로그인이 필요합니다.');
         location.href = '/login';
       </script>
