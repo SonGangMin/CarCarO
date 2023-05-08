@@ -86,7 +86,7 @@ exports.renderBoardContent = async (req, res, next) => {
 
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
     const total = await models.boards.count();
-    const { limit, offset } = getPagination(page, 5);
+    const { limit, offset } = getPagination(page, 10);
     const listCount = await models.comments.findAndCountAll({
       where: { post_id: req.params.postId },
       include: [
@@ -209,7 +209,7 @@ exports.editPost = async (req, res, next) => {
       throw new Error("게시글 수정 권한이 없습니다.");
     }
     await models.boards.update({ title, content }, { where: { postId } });
-    res.redirect(`/board/${postId}`);
+    res.redirect(`/board/content/${postId}`);
   } catch (err) {
     console.error(err);
     next(err);
@@ -277,6 +277,7 @@ exports.deleteComment = async (req, res, next) => {
 exports.editComment = async (req, res, next) => {
   const commentId = req.params.commentId;
   const { content } = req.body;
+  console.log(content);
   try {
     await models.comments.update({ content }, { where: { number: commentId } });
     res.redirect("back");

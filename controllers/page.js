@@ -1,8 +1,13 @@
-const models = require('../models');
-const {hashtags, advertises} = require('../models')
+const models = require("../models");
+const { hashtags, likes, advertises } = require("../models");
 const { Op } = require("sequelize");
+const {
+  getPagingDataCount,
+  getPagination,
+  getPagingData,
+} = require("./pagination");
 
-exports.renderMain = async(req, res, next) => {
+exports.renderMain = async (req, res, next) => {
   const isMine = req.user && req.user.id;
   // const carNum = req.param
   try {
@@ -10,7 +15,7 @@ exports.renderMain = async(req, res, next) => {
       include: [
         {
           attributes: ["user_id"],
-          model: models.likes,
+          model: likes,
           as: "likes",
         },
         {
@@ -19,14 +24,12 @@ exports.renderMain = async(req, res, next) => {
           as: "hashtags",
         },
       ],
-      order: [['createdAt','desc']],
+      order: [["createdAt", "desc"]],
     });
     const isOwner = req.user && Cars.user_id === req.user.id;
     const status2 = Cars.status === 2;
-    
-    const Adver = await advertises.findAll({
 
-    })
+    const Adver = await advertises.findAll({});
 
     res.render("index", {
       title: "CarCarO",
@@ -34,9 +37,8 @@ exports.renderMain = async(req, res, next) => {
       isOwner,
       status2,
       isMine,
-      Adver
+      Adver,
     });
-    
   } catch (error) {
     console.error(error);
     next(error);
@@ -48,11 +50,11 @@ exports.renderMain = async(req, res, next) => {
 //   res.render("index", { title: "CarcarO", usergrade });
 // };
 // 로그인, 회원가입
-exports.renderJoin = async(req, res) => {
+exports.renderJoin = async (req, res) => {
   const users = await models.users.findAll({
-    attributes: ["id"]
+    attributes: ["id"],
   });
-  res.render("join", { users,title: "회원가입"});
+  res.render("join", { users, title: "회원가입" });
   // res.json(users);
 };
 
@@ -61,33 +63,48 @@ exports.renderLogin = (req, res) => {
 };
 // 마이페이지
 
-exports.hashtagsearch =  async (req, res, next) => {
+exports.hashtagsearch = async (req, res, next) => {
   const query = req.query.hashtag;
   if (!query) {
-    return res.redirect("/page");
+    return res.redirect("/index");
   }
   try {
-    const PAGE_SIZE = 15;
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
-    const offset = (page - 1) * PAGE_SIZE;
-    const total = await models.cars.count();
-    const totalPages = Math.ceil(total / PAGE_SIZE);
-    const results = await models.cars.findAll({
+    const { limit, offset } = getPagination(page, 16);
+    const isMine = req.user && req.user.id;
+    const totalItems = await models.cars.count({
       where: {
-        [Op.or]: [
-          { title: { [Op.like]: `%${query}%` } },
-          { content: { [Op.like]: `%${query}%` } },
-        ],
+        [Op.or]: [{ hashtag: { [Op.like]: `%${query}%` } }],
+      },
+    });
+    const Cars = await models.cars.findAll({
+      include: [
+        {
+          attributes: ["user_id"],
+          model: likes,
+          as: "likes",
+        },
+        {
+          attributes: ["cars_hashtag"],
+          model: hashtags,
+          as: "hashtags",
+        },
+      ],
+      where: {
+        [Op.or]: [{ hashtag: { [Op.like]: `%${query}%` } }],
       },
       order: [["createdAt", "DESC"]],
       offset,
-      limit: PAGE_SIZE,
+      limit,
     });
+    const pagingData = getPagingDataCount(totalItems, page, limit);
+    // res.json(Cars)
     res.render("hashtagsearch", {
-      results,
+      Cars,
       title: `검색 결과: ${query}`,
-      totalPages,
-      currentPage: page,
+      totalItems,
+      pagingData,
+      isMine,
     });
   } catch (err) {
     console.error(err);

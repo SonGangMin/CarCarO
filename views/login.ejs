@@ -8,21 +8,35 @@
     <link rel="stylesheet" href="/stylesheets/auth.css">
 </head>
 <body>
-    <form action="/auth/login" method="post" class="form">
+    <form action="/auth/login" method="post" class="form" onsubmit="sessionStorage.removeItem('loginRedirectUrl')">
         <h1 class="title">로그인</h1>
         <label for=""><span>아이디</span><input type="text" name="id"></label>
         <label for=""><span>비밀번호</span><input type="password" name="password"></label>
         <button type="submit" class="btn">로그인</button>
+        <input id="redirectUrl" type="hidden" name="redirectUrl">
         <button type="button" onclick="location.href=('/auth/kakao')" class="btn">카카오 로그인</button>
         <button type="button" onclick="location.href=('/join')" class="btn">회원가입</button>
-      </form>
+        <a>
+            <button type="submit" onclick=""></button>
+        </a>
+        <button type="button" onclick="location.href=('/renderfindpw')" class="btn">비밀번호 찾기</button>
+    </form>
 
-      <script>
+    <script>
         window.onload = () =>{
-                if (new URL(location.href).searchParams.get('loginError')){ 
-                    alert(new URL(location.href).searchParams.get('loginError')); 
-                }
-            };
-        </script>
+            if (new URL(location.href).searchParams.get('loginError')){ 
+                alert(new URL(location.href).searchParams.get('loginError')); 
+            }
+        };
+        
+        // all tags loaded
+        window.addEventListener("DOMContentLoaded", () => {
+            const hiddenTag = document.getElementById("redirectUrl");
+            // const redirectUri = sessionStorage.loginRedirectUrl != null ? sessionStorage.loginRedirectUrl : "/";
+            const redirectUri = sessionStorage.loginRedirectUrl ?? "/"; // sessionStorage.loginRedirectUrl이 null/undefined면 "/"를 넣겠다. 초깃값.
+
+            hiddenTag.value = redirectUri;
+        });
+    </script>
 </body>
 </html>

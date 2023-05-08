@@ -30,6 +30,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'comments',
+    hasTrigger: true,
     timestamps: true,
     indexes: [
       {

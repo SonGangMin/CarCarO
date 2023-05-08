@@ -94,60 +94,6 @@ exports.renderFindcar = async (req, res, next) => {
   }
 };
 
-// // 내차 찾기, 내차 팔기
-// // 내차찾기 페이지
-// exports.renderFindcar = async (req, res, next) => {
-//   const isMine = req.user && req.user.id;
-//   const twentyFourHoursAgo = moment().subtract(24, "hours").toDate();
-//   const recenttotal = await cars.count({
-//     where: {
-//       createdAt: {
-//         [Op.gte]: twentyFourHoursAgo,
-//       },
-//     },
-//   });
-//   let searchkeyword = "";
-
-//   const contentSize = 5; // 한페이지에 나올 개수
-//   const currentPage = Number(req.query.currentPage) || 1; //현재페이
-//   const { limit, offset } = getPagination(currentPage, contentSize);
-
-//   const listCount = await cars.findAndCountAll({
-//     raw: true,
-//     include: [
-//       {
-//         attributes: ["user_id"],
-//         model: likes,
-//         as: "likes",
-//       },
-//       {
-//         attributes: ["cars_hashtag"],
-//         model: hashtags,
-//         as: "hashtags",
-//       },
-//     ],
-//     order: [["num", "DESC"]],
-//     limit,
-//     offset,
-//   });
-//   const { count: totalItems, rows: tutorials } = listCount;
-//   const pagingData = getPagingDataCount(totalItems, currentPage, limit);
-//   let cri = currentPage;
-//   if (totalItems > 0) {
-//     res.status(200).json({
-//       msg: "seccess",
-//       searchkeyword,
-//       list: tutorials,
-//       pagingData,
-//       isMine,
-//       recenttotal,
-//       title: "내차찾기",
-//     });
-//   } else {
-//     res.status(401).json({ msg: "nothing" });
-//   }
-// };
-
 exports.carLike = async (req, res, next) => {
   try {
     await likes.create({
@@ -179,6 +125,7 @@ exports.renderCarSearch = async (req, res, next) => {
     const page = req.query.page ? parseInt(req.query.page, 10) : 1;
     const isMine = req.user && req.user.id;
     const twentyFourHoursAgo = moment().subtract(24, "hours").toDate();
+    const total = await cars.count();
     const recenttotal = await cars.count({
       where: {
         createdAt: {
@@ -221,7 +168,7 @@ exports.renderCarSearch = async (req, res, next) => {
     }
     if (from) {
       where.from = from;
-      console.log("자동차 국내외 : ", from);
+      // console.log("자동차 국내외 : ", from);
     }
     if (brand) {
       where.brand = brand;
@@ -229,17 +176,36 @@ exports.renderCarSearch = async (req, res, next) => {
     if (fuel) {
       where.fuel = fuel;
     }
-    const total = await cars.count({
+    const totalItems = await cars.count({
       where,
-      include: [
-        {
-          attributes: ["user_id"],
-          model: likes,
-          as: "likes",
-        },
-      ],
     });
-
+    const sortOption = req.query.sort || "createdAt_desc";
+    let order;
+    switch (sortOption) {
+      case "createdAt_desc":
+        order = [["createdAt", "DESC"]];
+        break;
+      case "year_asc":
+        order = [["year", "ASC"]];
+        break;
+      case "year_desc":
+        order = [["year", "DESC"]];
+        break;
+      case "mileage_asc":
+        order = [["mile", "ASC"]];
+        break;
+      case "mileage_desc":
+        order = [["mile", "DESC"]];
+        break;
+      case "price_asc":
+        order = [["price", "ASC"]];
+        break;
+      case "price_desc":
+        order = [["price", "DESC"]];
+        break;
+      default:
+        order = [["createdAt", "DESC"]]; // 최근 등록순
+    }
     const listCount = await cars.findAll({
       where,
       include: [
@@ -254,14 +220,13 @@ exports.renderCarSearch = async (req, res, next) => {
           as: "hashtags",
         },
       ],
-      order: [["num", "DESC"]],
+      order,
       offset,
       limit,
     });
-    const totalItems = total;
     const Cars = listCount;
     const pagingData = getPagingDataCount(totalItems, page, limit);
-    // res.json({ Cars });
+    // res.json({ totalItems });
     res.render("carfind_search", {
       Cars,
       title: "차량검색결과",

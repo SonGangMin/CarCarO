@@ -30,6 +30,7 @@ router.get("/login", isNotLoggedIn, renderLogin);
 router.get("/", renderMain);
 router.post("/", carLike);
 router.post("/2", carDislike);
-router.get("/hashtagsearch/:hashtag", hashtagsearch);
+router.get("/hashtagsearch/", hashtagsearch);
+
 
 module.exports = router;

@@ -12,8 +12,8 @@
     <% }); %>
 </div>
 <div class="hashtagsearch">
-    <form action="/index/hashtagsearch/:hashtag" method="get">
-        <input class="hashtagsearchbox" placeholder="해쉬태그 검색 ex) #제네시스 #G80">
+    <form action="/hashtagsearch/" method="get">
+        <input class="hashtagsearchbox" name="hashtag" placeholder="해쉬태그 검색 ex) #제네시스 #G80">
         <button type="submit">검색</button>
     </form>
 </div>
@@ -33,15 +33,14 @@
                                 <% count++; %>
                                 <% } %>
                             <% } %>
-                            <% console.log(isMine) %>
-                            <% console.log(isMine === twit.user_id) %>
+
                             <% if (typeof isMine === 'undefined') { %>
                                 <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
                             <% } else if (isMine === twit.user_id) { %>
                                 <button class="Mine">♥ 내차<%= twit.likes_count %></button>
                             <% } else { %>
                                 <% if(!count) { %>
-                                <form action="/car/carfind" method="post" onsubmit="return confirm('관심차량 목록에 추가하시겠습니까?')">
+                                <form action="/car/carfind" method="post">
                                     <input type="hidden" name="carNum" value="<%= twit.num %>">
                                     <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
                                 </form>
@@ -56,7 +55,7 @@
                         <div>
                             <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
                             <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
-                            <% for(i=0; i<twit.hashtags.length; i++) { %>
+                            <% for(i=0; i<Math.min(twit.hashtags.length,4); i++) { %>
                                 <div class="hash">#<%= twit.hashtags[i].cars_hashtag %></div>
                             <% } %>
                         </div>
@@ -85,15 +84,13 @@
                                     <% count++; %>
                                     <% } %>
                                 <% } %>
-                                <% console.log(isMine) %>
-                                <% console.log(isMine === twit.user_id) %>
                                 <% if (typeof isMine === 'undefined') { %>
                                     <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
                                 <% } else if (isMine === twit.user_id) { %>
                                     <button class="Mine">♥ 내차<%= twit.likes_count %></button>
                                 <% } else { %>
                                     <% if(!count) { %>
-                                    <form action="/car/carfind" method="post" onsubmit="return confirm('관심차량 목록에 추가하시겠습니까?')">
+                                    <form action="/car/carfind" method="post">
                                         <input type="hidden" name="carNum" value="<%= twit.num %>">
                                         <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
                                     </form>
@@ -108,7 +105,7 @@
                             <div>
                                 <div><%= twit.from %> <%= twit.brand %> <%= twit.model %></div>
                                 <div><%= twit.fuel %> <%= twit.year %>년식 <%= twit.price %>만원</div>
-                                <% for(i=0; i<twit.hashtags.length; i++) { %>
+                                <% for(i=0; i<Math.min(twit.hashtags.length,4); i++) { %>
                                     <div class="hash">#<%= twit.hashtags[i].cars_hashtag %></div>
                                 <% } %>
                             </div>

@@ -1,69 +1,61 @@
 <%- include ./include/head.ejs %>
 
 
-<div class="container" style="float: left; width: 30%;">
+<div class="container">
     <section class="box">
         <aside class="mypage_left_area">
-        <ul class="left_area_box">
-            <li class="left_area_list"><a href="#">내차찾기 신청관리</a></li>
-            <li class="left_area_list"><a href="#">내차팔기 신청관리</a></li>
-            <li class="left_area_list"><a href="/mypage/mylikescar/<%= user.id %>">관심차량</a></li>
-            <li class="left_area_list">
-            <a href="/mypage/myinquiry/<%= user.id %>">내 문의</a>
-            </li>
-            <li class="left_area_list">
-            <a href="/mypage/password/<%= user.id %>">회원정보</a>
-            </li>
-        </ul>
-        </aside>
+            <a href="/mypage"><div class="left_area_top">나의 CarCarO</div></a>
+            <ul class="left_area_box">
+              <li class="left_area_list">
+                <a href="/mypage/mylikescar/<%= user.id %>">관심차량</a>
+              </li>
+              <li class="left_area_list">
+                <a href="/mypage/myinquiry/<%= user.id %>"> 내 문의</a>
+              </li>
+              <li class="left_area_list">
+                <a href="mypage/password/<%= user.id %>">회원정보</a>
+              </li>
+            </ul>
+          </aside>
+          <form action="/mypage/edit/" id="editform" method="post" class="form" style="float: left; width: 50%;">
+            <h1 class="title">회원 정보 수정</h1>
+            <label for=""><span>아이디</span>
+            <input id="id" type="text" name="id" value="<%= user.id %>" readonly></label><br>
+            <label for=""><span>비밀번호</span>
+            <input id="pw" type="password" name="password" value="" placeholder="비밀번호를 입력해주세요" onkeyup="checkPassword()">    
+            <span id="password_feedback"></span></label><br>
+            <label for=""><span>비밀번호 확인</span>
+            <input id="pw_confirm" type="password" name="password_confirm" placeholder="비밀번호 확인을 입력해주세요" value=""></label>
+            <span id="password_confirm_feedback"></span></label><br>
+            <label for=""><span>이름</span>
+            <input id="name" type="text" name="name" value="<%= user.name %>" readonly></label><br>
+            <label for=""><span>전화번호</span>
+                <div class="phone">
+                    <input id="tel" type="number" name="tel" value="<%= user.tel %>" placeholder="전화번호를 입력해주세요"></div></label>
+                    <span id="tel_feedback"></span><br>
+            <label for=""><span>이메일</span>
+            <input id="email" type="email" name="email" value="<%= user.email %>" placeholder="이메일을 입력해주세요"></label>
+            <span id="email_feedback"></span><br>
+            <label for=""><span>나이</span>
+            <input id="birth" type="number" name="birth" value="<%= user.birth %>" placeholder="나이를 입력해주세요"></label>
+            <span id="birth_message"></span><br>
+            <button type="button" class="cancel_btn" onclick="cancel()">취소</button>
+            <button type="button" onclick="checkForm()" class="edit_btn">정보 수정</button>
+        </form>
     </section>
-</div>
-<body>
-    <form action="/mypage/edit/" id="editform" method="post" class="form" style="float: left; width: 50%;">
-        <h1 class="title">회원 정보 수정</h1>
-        <label for=""><span>아이디</span>
-        <input id="id" type="text" name="id" value="<%= user.id %>" readonly></label><br>
-        <label for=""><span>비밀번호</span>
-        <input id="pw" type="password" name="password" value="" placeholder="비밀번호를 입력해주세요" onkeyup="checkPassword()">    
-        <span id="password_feedback"></span></label><br>
-        <label for=""><span>비밀번호 확인</span>
-        <input id="pw_confirm" type="password" name="password_confirm" placeholder="비밀번호 확인을 입력해주세요" value=""></label>
-        <span id="password_confirm_feedback"></span></label><br>
-        <label for=""><span>이름</span>
-        <input id="name" type="text" name="name" value="<%= user.name %>" readonly></label><br>
-        <label for=""><span>전화번호</span>
-            <div class="phone">
-                <input id="tel" type="number" name="tel" value="<%= user.tel %>" placeholder="전화번호를 입력해주세요"></div></label>
-                <span id="tel_feedback"></span><br>
-        <label for=""><span>이메일</span>
-        <input id="email" type="email" name="email" value="<%= user.email %>" placeholder="이메일을 입력해주세요"></label>
-        <span id="email_feedback"></span><br>
-        <label for=""><span>나이</span>
-        <input id="birth" type="number" name="birth" value="<%= user.birth %>" placeholder="나이를 입력해주세요"></label>
-        <span id="birth_message"></span><br>
-        <button type="button" onclick="checkForm()" class="edit_btn">정보 수정</button>
-    </form>
-
     <form id="withdrawForm" method="POST" action="/mypage/withdraw" style="float:left; width:50%">
         <button type="submit" class="withdraw_btn" onclick="confirmWithdraw(event)">탈퇴하기</button>
-        <button type="button" class="cancel_btn" onclick="cancelWithdraw()">취소</button>
-      </form>
-      
-      <script>
+    </form>
+    <script>
         function confirmWithdraw(event) {
           // confirm 대화 상자를 띄움
           if (!confirm('정말로 탈퇴하시겠습니까?')) {
             event.preventDefault(); // 요청을 보내는 것을 중단함
           }
         }
-      
-        function cancelWithdraw() {
+        function cancel() {
           location.href = '/mypage'; // 마이페이지로 돌아감
         }
-      </script>
-      
-
-    <script>
         const edit_form = document.getElementById('editform');
         const pw = document.getElementById('pw');
         const password_feedback = document.getElementById('password_feedback');
@@ -86,10 +78,10 @@
 
             if(pw.value === pw_confirm.value) {
                 password_confirm_feedback.textContent = "비밀번호가 일치 합니다";
-                passwordFeedback.style.color = 'green';
+                password_confirm_feedback.style.color = 'green';
             }else{
                 password_confirm_feedback.textContent = "비밀번호가 일치하지 않습니다";
-                passwordFeedback.style.color = 'red';
+                password_confirm_feedback.style.color = 'red';
             }
         }
 
@@ -115,12 +107,12 @@
                 return false;
             }
             if(tel.value === ''){
-                alert('전화번호를 입력해주세요')
+                alert('휴대폰 번호를 입력해주세요')
                 tel.focus()
                 return false;
             }
 
-            if (!checkTel()) { // 전화번호 유효성 검사를 수행
+            if (!checkTel()) { // 휴대폰 번호 유효성 검사를 수행
                 tel.focus();
                 return false;
             }
@@ -197,7 +189,5 @@
                 return true;
             }
         }
-
 </script>
-</body>
-</html>
+</div>

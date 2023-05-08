@@ -6,10 +6,41 @@ const { hash } = require("bcrypt");
 const axios = require("axios");
 const { likes, cars } = require("../models");
 
-exports.renderMypage = (req, res) => {
-  res.render("mypage", {
-    title: "마이페이지",
-  });
+exports.renderMypage = async (req, res, next) => {
+  try {
+    const mylikes = await likes.findAndCountAll({
+      include: [
+        {
+          model: cars,
+          as: "car_num_car",
+        },
+      ],
+      where: { user_id: req.user.id },
+      order: [["number", "DESC"]],
+      limit: 2,
+    });
+    const { count: mylikescount, rows: twits } = mylikes;
+    const mycarscount = await cars.count({
+      where: { user_id: req.user.id },
+    });
+    const myinq = await models.inquirys.findAll({
+      order: [["number", "DESC"]],
+      where: { user_id: req.user.id },
+      limit: 5,
+    });
+
+    // res.json(twits);
+    res.render("mypage", {
+      title: "마이페이지",
+      mylikescount,
+      mycarscount,
+      twits,
+      myinq,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
 };
 
 // 회원 정보 수정 페이지 렌더링 처리
@@ -63,6 +94,7 @@ exports.renderInquiry = async (req, res, next) => {
     const totalPages = Math.ceil(total / PAGE_SIZE);
     const twits = await models.inquirys.findAll({
       order: [["number", "DESC"]],
+      where: { user_id: req.user.id },
       offset,
       limit: PAGE_SIZE,
     });
@@ -156,11 +188,13 @@ exports.renderLikescar = async (req, res, next) => {
     const total = await models.cars.count();
     const totalPages = Math.ceil(total / PAGE_SIZE);
     const twits = await likes.findAll({
-      include: [{
-        model: cars,
-        as: "car_num_car",
-      }],
-      where: { "user_id": req.user.id },
+      include: [
+        {
+          model: cars,
+          as: "car_num_car",
+        },
+      ],
+      where: { user_id: req.user.id },
       order: [["number", "DESC"]],
       offset,
       limit: PAGE_SIZE,
@@ -172,14 +206,13 @@ exports.renderLikescar = async (req, res, next) => {
       isOwner,
       totalPages,
       currentPage: page,
-      isMine
+      isMine,
     });
   } catch (err) {
     console.error(err);
     next(err);
   }
 };
-
 
 exports.getModifyPage = function (req, res, next) {
   models.query(

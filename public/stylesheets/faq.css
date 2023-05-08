@@ -49,14 +49,29 @@
     cursor: pointer;
 }
 
-.waringblock {
+.warningblock {
     width: 500px;
     height: 150px;
     margin: 0 auto;
-    padding: 50px 50px;
     border-style: solid;
     border-width: 1px;
     border-color: black;
     position: relative;
     left: 2%;
+}
+
+.leftblock {
+    width: 50%;
+    height: 100%;
+    float: left;
+    box-sizing: border-box;
+    /* background-color: yellow; */
+}
+
+.rightblock {
+    width: 50%;
+    height: 100%;
+    float: left;
+    box-sizing: border-box;
+    /* background-color: green; */
 }

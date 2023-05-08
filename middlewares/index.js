@@ -4,6 +4,7 @@ exports.isLoggedIn = (req, res, next) => {
   } else {
     res.status(403).send(`
       <script>
+        sessionStorage.loginRedirectUrl = '${req.originalUrl}';
         alert('로그인이 필요합니다.');
         location.href = '/login';
       </script>
@@ -30,7 +31,7 @@ exports.isManager = (req, res, next) => {
   } else {
     res.status(403).send(`
     <script>
-      alert('관리자도 아닌새끼가 어딜?');
+      alert('관리자만 접근가능한 페이지입니다.');
       location.href = '/';
     </script>
   `);
@@ -39,14 +40,14 @@ exports.isManager = (req, res, next) => {
 
 exports.isMyId = (req, res, next) => {
   const myId = req.user && req.user.id === req.params.id;
-  console.log("req.user.id=================>", req.user && req.user.id);
-  console.log("req.params.id================>", req.params.id);
+  // console.log("req.user.id=================>", req.user && req.user.id);
+  // console.log("req.params.id================>", req.params.id);
   if (myId) {
     next();
   } else {
     res.status(403).send(`
     <script>
-    alert('지 아뒤도 아닌게 어딜?');
+    alert('올바른 접근이 아닙니다.');
     location.href = '/';
   </script>
     `);
