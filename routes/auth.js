@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const authController = require('../controllers/auth');
 
 const {isLoggedIn, isNotLoggedIn} = require('../middlewares');
 const {join, login, logout, checkid } = require('../controllers/auth');
@@ -15,5 +16,7 @@ router.get('/kakao/callback', passport.authenticate('kakao', {
 }), (req, res) => {
     res.redirect('/');
 });
+
+router.get('/check-id', authController.checkIdDuplicate);
 
 module.exports = router;

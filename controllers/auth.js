@@ -60,17 +60,39 @@ exports.logout = (req, res) => {
   });
 };
 
-exports.checkid = async (req, res, next) => {
-  const id = req.params.id;
+// exports.checkid = async (req, res, next) => {
+//   const id = req.params.id;
+//   try {
+//     const user = await models.users.findOne({ where: { id } });
+//     if (user) {
+//       res.status(200).json({ message: "user exists" });
+//     } else {
+//       res.status(404).json({ message: "user does not exist" });
+//     }
+//   } catch (err) {
+//     console.error(err);
+//     next(err);
+//   }
+// };
+
+// 아이디 중복확인
+
+exports.checkIdDuplicate = async (req, res, next) => {
+  const id = req.query.id;
+
+  if (!id || id.trim() === '') {
+    return res.status(400).json({ message: '아이디를 입력해주세요'});
+  }
+
   try {
-    const user = await models.users.findOne({ where: { id } });
+    const user = await users.findOne({ where: { id } });
     if (user) {
-      res.status(200).json({ message: "user exists" });
+      return res.json({ isDuplicate: true });
     } else {
-      res.status(404).json({ message: "user does not exist" });
+      return res.json({ isDuplicate: false });
     }
-  } catch (err) {
-    console.error(err);
-    next(err);
+  } catch(error) {
+    console.error(error);
+    next(error);
   }
 };
