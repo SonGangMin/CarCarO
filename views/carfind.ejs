@@ -296,19 +296,19 @@
                   <% } %>
 
                   <% if (typeof isMine === 'undefined') { %>
-                    <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
+                    <button class="notLoggedIn">♡ 로그인안함<%= twit.likes_count %></button>
                   <% } else if (isMine === twit.user_id) { %>
-                    <button class="Mine" onclick="alert ('자신의 차는 추천할 수 없습니다.')">♥ 내차<%= twit.likes_count %></button>
+                    <button class="Mine" onclick="alert ('자신의 차는 추천할 수 없습니다.')">♡ 내차<%= twit.likes_count %></button>
                   <% } else { %>
                     <% if(!count) { %>
                       <form action="/car/carfind" method="post">
                         <input type="hidden" name="carNum" value="<%= twit.num %>">
-                        <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
+                        <button type="submit" class="heart">♡ <%= twit.likes_count %></button>
                       </form>
                     <% } else { %>
                       <form action="/car/carfind2" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
                         <input type="hidden" name="carNum" value="<%= twit.num %>">
-                        <button type="submit" class="heart">♡ <%= twit.likes_count %></button>
+                        <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
                       </form>
                     <% } %>
                   <% } %>
