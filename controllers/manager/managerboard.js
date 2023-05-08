@@ -62,7 +62,11 @@ exports.renderManagerBoardContent = async (req, res, next) => {
     if (!board) {
       return res.status(404).send("해당 게시글을 찾을 수 없습니다.");
     }
-    const comments = await models.comments.findAll({
+    const page = req.query.page ? parseInt(req.query.page, 10) : 1;
+    const total = await models.boards.count();
+    const { limit, offset } = getPagination(page, 10);
+
+    const listCount = await models.comments.findAndCountAll({
       where: { post_id: req.params.postId },
       include: [
         {
@@ -72,13 +76,17 @@ exports.renderManagerBoardContent = async (req, res, next) => {
         },
       ],
       order: [["createdAt", "ASC"]],
+      offset,
+      limit,
     });
-    // const isOwner = req.user && board.user_id === req.user.id;
+    const { count: totalItems, rows: comments } = listCount;
+    const pagingData = getPagingDataCount(totalItems, page, limit);
     res.render("manager/managerBoard_content", {
       board,
-      // isOwner,
       title: "게시글 내용 보기",
       comments,
+      pagingData,
+      totalItems,
     });
   } catch (err) {
     console.error(err);
