@@ -84,11 +84,9 @@ exports.checkIdDuplicate = async (req, res, next) => {
     return res.status(400).json({ message: "아이디를 입력해주세요" });
   }
   if (!/^[a-zA-Z0-9]{8,16}$/.test(id)) {
-    return res
-      .status(400)
-      .json({
-        message: "아이디는 영문 + 숫자 조합으로 8~16자리로 설정하셔야 합니다",
-      });
+    return res.status(400).json({
+      message: "아이디는 영문 + 숫자 조합으로 8~16자리로 설정하셔야 합니다",
+    });
   }
 
   try {
@@ -105,13 +103,46 @@ exports.checkIdDuplicate = async (req, res, next) => {
 };
 
 exports.renderfindid = async (req, res, next) => {
-    res.render("renderfindid", {
-      title: "id 찾기",
+  res.render("findid", {
+    title: "CarCarO ID 찾기",
+  });
+};
+exports.findid = async (req, res, next) => {
+  const { name, email } = req.body;
+  try {
+    const find = await users.findOne({
+      where: { name, email },
     });
-}
+
+    if (find) {
+      res.render("findedid", {
+        find,
+        title: "CarCarO ID 찾기",
+      });
+    } else {
+      res.render("findidError", {
+        title: "CarCarO ID 찾기",
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
 
 exports.renderfindpw = async (req, res, next) => {
-  res.render("renderfindpw", {
+  res.render("findpw", {
     title: "비밀번호 찾기",
   });
-}
+};
+exports.findpw = async (req, res, next) => {
+  const { name, id, email } = req.body;
+  try {
+    const find = await users.findOne({
+      where: { name, id, email },
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
