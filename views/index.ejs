@@ -1,11 +1,13 @@
 <%- include('./include/head.ejs') %>
+<link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
 <div class="bxslider">
     <% Adver.forEach(function(advers) { %>
-        <div>
-            <a href="<%= advers.href %>">
-                <img src="<%= advers.img[0].url %>"/>
-            </a>
+        <div onclick="location.href='<%= advers.href %>'">
+            <img src="<%= advers.img[0].url %>"/>
         </div>
     <% }); %>
 </div>
@@ -116,12 +118,13 @@
 
 </body>
 <script>
-    $(function(){
-        $('.bxslider').bxSlider({
-        mode: 'horizontal',
-        captions: true,
-        slideWidth: 600
-        });
-    });
+    // $(function(){
+    //     $('.bxslider').bxSlider({
+    //     mode: 'horizontal',
+    //     captions: true,
+    //     // slideWidth: 600
+    //     });
+    // });
+    $('.bxslider').slick();
 </script>
 </html>
