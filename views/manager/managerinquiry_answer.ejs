@@ -5,7 +5,13 @@
 <div align="center">
     <p>유저ID: <%= title.user_id %></p>
     <p>제목: <%= title.title %></p>
-    <p>내용: <%= title.content %></p><br><br>
+    <p>내용: <%= title.content %></p>
+    <span style="color: black;">
+        <%= title.updatedAt.getFullYear() %>년
+        <%= (title.updatedAt.getMonth() + 1) %>월
+        <%= title.updatedAt.getDate() %>일
+        (<%= ["일", "월", "화", "수", "목", "금", "토"][title.updatedAt.getDay()] %>)
+    </span><br><br>
     답변<br>
     <textarea style="border: solid 1px white;" rows="15" cols="70"
     name="answer"><%= title.answer %>

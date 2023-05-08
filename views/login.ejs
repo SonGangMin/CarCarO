@@ -16,9 +16,13 @@
         <input id="redirectUrl" type="hidden" name="redirectUrl">
         <button type="button" onclick="location.href=('/auth/kakao')" class="btn">카카오 로그인</button>
         <button type="button" onclick="location.href=('/join')" class="btn">회원가입</button>
-      </form>
+        <a>
+            <button type="submit" onclick=""></button>
+        </a>
+        <button type="button" onclick="location.href=('/renderfindpw')" class="btn">비밀번호 찾기</button>
+    </form>
 
-      <script>
+    <script>
         window.onload = () =>{
             if (new URL(location.href).searchParams.get('loginError')){ 
                 alert(new URL(location.href).searchParams.get('loginError')); 
@@ -33,6 +37,6 @@
 
             hiddenTag.value = redirectUri;
         });
-        </script>
+    </script>
 </body>
 </html>
