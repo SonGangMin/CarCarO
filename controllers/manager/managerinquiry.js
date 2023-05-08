@@ -12,7 +12,7 @@ exports.renderManagerInquiry = async (req, res, next) => {
         const twits = await models.inquirys.findAll({
         nest: true,
         order: [
-            ["number", "DESC"],
+            ["answer", "DESC"],
         ],
         offset,
         limit: PAGE_SIZE

@@ -1,5 +1,8 @@
 <%- include('./include/head.ejs')%>
-
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+/>
 <script src="../public/javascript/faq.js"></script>
 <script src="../public/javascript/faqcontent.js"></script>
 <!-- <script src="../routes/faqsearch.js"></script> -->
@@ -42,16 +45,22 @@
 <div class="warningblock">
   <div class="leftblock">
     <img
-      src="./images/lamborghini_aventador.png"
-      style="cursor: pointer"
-      onclick="window.open('/faq/leftpopup','lamborgini','scrollbars=yes,width=417,height=385,top=10,left=20');"
+      src="./images/warning_thumnail.png"
+      style="cursor: pointer;"
+      width="250"
+      height="150"
+      onclick="window.open('/faq/leftpopup','warning','scrollbars=yes,width=890,height=600,top=10,left=20');"
     />
+    <i class="fa fa-hand-pointer-o" aria-hidden="true"></i>
+
   </div>
   <div class="rightblock">
     <img
-      src="./images/ferrari_laferrari.png"
+      src="./images/warning_thumnail.png"
       style="cursor: pointer"
-      onclick="window.open('/faq/rightpopup','ferrari','scrollbars=yes,width=417,height=385,top=10,left=20');"
+      width="250"
+      height="150"
+      onclick="window.open('/faq/rightpopup','ferrari','scrollbars=yes,width=800,height=840,top=10,left=20');"
     />
   </div>
 </div>
