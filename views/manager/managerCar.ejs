@@ -9,6 +9,17 @@
             <input type="text" name="hashtag">
             <button class="btn">검색</button>
         </form> -->
+        <select name="sort" onchange="sortCars(this.value)">
+          <option value="" selected>정렬</option>
+          <option value="createdAt_desc">최근 등록순</option>
+          <option value="likes_desc">추천순</option>
+          <option value="year_desc">최근 연식순</option>
+          <option value="year_asc">오래된 연식순</option>
+          <option value="mile_asc">적은 주행거리순</option>
+          <option value="mile_desc">많은 주행거리순</option>
+          <option value="price_asc">낮은 가격순</option>
+          <option value="price_desc">높은 가격순</option>
+        </select>
         <ul class="viewImg">
           <% Cars.forEach(function(carList) { %>
           <li onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'"  <% if (carList.recommends === 1) { %>class="recommended"<% } %>>
@@ -69,4 +80,74 @@
     </div>
 </div>
 </body>
+<script>
+  window.onload = () => {
+    setQueryStringParams();
+    setSelectedSort();
+    }
+  function sortCars(sort) {
+    const url = `/manager/managerCar${sort ? `?sort=${sort}` : ""}`;
+    window.location.href = url;
+    }
+    function setSelectedSort() {
+      console.log('sssssssssssssssssssssssssssssssssssss');
+      const urlParams = new URLSearchParams(window.location.search);
+      const sortValue = urlParams.get('sort');
+      if (sortValue) {
+        document.querySelector('select[name="sort"]').value = sortValue;
+      }
+    }
+    function setQueryStringParams(){
+      if(!location.search){
+        return false;
+      }
+      const urlParams = new URLSearchParams(window.location.search);
+      const searchfrom = urlParams.get('from')
+      const searchbrand = urlParams.get('brand')
+      const searchmodel = urlParams.get('model')
+      const searchlowprice = urlParams.get('lowprice')
+      const searchhighprice = urlParams.get('highprice')
+      const searchtrans = urlParams.get('trans')
+      const searchfuel = urlParams.get('fuel')
+      const searchstartyear = urlParams.get('startyear')
+      const searchendyear = urlParams.get('endyear')
+      const searchshortmile = urlParams.get('shortmile')
+      const searchlongmile = urlParams.get('longmile')
+
+      if(searchfrom){
+        document.querySelector('#from').value=searchfrom;
+      }
+      if(searchbrand){
+        document.querySelector('#brand').value=searchbrand;
+      }
+      if(searchmodel){
+        document.querySelector('input[name="model"]').value = searchmodel;
+      }
+      if(searchlowprice){
+        document.querySelector('#lowprice').value=searchlowprice;
+      }
+      if(searchhighprice){
+        document.querySelector('#highprice').value=searchhighprice;
+      }
+      if(searchtrans){
+        document.querySelector('#trans').value=searchtrans;
+      }
+      if(searchfuel){
+        document.querySelector('#fuel').value=searchfuel;
+      }
+      if(searchstartyear){
+        document.querySelector('#startyear').value=searchstartyear;
+      }
+      if(searchendyear){
+        document.querySelector('#endyear').value=searchendyear;
+      }
+      if(searchshortmile){
+        document.querySelector('#shortmile').value=searchshortmile;
+      }
+      if(searchlongmile){
+        document.querySelector('#longmile').value=searchlongmile;
+      }
+    }
+</script>
 </html>
+

@@ -338,7 +338,7 @@ tr:hover {
         <form action="/board/search/" method="get">
           <div class="search-wrap">
             <label for="search" class="blind">검색어를 입력하세요.</label>
-            <select name="searchType">
+            <select name="searchType" class="searchType">
               <option value="title">제목</option>
               <option value="content">내용</option>
               <option value="title_content">제목+내용</option>
@@ -358,10 +358,10 @@ tr:hover {
   </div>
 
 
-
-
-
 <script>
+  window.onload = () => {
+      setQueryStringParams();
+    }
   function onPageClick(event, page) {
     const queryParams = new URLSearchParams(window.location.search);
     queryParams.set("page", page); // 현재 페이지 설정
@@ -372,9 +372,22 @@ tr:hover {
     location.href = searchUrl;
   }
   function redirectToNewPost() {
-          location.href = "/board/newpost";
-        }
+    location.href = "/board/newpost";
+  }
+  function setQueryStringParams(){
+      if(!location.search){
+        return false;
+      }
+      const urlParams = new URLSearchParams(window.location.search);
+      const searchsearchType = urlParams.get('searchType')
+      const searchresult = urlParams.get('result')
+      console.log('dddddddddddddddddddddddddddddddddddddd',searchresult);
+      if(searchsearchType){
+        document.querySelector('.searchType').value=searchsearchType;
+      }
+      if(searchresult){
+        document.querySelector('input[name="result"]').value=searchresult;
+      }
+    }
 </script>
 <%- include('./include/pagination.ejs') %>
-
-<button><a href="/board/newpost">게시글 등록</a></button>
