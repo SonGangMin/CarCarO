@@ -5,6 +5,8 @@ const path = require("path");
 const fs = require("fs");
 const { isLoggedIn } = require("../middlewares");
 const { Op } = require("sequelize");
+const { leftpopup, rightpopup } = require("../controllers/faq")
+
 
 router.get("/", async (req, res, next) => {
   try {
@@ -74,5 +76,8 @@ router.get("/faqSearch/:keyword", async (req, res, next) => {
 // router.get('/faqSearch/:keyword', async (req, res, next) => {
 //   const
 // })
+
+router.get("/leftpopup", leftpopup);
+router.get("/rightpopup", rightpopup);
 
 module.exports = router;

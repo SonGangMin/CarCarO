@@ -49,7 +49,7 @@ exports.login = (req, res, next) => {
       }
       // const previousUrl = req.headers.referer;
       // console.log("ddddddddddddddddddddddddddddddddddddddddddd", previousUrl);
-      return res.redirect("/");
+      return res.redirect(req.body.redirectUrl);
     });
   })(req, res, next);
 };

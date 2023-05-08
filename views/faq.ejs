@@ -30,22 +30,25 @@
     <button class="inquiry" ><a href="/faq/inquiry">문의하기</a></button>
 </div>
 <br><br><br>
-<div class="waringblock"></div>
+
+
+<div class="warningblock">
+    <div class="leftblock">
+        <img src="../public/images/lamborghini_aventador.png" style="cursor:pointer" onclick="window.open('/faq/leftpopup','lamborgini','scrollbars=yes,width=417,height=385,top=10,left=20');"> 
+    </div>
+    <div class="rightblock">
+        <img src="../public/images/ferrari_laferrari.png" style="cursor:pointer" onclick="window.open('/faq/rightpopup','ferrari','scrollbars=yes,width=417,height=385,top=10,left=20');">
+    </div>
+</div>
+
+
+
+
+
+
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script>
-//     const hidden = document.querySelector('.hidden');
-//     const quesTitle = document.querySelector('.questitle');
-
-// quesTitle.addEventListener('click',function(){
-//     if(hidden.style.display = 'none'){
-//         hidden.style.display = 'block'
-//     }
-// });
-
-
 $(".questitle").click(function(){
     $(this).find(".hidden").slideToggle()
 })
-
-
 </script>
