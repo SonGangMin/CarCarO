@@ -19,15 +19,7 @@
       <h1 class="title">회원가입</h1>
       <label for=""
         ><span>아이디</span
-        ><input id="id" type="text" name="id" /> &nbsp;&nbsp;&nbsp;
-        <button
-          onclick="checkedid()"
-          id="checkid"
-          name="checkid"
-          style="width: 100px"
-        >
-          중복 확인
-        </button></label>
+        ><input id="id" type="text" name="id" required/> &nbsp;&nbsp;&nbsp;</label>
         <span id="id_feedback"></span>
       <label for=""
         ><span>비밀번호</span><input id="pw" type="password" name="password"
@@ -49,7 +41,7 @@
         ><span>이메일</span><input id="email" type="email" name="email"
       /></label><span id="email_feedback"></span>
       <label for=""
-        ><span>나이</span><input id="birth" type="text" name="birth"
+        ><span>나이</span><input id="birth" type="number" name="birth"
       /></label><span id="birth_feedback"></span>
       <button type="button" onclick="checkForm()" class="join_btn">
         회원가입
@@ -58,14 +50,8 @@
     </form>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
-      document
-        .querySelector("#checkid")
-        .addEventListener("click", function (event) {
-          event.preventDefault(); // 폼 전송 막기
-        });
       const join_form = document.getElementById("joinform");
       const id = document.getElementById("id");
-      const checkid = document.getElementById("checkid");
       const pw = document.getElementById("pw");
       const checkpw = document.getElementById("checkpw");
       const name = document.getElementById("name");
@@ -171,27 +157,40 @@
         join_form.submit();
       }      
       
-      // 중복된 아이디 확인
-      const idInput = document.getElementById('id');
-      const idFeedBack = document.getElementById('id-feedback');
 
-      id.addEventListener('input', checkId);
-
-      function checkId() {
-        const idValue = id.value;
-
-        axios.get(`/check-id?id=${idValue}`)
-        .then(response => {
-          if (response.data.isDuplicate) {
-            idFeedBack.textContent = '중복된 아이디입니다';
-            idFeedBack.style.color = 'red';
-          } else {
-            idFeedBack.textContent = '사용 가능한 아이디입니다';
-            idFeedBack.style.color = 'color';
-          }
-        })
-        .catch(error => console.error(error));
+      //아이디 유효성 검사 함수
+      function isValidId(id) {
+        // 영문자 숫자 조합 8~16자리 정규식
+        const idRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/;
+        return idRegex.test(id);
       }
+      // 중복된 아이디 확인 및 유효성 검사
+     id.addEventListener('input', checkId);
+
+     function checkId() {
+      const idValue = id.value;
+      if(!idValue || idValue.trim() === '') {
+        idFeedback.textContent = '아이디를 입력해주세요';
+        idFeedback.style.color = 'red';
+        return;
+      }
+      if (!isValidId(idValue)){
+        idFeedback.textContent = '영문과 숫자를 조합한 8~16자리 아이디를 입력해주세요';
+        idFeedback.style.color = 'red';
+      }
+      axios.get(`auth/check-id?id=${idValue}`)
+      .then(response => {
+        if (response.data.isDuplicate) {
+          idFeedback.textContent = '중복된 아이디입니다';
+          idFeedback.style.color = 'red';
+        } else {
+          idFeedback.textContent = '사용 가능한 아이디입니다';
+          idFeedback.style.color = 'green';
+        }
+      })
+      .catch(error => console.error(error));
+      }
+
 
       // 비밀번호 유효성 검사
       pw.addEventListener('input', checkPassword);
