@@ -183,7 +183,7 @@ exports.editManagerBoard = async (req, res, next) => {
       { title, content },
       { where: { postId: postId } }
     );
-    res.redirect(`/manager/managerboard/${postId}`);
+    res.redirect(`/manager/managerboard/content/${postId}`);
   } catch (err) {
     console.error(err);
     next(err);

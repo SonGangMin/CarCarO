@@ -40,6 +40,9 @@ exports.renderFindcar = async (req, res, next) => {
       case "price_desc":
         order = [["price", "DESC"]];
         break;
+      case "likes_desc":
+        order = [["likes_count", "DESC"]];
+        break;
       default:
         order = [["createdAt", "DESC"]]; // 최근 등록순
     }

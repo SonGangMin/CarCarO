@@ -1,14 +1,130 @@
 <%- include('./include/head.ejs') %>
-    <h1>게시글 등록하기</h1>
-    <form method="post" action="/board">
-      <label>제목:</label>
-      <input type="text" name="title" required />
-      <br />
-      <label>내용:</label>
-      <textarea name="content" cols="30" rows="10" required></textarea>
-      <br />
-      <button type="button" id="back" onclick="location.href='/board'">뒤로</button>
-      <button type="submit">등록</button>
+<style>
+  .board_container {
+    /* display: flex; */
+    /* justify-content: center; */
+    /* text-align: center; */
+    padding: 1% 7% 5% 7%;
+    /* border: 1px solid red; */
+  }
+  .main_name {
+    font-size: 30px;
+    margin: 10px;
+    color: yellowgreen;
+    font-weight: bold;
+  }
+  .greenhr {
+    background: yellowgreen;
+    height: 3px;
+    border: 0;
+  }
+  .board_container2 {
+    padding: 3% 7% 2% 7%;
+    /* border: 1px solid black; */
+  }
+  .board_title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5%;
+  }
+  .input_title {
+    width: 100%;
+    height: 30px;
+    caret-color: black; /* 커서 색상 설정 */
+    caret-width: 2px; /* 커서 굵기 설정 */
+    padding: 5px; /* 텍스트 영역의 패딩 설정 */
+    border: 1px solid #ccc;
+  }
+  .greenhr2 {
+    background: lightgreen;
+    height: 1px;
+    border: 0;
+    margin: 1% 0% 3% 0%;
+  }
+  .input_content {
+    width: 100%;
+    font-size: 15px;
+    caret-color: black; /* 커서 색상 설정 */
+    caret-width: 2px; /* 커서 굵기 설정 */
+    padding: 5px; /* 텍스트 영역의 패딩 설정 */
+    border: 1px solid #ccc;
+  }
+  .buttons {
+    display: flex;
+    justify-content: end;
+  }
+  .buttons > button {
+    margin-left: 1%;
+    width: 10%;
+    height: 25px;
+    background: skyblue;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+</style>
+<div class="board_container">
+  <div
+    class="main_name"
+    onclick="location.href='/board/'"
+    style="cursor: pointer"
+  >
+    커뮤니티
+  </div>
+  <hr class="greenhr" />
+  <div class="board_container2">
+    <div class="board_title">게시글 등록하기</div>
+    <form method="post" action="/board" onsubmit="return validateForm()">
+      <input
+        type="text"
+        name="title"
+        placeholder="제목을 입력해주세요"
+        class="input_title"
+      />
+      <hr class="greenhr2" />
+      <textarea
+        name="content"
+        id="myTextarea"
+        cols="100"
+        rows="30"
+        placeholder="내용을 입력해주세요"
+        class="input_content"
+      ></textarea>
+      <hr class="greenhr2" />
+      <div class="buttons">
+        <button type="button" id="back" onclick="location.href='/board'">
+          뒤로
+        </button>
+        <button type="submit">등록</button>
+      </div>
     </form>
-  </body>
-</html>
+  </div>
+  <hr class="greenhr" />
+</div>
+
+<script>
+  // tap키인식
+  var textarea = document.getElementById("myTextarea");
+  textarea.addEventListener("keydown", function (e) {
+    if (e.keyCode === 9) {
+      // Tab key
+      e.preventDefault();
+      var start = this.selectionStart;
+      var end = this.selectionEnd;
+      this.value =
+        this.value.substring(0, start) + "\t" + this.value.substring(end);
+      this.selectionStart = this.selectionEnd = start + 1;
+    }
+  });
+  // 유효성검사
+  function validateForm() {
+    var title = document.forms[0].title.value;
+    var content = document.getElementById("myTextarea").value;
+
+    if (title === "" || content === "") {
+      alert("제목과 내용을 모두 입력해주세요.");
+      return false;
+    }
+  }
+</script>

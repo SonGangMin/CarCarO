@@ -270,6 +270,7 @@
       <select name="sort" onchange="sortCars(this.value)">
         <option value="" selected>정렬</option>
         <option value="createdAt_desc">최근 등록순</option>
+        <option value="likes_desc">추천순</option>
         <option value="year_desc">최근 연식순</option>
         <option value="year_asc">오래된 연식순</option>
         <option value="mile_asc">적은 주행거리순</option>
@@ -295,19 +296,19 @@
                   <% } %>
 
                   <% if (typeof isMine === 'undefined') { %>
-                    <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
+                    <button class="notLoggedIn">♡ 로그인안함<%= twit.likes_count %></button>
                   <% } else if (isMine === twit.user_id) { %>
-                    <button class="Mine" onclick="alert ('자신의 차는 추천할 수 없습니다.')">♥ 내차<%= twit.likes_count %></button>
+                    <button class="Mine" onclick="alert ('자신의 차는 추천할 수 없습니다.')">♡ 내차<%= twit.likes_count %></button>
                   <% } else { %>
                     <% if(!count) { %>
                       <form action="/car/carfind" method="post">
                         <input type="hidden" name="carNum" value="<%= twit.num %>">
-                        <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
+                        <button type="submit" class="heart">♡ <%= twit.likes_count %></button>
                       </form>
                     <% } else { %>
                       <form action="/car/carfind2" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
                         <input type="hidden" name="carNum" value="<%= twit.num %>">
-                        <button type="submit" class="heart">♡ <%= twit.likes_count %></button>
+                        <button type="submit" class="heart">♥ <%= twit.likes_count %></button>
                       </form>
                     <% } %>
                   <% } %>
@@ -341,10 +342,10 @@
   </script>
   <%- include('./include/pagination.ejs') %>
   <script>
-  window.onload = () => {
-  setQueryStringParams();
-  setSelectedSort();
-  }
+    window.onload = () => {
+    setQueryStringParams();
+    setSelectedSort();
+    }
     const fromSelect = document.querySelector('#from');
     const brandSelect = document.querySelector('#brand');
 
@@ -377,20 +378,6 @@
       `;
     }
     });
-    // function sortCars(sort) {
-    //       const url = `/car/carfind${sort ? `?sort=${sort}` : ""}`;
-    //       window.location.href = url;
-    //     }
-    // function setSelectedSort() {
-    //   const urlParams = new URLSearchParams(window.location.search);
-    //   const sortValue = urlParams.get('sort');
-    //   const modelInput = document.querySelector('input[name="model"]');
-    //   const modelValue = modelInput.value.trim();
-    //   modelInput.value = modelValue;
-    //   if (sortValue) {
-    //     document.querySelector('select[name="sort"]').value = sortValue;
-    //   }
-    // }
     function sortCars(sort) {
           const url = `/car/carfind${sort ? `?sort=${sort}` : ""}`;
           window.location.href = url;
