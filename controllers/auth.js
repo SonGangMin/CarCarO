@@ -84,6 +84,10 @@ exports.checkIdDuplicate = async (req, res, next) => {
     return res.status(400).json({ message: '아이디를 입력해주세요'});
   }
 
+  if (!/^[a-zA-Z0-9]{8,16}$/.test(id)) {
+    return res.status(400).json({ message: '아이디는 영문 + 숫자 조합으로 8~16자리로 설정하셔야 합니다'})
+  }
+
   try {
     const user = await users.findOne({ where: { id } });
     if (user) {
