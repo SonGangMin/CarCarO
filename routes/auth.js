@@ -8,8 +8,8 @@ const {join, login, logout, checkid, renderfindid, renderfindpw } = require('../
 const router = express.Router();
 
 router.post('/join', isNotLoggedIn, join);
-// router.post('/renderfindid', isNotLoggedIn, renderfindid);
-// router.post('/renderfindpw', isNotLoggedIn, renderfindpw);
+router.get('/renderfindid', isNotLoggedIn, renderfindid);
+router.get('/renderfindpw', isNotLoggedIn, renderfindpw);
 router.post('/login', isNotLoggedIn, login);
 router.get('/logout', isLoggedIn, logout);
 router.get('/kakao', passport.authenticate('kakao'));

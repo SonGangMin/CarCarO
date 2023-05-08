@@ -165,9 +165,9 @@
         return idRegex.test(id);
       }
       // 중복된 아이디 확인 및 유효성 검사
-     id.addEventListener('input', checkId);
+    id.addEventListener('input', checkId);
 
-     function checkId() {
+    function checkId() {
       const idValue = id.value;
       if(!idValue || idValue.trim() === '') {
         idFeedback.textContent = '아이디를 입력해주세요';

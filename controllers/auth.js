@@ -105,17 +105,13 @@ exports.checkIdDuplicate = async (req, res, next) => {
 };
 
 exports.renderfindid = async (req, res, next) => {
-  try {
-    const email = req.params.email;
-    const user = await models.users.findOne({ where: { email } });
-    if (!user) {
-      return res.render("findid", {
-        message: "일치하는 사용자를 찾을 수 없습니다.",
-      });
-    }
-    res.render("findid", { id: user.id });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("서버 오류");
-  }
-};
+    res.render("renderfindid", {
+      title: "id 찾기",
+    });
+}
+
+exports.renderfindpw = async (req, res, next) => {
+  res.render("renderfindpw", {
+    title: "비밀번호 찾기",
+  });
+}

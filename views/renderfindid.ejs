@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>ID 찾기</title>
-</head>
-<body>
-    
-</body>
-</html>
+<%- include('./include/head.ejs') %>
+
+<div align="center">
+    <form action="findID">
+        <h1>아이디 찾기</h1>
+        <label><span>e-mail입력</span></label>
+        <input id="email" type="email" name="email" required>
+        <button type="submit">제출</button>
+        <br>
+        <input class="idresult" <% twit.id %>>
+    </form>
+</div>
