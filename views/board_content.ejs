@@ -75,7 +75,7 @@
   .comment {
     display: flex;
     justify-content: space-between;
-    margin: 0;
+    margin: 1% 0 0 0;
     padding: 0;
   }
   .input {
@@ -83,13 +83,18 @@
   }
   .comment_user {
     width: 20%;
+    font-size: 15px;
     /* border: 1px solid black; */
   }
   #comment_content {
     width: 80%;
     display: flex;
     justify-content: space-between;
+    font-size: 15px;
     /* border: 1px solid blue; */
+  }
+  .commenttime {
+    font-size: 15px;
   }
   #content_txt {
     width: 50%;
@@ -129,15 +134,44 @@
     /* width: 5%; */
   }
   .createcomment {
-    margin-top: 2%;
-    justify-content: end;
+    margin-top: 10%;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
+    /* font-size: 15px; */
+    /* margin-left: 20%; */
+  }
+  .createcomment_head {
+    /* margin-top: 1%; */
+    background-color: yellowgreen;
+    border: none;
+    color: white;
+    height: 40px;
+    width: 20%;
+    font-weight: bold;
+    text-align: center;
+    justify-items: center;
+    /* align-items: center; */
   }
   .createinput {
-    width: 100%;
+    width: 650px;
+    height: 40px;
   }
   #editdelete {
     height: 100%;
+  }
+  .commentsubmit {
+    display: flex;
+    justify-content: end;
+  }
+  .commentsubmit > input {
+    margin-top: 1%;
+    background-color: skyblue;
+    border: none;
+    color: white;
+    height: 40px;
+    width: 15%;
+    font-weight: bold;
   }
 </style>
 <div class="board_container">
@@ -260,9 +294,12 @@
     </ul>
     <% if (isUser) { %>
     <div class="createcomment">
+      <div class="createcomment_head">댓글등록하기</div>
       <form action="/board/content/<%= board.postId %>" method="post">
         <input type="text" name="content" class="createinput" />
-        <input type="submit" value="등록" />
+        <div class="commentsubmit">
+          <input type="submit" style="cursor: pointer" value="등록" />
+        </div>
       </form>
     </div>
     <% } %>
