@@ -77,12 +77,26 @@
 }
 
 .reccar {
-    border: solid 1px black;
+    /* border: solid 1px black; */
     padding: 100px;
     position: relative;
     width: 100%;
     display: block;
     /* left: 15%; */
+}
+.contents h1{
+    position: relative;
+    margin-bottom: 30px;
+}
+.contents h1:after{
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 2px;
+    background-color: orange;
 }
 
 .reccar ul {
@@ -100,7 +114,7 @@
     text-align: center;
 }
 .popucar {
-    border: solid 1px black;
+    /* border: solid 1px black; */
     padding: 100px;
     position: relative;
     width: 100%;
@@ -128,14 +142,51 @@
     height: 150px;
 }
 
-.reccarlist {
-    border: solid 1px black;
-    width: 100%;
-}
-
+.reccarlist,
 .popucarlist {
     border: solid 1px black;
     width: 100%;
+    border-radius: 20px;
+    height: 270px;
+    padding-bottom: 10px;
+}
+.reccarlist img,
+.popucarlist img{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.carProfile span{
+    position: relative;
+    display: inline-block;
+    padding-right: 5px;
+    font-size: 14px;
+    color: #aaa;
+    font-weight: normal;
+}
+.carProfile span::after{
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-35%);
+    width: 1px;
+    height: 12px;
+    background-color: #ddd;
+}
+.carProfile span:last-child{
+    display: none;
+}
+.carProfile span:last-child:after{
+    display: none;
+}
+.carProfile h5{
+    font-size: 18px;
+}
+.carProfile h5 p{
+    display: inline-block;
+    font-size: 14px;
+    margin-left: 5px;
 }
 
 .like {

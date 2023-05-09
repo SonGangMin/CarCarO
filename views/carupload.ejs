@@ -166,6 +166,8 @@
                 
                 <label for=""><b>해시태그</b><input id="hashtag" type="text" name="hashtag" placeholder="ex) #ㅇㅇㅇ 최대 4개 까지 가능합니다."></label>
 
+                <label for=""><b>지역</b><input id="area" type="text" name="area"></label>
+                
                 <label for=""><b>연락처</b><input id="tel" type="number" name="tel"></label>
 
                 <input id="img-url" type="hidden" name="url">
@@ -233,6 +235,7 @@
         const heatedInput = document.getElementsByName('heated');
         const etcInput = document.querySelector('#etc');
         const priceInput = document.querySelector('#price');
+        const areaInput = document.querySelector('#area');
         const telInput = document.querySelector('#tel');
         const hashtagInput = document.querySelector('#hashtag');
   
@@ -253,6 +256,7 @@
             formData.append('method', methodInput.value);
             formData.append('color', colorInput.value);
             formData.append('tel', telInput.value);
+            formData.append('area', areaInput.value);
             
             let dispInput = document.querySelector('input[name = disp]:checked').value;
             formData.append('disp', dispInput);
