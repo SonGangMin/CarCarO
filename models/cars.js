@@ -68,6 +68,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(100),
       allowNull: false
     },
+    area: {
+      type: DataTypes.STRING(100),
+      allowNull: false
+    },
     tel: {
       type: DataTypes.STRING(100),
       allowNull: false

@@ -30,7 +30,7 @@
         <!-- <a href="/mypage">마이페이지</a> -->
       
         <%} else {%>
-          <a href="/mypage"><%= user.name %></a>
+          <b><%= user.name %></b>
           <% if(user.provider === 'local'){ %>
           <a href="/auth/logout">로그아웃</a>
           <% } else if(user.provider === 'kakao'){ %>
@@ -63,10 +63,48 @@
           </ul>
         </div>
         <div class="hd_rt">
-          <a href="javascript:void(0);">검색</a>
-          <a href="javascript:void(0);">메뉴</a>
+          <a href="javascript:void(0);" id="hambug">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </a>
         </div>
       </div>
     </header>
+    <div id="slide_menu" class="slide_menu">
+      <ul class="nav">
+        <li>
+          <div class="hashtagsearch">
+            <form action="/hashtagsearch/" method="get">
+                <input class="hashtagsearchbox" name="hashtag" placeholder="해쉬태그 검색 ex) #제네시스 #G80">
+                <button type="submit">검색</button>
+            </form>
+          </div>
+        </li>
+        <li class="<%= (req.originalUrl === '/car/carfind') ? 'active' : '' %>">
+          <a href="/car/carfind" class="">내차 찾기</a>
+        </li>
+        <li class="<%= (req.originalUrl === '/car/carsale') ? 'active' : '' %>">
+          <a href="/car/carsale">내차 팔기</a>
+        </li>
+        <li class="<%= (req.originalUrl === '/board') ? 'active' : '' %>">
+          <a href="/board">커뮤니티</a>
+        </li>
+        <li class="<%= (req.originalUrl === '/faq') ? 'active' : '' %>">
+          <a href="/faq">고객센터</a>
+        </li>
+      </ul>
+    </div>
   </body>
+  <script>
+    const hambug = document.getElementById('hambug');
+    const slide_menu = document.getElementById('slide_menu');
+    const body = document.querySelector('body');
+    hambug.addEventListener('click', () => {
+      hambug.classList.toggle('active');
+      slide_menu.classList.toggle('active');
+      body.classList.toggle('noscroll');
+    });
+  </script>
 </html>
