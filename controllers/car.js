@@ -482,10 +482,7 @@ exports.editBtn = async (req, res, next) => {
         type,
         method,
         color,
-<<<<<<< HEAD
-=======
         area,
->>>>>>> d15b5194eda917aeeeb3f11854d2f1c01bba2355
         tel,
         roof,
         nav,
@@ -506,10 +503,6 @@ exports.editBtn = async (req, res, next) => {
         where: { carNum },
       }
     );
-<<<<<<< HEAD
-
-=======
->>>>>>> d15b5194eda917aeeeb3f11854d2f1c01bba2355
     const Hashtags = req.body.hashtag.match(/#[^\s#]*/g);
     await hashtags.destroy({
       where: { cars_num: num },
@@ -517,24 +510,12 @@ exports.editBtn = async (req, res, next) => {
     if (Hashtags) {
       const result = await Promise.all(
         Hashtags.map((tag) => {
-<<<<<<< HEAD
           return hashtags.findOrCreate({
             where: {
               cars_hashtag: tag.slice(1).toLowerCase(),
               cars_num: num,
             },
           });
-=======
-          return hashtags.update(
-            {},
-            {
-              where: {
-                cars_hashtag: tag.slice(1).toLowerCase(),
-                cars_num: Cars.num,
-              },
-            }
-          );
->>>>>>> d15b5194eda917aeeeb3f11854d2f1c01bba2355
         })
       );
       // await post.addHashtags(result.map(r => r[0]));
