@@ -89,7 +89,7 @@ exports.renderFindcar = async (req, res, next) => {
       isMine,
       recenttotal,
       sortOption,
-      req: req
+      req: req,
     });
   } catch (err) {
     console.error(err);
@@ -249,7 +249,7 @@ exports.renderCarSearch = async (req, res, next) => {
       longmile,
       pagingData,
       totalItems,
-      req: req
+      req: req,
     });
   } catch (err) {
     console.error(err);
@@ -295,7 +295,7 @@ exports.renderSalecar = async (req, res, next) => {
       currentPage: pageNum,
       totalPages,
       totalCount, // 전체 데이터 수 추가
-      req: req
+      req: req,
     });
   } catch (error) {
     console.error(error);
@@ -319,7 +319,7 @@ exports.renderDetail = async (req, res, next) => {
       Cars,
       isOwner,
       status2,
-      req: req
+      req: req,
     });
   } catch (error) {
     console.error(error);
@@ -329,9 +329,9 @@ exports.renderDetail = async (req, res, next) => {
 
 // 내차팔기 등록 페이지
 exports.renderCarup = (req, res) => {
-  res.render("carupload", { 
-    title: "내차등록하기" ,
-    req: req
+  res.render("carupload", {
+    title: "내차등록하기",
+    req: req,
   });
 };
 
@@ -465,52 +465,56 @@ exports.editBtn = async (req, res, next) => {
       files.push({ filename: file.filename, url: `/carImg/${file.filename}` });
     }
     const carNum = req.params.carNum;
-    const Cars = await cars.update({
-      carNum,
-      from,
-      brand,
-      model,
-      mile,
-      year,
-      fuel,
-      trans,
-      picture: files,
-      seater,
-      disp,
-      type,
-      method,
-      color,
-      area,
-      tel,
-      roof,
-      nav,
-      key,
-      light,
-      sensor,
-      camera,
-      box,
-      leather,
-      heated,
-      airbag,
-      etc,
-      price,
-      hashtag,
-      user_id: req.user.id,
-    },{
-      where: {carNum}
-    });
+    const Cars = await cars.update(
+      {
+        carNum,
+        from,
+        brand,
+        model,
+        mile,
+        year,
+        fuel,
+        trans,
+        picture: files,
+        seater,
+        disp,
+        type,
+        method,
+        color,
+        area,
+        tel,
+        roof,
+        nav,
+        key,
+        light,
+        sensor,
+        camera,
+        box,
+        leather,
+        heated,
+        airbag,
+        etc,
+        price,
+        hashtag,
+        user_id: req.user.id,
+      },
+      {
+        where: { carNum },
+      }
+    );
     const Hashtags = req.body.hashtag.match(/#[^\s#]*/g);
     if (Hashtags) {
       const result = await Promise.all(
         Hashtags.map((tag) => {
-          return hashtags.update({
-            
-          },{
-            where: {
-              cars_hashtag: tag.slice(1).toLowerCase(),
-              cars_num: Cars.num,
-            },
-          });
+          return hashtags.update(
+            {},
+            {
+              where: {
+                cars_hashtag: tag.slice(1).toLowerCase(),
+                cars_num: Cars.num,
+              },
+            }
+          );
         })
       );
       // await post.addHashtags(result.map(r => r[0]));
@@ -540,7 +544,7 @@ exports.renderHashtag = async (req, res, next) => {
     return res.render("carsale", {
       title: `${query}`,
       twits: cars,
-      req: req
+      req: req,
     });
   } catch (error) {
     console.error(error);
@@ -557,12 +561,12 @@ exports.carEdit = async (req, res, next) => {
         carNum,
       },
     });
-    const from = Cars?.from || '';
+    const from = Cars?.from || "";
     res.render("caredit", {
       title: "내차 수정하기",
       Cars,
       from,
-      req: req
+      req: req,
     });
   } catch (error) {
     console.error(error);
