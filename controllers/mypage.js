@@ -36,6 +36,7 @@ exports.renderMypage = async (req, res, next) => {
       mycarscount,
       twits,
       myinq,
+      req,
     });
   } catch (err) {
     console.error(err);
@@ -50,7 +51,7 @@ exports.renderEditPage = async (req, res) => {
     // console.log("ee=========ee", id);
     const user = await models.users.findOne({ where: { id: id } }); // 사용자 정보 조회
     // console.log(user[0]);
-    res.render("modify", { title: "회원정보수정" }); // modify.ejs 뷰에 사용자 정보 전달
+    res.render("modify", { title: "회원정보수정", req }); // modify.ejs 뷰에 사용자 정보 전달
 
     // console.log("ddd=========dd", id);
   } catch (err) {
@@ -80,7 +81,7 @@ exports.updateUserInfo = async (req, res) => {
 
 // 회원 정보 수정 페이지 렌더링
 exports.modifyPage = (req, res) => {
-  res.render("edit", { title: "회원 정보 수정" });
+  res.render("edit", { title: "회원 정보 수정", req });
 };
 
 exports.renderInquiry = async (req, res, next) => {
@@ -103,6 +104,7 @@ exports.renderInquiry = async (req, res, next) => {
       title: "내 문의",
       totalPages,
       currentPage: page,
+      req,
     });
   } catch (err) {
     console.error(err);
@@ -113,7 +115,7 @@ exports.renderInquiry = async (req, res, next) => {
 // 마이페이지 들어가기 전 비밀번호 확인 페이지
 exports.showPasswordPage = (req, res, next) => {
   const { id } = req.params;
-  res.render("mypage_password", { id, title: "비밀번호확인" });
+  res.render("mypage_password", { id, title: "비밀번호확인", req });
 };
 
 exports.checkPasswordPage = async (req, res) => {
@@ -126,6 +128,7 @@ exports.checkPasswordPage = async (req, res) => {
     } else {
       res.render("mypage_password", {
         message: "비밀번호가 일치하지 않습니다.",
+        req,
       });
     }
   } catch (err) {
@@ -138,7 +141,7 @@ exports.checkPasswordPage = async (req, res) => {
 exports.getModify = async (req, res, next) => {
   try {
     const user = req.session.user;
-    res.render("modify", { user });
+    res.render("modify", { user, req });
   } catch (error) {
     console.error(error);
     next(error);
@@ -151,9 +154,9 @@ exports.checkPassword = async (req, res, next) => {
     const user = req.session.user;
     const response = await axios.post(
       "http://localhost:3000/api/checkPassword",
-      { id: user.id, password }
+      { id: user.id, password, req }
     );
-    res.json({ result: response.data.result });
+    res.json({ result: response.data.result, req });
   } catch (error) {
     console.error(error);
     next(error);
@@ -169,6 +172,7 @@ exports.postModify = async (req, res, next) => {
       tel,
       email,
       birth,
+      req,
     });
     res.redirect("/mypage");
   } catch (error) {
@@ -207,6 +211,7 @@ exports.renderLikescar = async (req, res, next) => {
       totalPages,
       currentPage: page,
       isMine,
+      req,
     });
   } catch (err) {
     console.error(err);
@@ -225,7 +230,7 @@ exports.getModifyPage = function (req, res, next) {
         return;
       }
 
-      res.render("modify", { user: results[0] });
+      res.render("modify", { user: results[0], req });
     }
   );
 };
@@ -237,7 +242,7 @@ exports.postModify = function (req, res, next) {
     "UPDATE users SET name = ?, email = ?, password = ?, WHERE id = ?",
     [name, email, req.session.user_id],
     function (err, result) {
-      res.render("withdraw");
+      res.render("withdraw", { req });
     }
   );
 };

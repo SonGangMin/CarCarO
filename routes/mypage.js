@@ -28,7 +28,7 @@ router.get("/modify", isLoggedIn, mypageController.getModify);
 router.post("checkPassword", isLoggedIn, mypageController.checkPassword);
 router.post("edit", isLoggedIn, mypageController.postModify);
 router.get("/mypage/edit", function (req, res) {
-  res.send("edit page");
+  res.send("edit page", { req });
 });
 
 // 회원 탈퇴
