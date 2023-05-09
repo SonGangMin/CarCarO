@@ -213,7 +213,7 @@ section.notice {
   clear: both;
 }
 .container2 {
-  width: 1100px;
+  width: 90%;
   margin: 0 auto;
 }
 .blind {
@@ -240,15 +240,15 @@ section.notice {
 .th-num {
   width: 5%;
 }
-
 .th-title {
-  width: 55%;
+  width: 50%;
 }
-
 .th-user {
   width: 20%;
 }
-
+.th-view {
+    width: 5%;
+  }
 .th-date {
   width: 20%;
 }
@@ -268,6 +268,13 @@ tr:hover {
   display: flex;
   justify-content: center;
 }
+.top_tr {
+    background-color: lightgray;
+  }
+.notice_num {
+    color: red;
+    font-weight: bold;
+  }
 
 </style>
 
@@ -292,18 +299,19 @@ tr:hover {
       </div>
       <table class="board-table">
         <thead>
-          <tr>
+          <tr class="top_tr">
             <th scope="col" class="th-num">번호</th>
             <th scope="col" class="th-title">제목</th>
             <th scope="col" class="th-user">작성자</th>
             <th scope="col" class="th-date">등록일</th>
+            <th scope="col" class="th-view">조회수</th>
           </tr>
         </thead>
         <tbody>
           <% results.forEach(function(result) { %>
           <tr<% if (result.grade === 2) { %> class="notice-row"<% } %>>
             <td>
-              <% if (result.grade === 2) { %> 공지 <% } else { %> <%= result.postId
+              <% if (result.grade === 2) { %> <span class="notice_num">공지</span> <% } else { %> <%= result.postId
               %> <% } %>
             </td>
             <td>
@@ -325,6 +333,9 @@ tr:hover {
               %>일 (<%= ["일", "월", "화", "수", "목", "금",
               "토"][result.createdAt.getDay()] %>) <%= result.createdAt.getHours()
               %>시 <%= result.createdAt.getMinutes() %>분
+            </td>
+            <td>
+              <%= result.views %>
             </td>
           </tr>
           <% }); %>

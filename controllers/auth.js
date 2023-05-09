@@ -120,8 +120,8 @@ exports.findid = async (req, res, next) => {
         title: "CarCarO ID 찾기",
       });
     } else {
-      res.render("findidError", {
-        title: "CarCarO ID 찾기",
+      res.render("findError", {
+        title: "CarCarO ID 찾기 에러",
       });
     }
   } catch (err) {
@@ -135,11 +135,43 @@ exports.renderfindpw = async (req, res, next) => {
     title: "비밀번호 찾기",
   });
 };
+
 exports.findpw = async (req, res, next) => {
   const { name, id, email } = req.body;
   try {
     const find = await users.findOne({
       where: { name, id, email },
+    });
+    if (find) {
+      res.render("findedpw", {
+        find,
+        title: "CarCarO PW 찾기",
+      });
+    } else {
+      res.render("findError", {
+        title: "CarCarO PW 찾기 에러",
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.changepw = async (req, res, next) => {
+  const id = req.body.id;
+  const password = req.body.password;
+  console.log("dddddddddddddddddddddddddd", req.body.password);
+  const hash = await bcrypt.hash(password, 12);
+  try {
+    if (!id) {
+      return res.render("findError", {
+        title: "ID오류",
+      });
+    }
+    await users.update({ password: hash }, { where: { id } });
+    return res.render("successpwchange", {
+      title: "비밀번호 수정완료",
     });
   } catch (err) {
     console.error(err);

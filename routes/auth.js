@@ -12,6 +12,7 @@ const {
   renderfindpw,
   findid,
   findpw,
+  changepw,
 } = require("../controllers/auth");
 
 const router = express.Router();
@@ -22,6 +23,7 @@ router.get("/findid", isNotLoggedIn, renderfindid);
 router.post("/findid", isNotLoggedIn, findid);
 router.get("/findpw", isNotLoggedIn, renderfindpw);
 router.post("/findpw", isNotLoggedIn, findpw);
+router.post("/changepw", isNotLoggedIn, changepw);
 
 router.post("/login", isNotLoggedIn, login);
 router.get("/logout", isLoggedIn, logout);
