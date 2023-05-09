@@ -36,7 +36,7 @@ exports.renderBoard = async (req, res, next) => {
       total,
       pagingData,
       totalItems,
-      req: req
+      req: req,
     });
   } catch (err) {
     console.error(err);
@@ -45,7 +45,7 @@ exports.renderBoard = async (req, res, next) => {
 };
 
 exports.renderNewpost = (req, res, next) => {
-  res.render("board_newpost", { title: "글 작성" });
+  res.render("board_newpost", { title: "글 작성", req });
 };
 
 exports.createPost = async (req, res, next) => {
@@ -116,7 +116,7 @@ exports.renderBoardContent = async (req, res, next) => {
       userId,
       pagingData,
       totalItems,
-      req: req
+      req: req,
     });
   } catch (err) {
     console.error(err);
@@ -177,7 +177,7 @@ exports.renderSearch = async (req, res, next) => {
       total,
       pagingData,
       totalItems,
-      req: req
+      req: req,
     });
   } catch (err) {
     console.error(err);
