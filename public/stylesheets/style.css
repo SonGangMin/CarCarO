@@ -65,6 +65,10 @@ a {
 
 .nav li a {
   display: block;
+  color: #888;
+}
+.nav li:active a {
+  color: #000;
 }
 
 .src_menu {

@@ -36,6 +36,7 @@ exports.renderBoard = async (req, res, next) => {
       total,
       pagingData,
       totalItems,
+      req: req
     });
   } catch (err) {
     console.error(err);
@@ -113,6 +114,7 @@ exports.renderBoardContent = async (req, res, next) => {
       userId,
       pagingData,
       totalItems,
+      req: req
     });
   } catch (err) {
     console.error(err);
@@ -173,6 +175,7 @@ exports.renderSearch = async (req, res, next) => {
       total,
       pagingData,
       totalItems,
+      req: req
     });
   } catch (err) {
     console.error(err);

@@ -5,10 +5,10 @@
         <h1>차량관리</h1>
         <h2 class="title">판매목록</h2>  
         <h3 class="counting">총 <span><%= totalCount %></span>개</h3>
-        <!-- <form action="/car/hashtag">
-            <input type="text" name="hashtag">
-            <button class="btn">검색</button>
-        </form> -->
+          <!-- <form action="/car/hashtag">
+              <input type="text" name="hashtag">
+              <button class="btn">검색</button>
+          </form> -->
         <ul class="viewImg">
           <% Cars.forEach(function(carList) { %>
           <li onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'"  <% if (carList.recommends === 1) { %>class="recommended"<% } %>>
@@ -69,4 +69,21 @@
     </div>
 </div>
 </body>
+<script>
+  const arrayForm = document.getElementById('arrayForm');
+  const array = document.getElementById('array');
+  array.addEventListener('change', () => {
+    arrayForm.submit();
+  });
+
+  if (window.location.search.includes('array=%EB%93%B1%EB%A1%9D%EC%88%9C')) {
+    // query 값에 "array=등록순"이 포함되어 있을 경우
+    document.querySelector('#array option[value="등록순"]').selected = true;
+  } else {
+    // 그 외의 경우 (최신순이 기본값이므로)
+    document.querySelector('#array option[value="최신순"]').selected = true;
+  }
+  console.log(window.location.search); // 현재 페이지의 query string 출력
+  console.log(document.querySelector('#array option[selected]').value); 
+</script>
 </html>

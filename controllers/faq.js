@@ -3,7 +3,8 @@ const { Op } = require("sequelize");
 exports.leftpopup = async (req, res, next) => {
     try {
         res.render('leftpopup', {
-            title: 'Sample'
+            title: 'Sample',
+            req: req
         });
     } catch (error) {
         next(error);
@@ -13,7 +14,8 @@ exports.leftpopup = async (req, res, next) => {
 exports.rightpopup = async (req, res, next) => {
     try {
         res.render('rightpopup', {
-            title: 'Sample'
+            title: 'Sample',
+            req: req
         });
     } catch (error) {
         next(error);

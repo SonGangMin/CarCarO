@@ -13,8 +13,55 @@
 
 .slick-prev{
     z-index: 999;
+    position: absolute;
     left: 20px;
     top: 50%;
+    background-image: url(../images/arrow.png);
+    background-size: 100%;
+    background-color: transparent;
+    transform: rotate(180deg);
+    text-indent: -9999px;
+    border: none;
+    width: 35px;
+    height: 35px;
+    opacity: .5;
+}
+
+.slick-next{
+    z-index: 999;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    background-image: url(../images/arrow.png);
+    background-size: 100%;
+    background-color: transparent;
+    text-indent: -9999px;
+    border: none;
+    width: 35px;
+    height: 35px;
+    opacity: .5;
+}
+
+.slick-dots{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.slick-dots > li{
+    margin-right: 10px;
+    /* text-indent: -99999px; */
+}
+.slick-dots > li button{
+    text-indent: -9999px;
+    width: 10px;
+    height: 10px;
+    background-color: #aaa;
+    border-radius: 100%;
+    border: none;
+    cursor: pointer;
+}
+.slick-dots > li.slick-active button{
+    background-color: rgba(0,0,0,.8);
 }
 
 /* 해시태그 */

@@ -73,7 +73,6 @@ exports.renderFindcar = async (req, res, next) => {
     const totalItems = total;
     const twits = listCount;
     const pagingData = getPagingDataCount(totalItems, page, limit);
-
     // console.log("111111111111->", pagingData);
 
     // console.log(twits);
@@ -87,6 +86,7 @@ exports.renderFindcar = async (req, res, next) => {
       isMine,
       recenttotal,
       sortOption,
+      req: req
     });
   } catch (err) {
     console.error(err);
@@ -246,6 +246,7 @@ exports.renderCarSearch = async (req, res, next) => {
       longmile,
       pagingData,
       totalItems,
+      req: req
     });
   } catch (err) {
     console.error(err);
@@ -291,6 +292,7 @@ exports.renderSalecar = async (req, res, next) => {
       currentPage: pageNum,
       totalPages,
       totalCount, // 전체 데이터 수 추가
+      req: req
     });
   } catch (error) {
     console.error(error);
@@ -314,6 +316,7 @@ exports.renderDetail = async (req, res, next) => {
       Cars,
       isOwner,
       status2,
+      req: req
     });
   } catch (error) {
     console.error(error);
@@ -416,6 +419,99 @@ exports.uploadPost = async (req, res, next) => {
   }
 };
 
+// 수정 등록
+exports.editBtn = async (req, res, next) => {
+  const {
+    carNum,
+    from,
+    brand,
+    model,
+    mile,
+    year,
+    fuel,
+    trans,
+    seater,
+    disp,
+    type,
+    method,
+    color,
+    tel,
+    roof,
+    nav,
+    key,
+    light,
+    sensor,
+    camera,
+    box,
+    leather,
+    heated,
+    airbag,
+    etc,
+    price,
+    hashtag,
+  } = req.body;
+  try {
+    const files = [];
+    for (const file of req.files) {
+      files.push({ filename: file.filename, url: `/carImg/${file.filename}` });
+    }
+    const carNum = req.params.carNum;
+    const Cars = await cars.update({
+      carNum,
+      from,
+      brand,
+      model,
+      mile,
+      year,
+      fuel,
+      trans,
+      picture: files,
+      seater,
+      disp,
+      type,
+      method,
+      color,
+      tel,
+      roof,
+      nav,
+      key,
+      light,
+      sensor,
+      camera,
+      box,
+      leather,
+      heated,
+      airbag,
+      etc,
+      price,
+      hashtag,
+      user_id: req.user.id,
+    },{
+      where: {carNum}
+    });
+    const Hashtags = req.body.hashtag.match(/#[^\s#]*/g);
+    if (Hashtags) {
+      const result = await Promise.all(
+        Hashtags.map((tag) => {
+          return hashtags.update({
+            
+          },{
+            where: {
+              cars_hashtag: tag.slice(1).toLowerCase(),
+              cars_num: Cars.num,
+            },
+          });
+        })
+      );
+      // await post.addHashtags(result.map(r => r[0]));
+    }
+
+    res.status(200).json({ msg: "/car/carsale" });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+};
 // 해시태그
 exports.renderHashtag = async (req, res, next) => {
   const query = req.query.hashtag;
@@ -434,6 +530,7 @@ exports.renderHashtag = async (req, res, next) => {
     return res.render("carsale", {
       title: `${query}`,
       twits: cars,
+      req: req
     });
   } catch (error) {
     console.error(error);
@@ -450,28 +547,12 @@ exports.carEdit = async (req, res, next) => {
         carNum,
       },
     });
+    const from = Cars?.from || '';
     res.render("caredit", {
       title: "내차 수정하기",
       Cars,
-    });
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-};
-
-// 수정 등록
-exports.editBtn = async (req, res, next) => {
-  try {
-    const carNum = req.params.carNum === cars.carNum;
-    const Cars = await cars.update({
-      where: {
-        carNum,
-      },
-    });
-    res.redirect("caredit", {
-      title: "내차 수정하기",
-      Cars,
+      from,
+      req: req
     });
   } catch (error) {
     console.error(error);

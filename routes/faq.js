@@ -18,6 +18,7 @@ router.get("/", async (req, res, next) => {
     res.render("faq", {
       twits: faq,
       title: "FAQ",
+      req: req
     });
   } catch (err) {
     console.error(err);
@@ -26,7 +27,10 @@ router.get("/", async (req, res, next) => {
 });
 
 router.get("/inquiry", isLoggedIn, function (req, res, next) {
-  res.render("inquiry", { title: "1:1문의" });
+  res.render("inquiry", { 
+    title: "1:1문의",
+    req: req 
+  });
 });
 router.post("/inquiry", isLoggedIn, function (req, res, next) {
   const title = req.body.title;
@@ -66,6 +70,7 @@ router.get("/faqSearch/:keyword", async (req, res, next) => {
     res.render("faqSearch", {
       results,
       title: `검색 결과: ${query}`,
+      req: req
     });
   } catch (err) {
     console.error(err);

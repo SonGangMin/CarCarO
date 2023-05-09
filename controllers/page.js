@@ -38,6 +38,7 @@ exports.renderMain = async (req, res, next) => {
       status2,
       isMine,
       Adver,
+      req: req
     });
   } catch (error) {
     console.error(error);
@@ -105,6 +106,7 @@ exports.hashtagsearch = async (req, res, next) => {
       totalItems,
       pagingData,
       isMine,
+      req: req
     });
   } catch (err) {
     console.error(err);

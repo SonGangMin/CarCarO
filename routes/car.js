@@ -34,8 +34,6 @@ router.get("/carsale", isLoggedIn, renderSalecar);
 router.get("/carupload", isLoggedIn, renderCarup);
 // 내차팔기 수정 페이지
 router.get("/caredit/:carNum", isLoggedIn, carEdit);
-// 내차팔기 수정 등록
-router.post("/edit/:carNum", isLoggedIn, editBtn);
 // 내차팔기 리스트 삭제
 router.post("/delete/:carNum", isLoggedIn, listDelete);
 // 내차팔기 리스트 상세 페이지
@@ -85,6 +83,8 @@ const upload = multer({
 // 내차 등록 이미지 업로드
 router.post("/multiple-upload", upload.array("files"), uploadPost);
 
+// 내차팔기 수정 등록
+router.post("/edit/:carNum", upload.array("files"), isLoggedIn, editBtn);
 // 페이지네이션
 const data = [
   /* your data here */
