@@ -2,9 +2,9 @@
 <link rel="stylesheet" href="/stylesheets/car.css">
 <div class="container5">
     <div class="contents">
-        <div class="titletext">차량관리</div>
+        <div class="titletext"><i class="fa-solid fa-car-side fa-fade"></i>차량관리</div>
         <hr class="hrtitle">
-        <h2 class="title">판매완료목록</h2>  
+        <h2 class="title">판매완료차량</h2>  
         <h3 class="counting">총 <span><%= totalCount %></span>개</h3>
         <!-- <form action="/car/hashtag">
             <input type="text" name="hashtag">
@@ -26,7 +26,7 @@
                 </div>
               </div>
               <div class="buttonBox" style="z-index: 99;">
-                <button id="cancleBtn" value="<%= carList.carNum %>">판매완료취소</button>
+                <button  class="Car-btn" id="cancleBtn" value="<%= carList.carNum %>">판매완료취소</button>
               </div>
           </li>
           <% }); %>

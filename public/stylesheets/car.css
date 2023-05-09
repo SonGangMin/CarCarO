@@ -169,3 +169,16 @@
     display: flex;
     justify-content: space-between;
 }
+
+
+.Car-btn {
+    background-color:#FEE500;
+    color: #000000;
+    border-radius:3px;
+}
+.Car-btn:hover {
+    cursor: pointer;
+}
+.Car-btn:active {
+    background-color: #dbc501;
+}

@@ -1,4 +1,20 @@
 <%- include('../include/managerhead.ejs') %>
+<style>
+    .Grade-btn {
+    background-color:#FEE500;
+    color: #000000;
+    border-radius:3px;
+    }
+
+    .Grade-btn:hover {
+    cursor: pointer;
+    }
+
+    .Grade-btn:active {
+    background-color: #dbc501;
+    }
+
+</style>
 <div class="container2">
   <div class="contents">
     <div class="titletext"><i class="fa-solid fa-users fa-fade"></i> 회원관리</div>
@@ -31,16 +47,16 @@
                     <td>
                         <form action="/manager/managerUser/edit/<%= users.id %>" method="post">
                             <% if(users.grade === 1) { %>
-                                <button>등급승급</button>
+                                <button class="Grade-btn">등급승급</button>
                             <% } else if(users.grade === 2) { %>
-                                <button>등급강등</button>
+                                <button class="Grade-btn">등급강등</button>
                             <% } %>
                         </form>
                     </td>
                     <td>
                         <% if(users.grade === 1 || users.grade === 2) { %>
                         <form action="/manager/managerUser/delete/<%= users.id %>" method="post">
-                            <button>탈퇴</button>
+                            <button class="Grade-btn">탈퇴</button>
                         </form>
                         <% } else %>
                     </td>

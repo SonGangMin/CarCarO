@@ -2,9 +2,9 @@
 <link rel="stylesheet" href="/stylesheets/car.css">
 <div class="container5">
     <div class="contents5">
-        <div class="titletext">차량관리</div>
+        <div class="titletext"><i class="fa-solid fa-car-side fa-fade"></i>차량관리</div>
         <hr class="hrtitle">
-        <h2 class="title">판매목록</h2>  
+        <h2 class="title">판매중인차량</h2>  
         <h3 class="counting">총 <span><%= totalCount %></span>개</h3>
         <!-- <form action="/car/hashtag">
             <input type="text" name="hashtag">
@@ -38,15 +38,15 @@
                 </div>
               </div>
               <div class="buttonBox">
-                <a href="/car/caredit/<%= carList.carNum %>">수정</a>
+                <a href="/car/caredit/<%= carList.carNum %>" style="text-decoration: none; color: #000000;"><button class="Car-btn" >수정</button></a>
                 <form action="/car/delete/<%= carList.carNum %>" method="POST">
-                  <input type="submit" value="삭제" />
+                  <input class="Car-btn" type="submit" value="삭제" />
                 </form>
                 <form action="/manager/managerCar/recommend/<%= carList.carNum %>" method="post">
                   <% if(carList.recommends === 0) { %>
-                  <button>추천차량등록</button>
+                  <button class="Car-btn">추천차량등록</button>
                   <% } else if(carList.recommends === 1) { %>
-                  <button>추천차량취소</button>
+                  <button class="Car-btn">추천차량취소</button>
                   <% } %>
                 </form>  
               </div>
