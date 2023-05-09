@@ -1,7 +1,7 @@
 /* 전체 페이지 스타일 */
 body {
-  background-color: #d0d0d0;
-  color: #000000;
+  background-color: #9bbbd4;
+  color: #191919;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
   margin: 0;
@@ -24,14 +24,14 @@ body {
   padding: 0;
   display: flex;
   justify-content: center;
-  background-color: #000;
+  background-color: #FEE500;
 }
 
 .tab {
   display: inline-block;
   padding: 15px 30px;
   text-decoration: none;
-  color: #ffffff;
+  color: #191919;
 }
 
 .tab a {
@@ -51,20 +51,20 @@ body {
 
 .subtabs li {
   display: block;
-  background-color: #666666;
+  background-color: whitesmoke;
 }
 
 .subtabs a {
   display: block;
   padding: 10px;
   text-decoration: none;
-  color: #ffffff;
+  color: #191919;
   transition: all 0.3s ease;
   text-align: center;
 }
 
 .subtabs a:hover {
-  background-color: #666666;
+  background-color: #556677;
 }
 
 /* .tab:hover + .subtabs {

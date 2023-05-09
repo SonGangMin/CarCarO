@@ -329,7 +329,7 @@ exports.renderDetail = async (req, res, next) => {
 
 // 내차팔기 등록 페이지
 exports.renderCarup = (req, res) => {
-  res.render("carupload", { title: "내차등록하기" });
+  res.render("carupload", { title: "내차등록하기", req });
 };
 
 // 내차팔기 db 등록
