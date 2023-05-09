@@ -155,7 +155,10 @@
       board.title %>
     </div>
     <div class="board_name">
-      <span><%= board.user.name %>(<%= board.user_id %>)</span>
+      <span
+        ><%= board.user.name %>(<%= board.user_id %>) | 조회수 : <%= board.views
+        %></span
+      >
       <span
         ><%= board.createdAt.getFullYear() %>년 <%= (board.createdAt.getMonth()
         + 1) %>월 <%= board.createdAt.getDate() %>일 (<%= ["일", "월", "화",

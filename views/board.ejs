@@ -214,7 +214,7 @@
     clear: both;
   }
   .container2 {
-    width: 1100px;
+    width: 90%;
     margin: 0 auto;
   }
   .blind {
@@ -243,7 +243,7 @@
   }
 
   .th-title {
-    width: 55%;
+    width: 50%;
   }
 
   .th-user {
@@ -252,6 +252,9 @@
 
   .th-date {
     width: 20%;
+  }
+  .th-view {
+    width: 5%
   }
   tr:hover {
     background-color: lightgray;
@@ -305,6 +308,7 @@
             <th scope="col" class="th-title">제목</th>
             <th scope="col" class="th-user">작성자</th>
             <th scope="col" class="th-date">등록일</th>
+            <th scope="col" class="th-view">조회수</th>
           </tr>
         </thead>
         <tbody>
@@ -333,6 +337,9 @@
               %>일 (<%= ["일", "월", "화", "수", "목", "금",
               "토"][twit.createdAt.getDay()] %>) <%= twit.createdAt.getHours()
               %>시 <%= twit.createdAt.getMinutes() %>분
+            </td>
+            <td>
+              <%= twit.views %>
             </td>
           </tr>
           <% }); %>

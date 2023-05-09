@@ -82,6 +82,8 @@ exports.renderBoardContent = async (req, res, next) => {
     if (!board) {
       return res.status(404).send("해당 게시글을 찾을 수 없습니다.");
     }
+    board.views += 1;
+    await board.save();
     const user = req.user && req.user.id;
     const isUser = user !== undefined;
 
