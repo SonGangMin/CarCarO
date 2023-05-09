@@ -1,7 +1,8 @@
 <%- include('../include/managerhead.ejs') %>
-<div class="container">
+<div class="container2">
   <div class="contents">
-    <h1 class="titletext">회원관리</h1>
+    <div class="titletext"><i class="fa-solid fa-users fa-fade"></i> 회원관리</div>
+    <hr class="hrtitle">
     <table>
         <tr>
             <th>No</th>
@@ -16,7 +17,7 @@
                 <th>회원탈퇴</th>
             <% } %>
         </tr>
-        <% User.forEach(function(users) { %>
+        <% Users.forEach(function(users) { %>
             <% if(user.id === users.id || user.grade === 3) { %>
             <tr>
                 <td><%= users.no %></td>
@@ -47,33 +48,16 @@
             </tr>
             <% } %>
         <% }); %>
-        <% if (totalPages > 1) { %>
-            <nav>
-              <ul class="pagination">
-                <% if (currentPage == 1) { %>
-                  <li class="disabled"><span>&laquo;</span></li>
-                <% } else { %>
-                  <li><a href="?page=<%= currentPage - 1 %>">&laquo;</a></li>
-                <% } %>
-          
-                <% for (let i = 1; i <= totalPages; i++) { %>
-                  <% if (i == currentPage) { %>
-                    <li class="active"><span><%= i %></span></li>
-                  <% } else { %>
-                    <li><a href="?page=<%= i %>"><%= i %></a></li>
-                  <% } %>
-                <% } %>
-          
-                <% if (currentPage == totalPages) { %>
-                  <li class="disabled"><span>&raquo;</span></li>
-                <% } else { %>
-                  <li><a href="?page=<%= currentPage + 1 %>">&raquo;</a></li>
-                <% } %>
-              </ul>
-            </nav>
-          <% } %>
     </table>
   </div>
+  <script>
+    function onPageClick(event, page) {
+      location.href = "/manager/managerUser?page=" + page;
+      console.info(page + " (from options)");
+    }
+  </script>
+
 </div>
+<%- include('../include/pagination.ejs') %>
 </body>
 </html>

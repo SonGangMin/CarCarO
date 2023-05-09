@@ -1,31 +1,38 @@
 <%- include('../include/managerhead.ejs')%>
-
-<div>
-    <h1 align="center">1대1 문의</h1><br>
-    <div align="center">
-        <div>
-            <ul>
-            <% twits.forEach(function(twit) { %>
-                <li>
-                    <a style="color: white;" href="/manager/managerinquiry/<%= twit.number%>">
-                        <span>
-                            <% if (twit.answer !== null) { %>
-                                <div style="font-weight: bold; color: green;">답변완료</div>
-                            <% } else { %> 
-                                <div class="check" style="color: blue">답변 중</div>
-                            <% } %>
-                        </span>
-                        <span style="color: black;">
-                            <%= twit.updatedAt.getFullYear() %>년
-                            <%= (twit.updatedAt.getMonth() + 1) %>월
-                            <%= twit.updatedAt.getDate() %>일
-                            (<%= ["일", "월", "화", "수", "목", "금", "토"][twit.updatedAt.getDay()] %>)
-                        </span><br>
-                        제목: <%= twit.title %></a><br><br>
-                        작성자: <%= twit.user_id %><br><br><hr><br><br>
-                </li>
-            <% }); %>
-            </ul>
-        </div>
+<link rel="stylesheet" href="/stylesheets/manager/managerinquiry.css" />
+<div class="container5">
+  <div class="contents5">
+    <div class="titletext">1대1 문의</div>
+    <hr class="hrtitle" />
+    <div>
+      <ul>
+        <% twits.forEach(function(twit) { %>
+        <li>
+          <a
+            style="color: white"
+            href="/manager/managerinquiry/<%= twit.number%>"
+          >
+            <span>
+              <% if (twit.answer !== null) { %>
+              <div style="font-weight: bold; color: green">답변완료</div>
+              <% } else { %>
+              <div class="check" style="color: blue">답변 중</div>
+              <% } %>
+            </span>
+            <span style="color: black">
+              <%= twit.updatedAt.getFullYear() %>년 <%=
+              (twit.updatedAt.getMonth() + 1) %>월 <%= twit.updatedAt.getDate()
+              %>일 (<%= ["일", "월", "화", "수", "목", "금",
+              "토"][twit.updatedAt.getDay()] %>) </span
+            ><br />
+            제목: <%= twit.title %></a
+          ><br /><br />
+          작성자: <%= twit.user_id %><br /><br />
+          <hr />
+          <br /><br />
+        </li>
+        <% }); %>
+      </ul>
     </div>
+  </div>
 </div>

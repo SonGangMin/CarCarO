@@ -28,6 +28,8 @@ body {
   display: flex;
   justify-content: center;
   background-color: #fee500;
+  /* border: 3px solid #3a1d1d; */
+  border-radius: 15px;
 }
 
 .tab {
@@ -74,9 +76,30 @@ body {
   color: #fef01b;
 }
 .titletext {
-  color: #191919;
+  color: #fee500;
+  border: 1px solid #fee500;
+  display: inline;
+  padding: 0.8%;
+  font-weight: bold;
+  font-size: 30px;
+  background: #3a1d1d;
+  border-radius: 10px;
 }
-
+.hrtitle {
+  margin: 1% 0% 1% 0;
+  height: 4px;
+  border: 0;
+  background: #3a1d1d;
+}
+.container1 {
+  display: flex;
+  justify-content: center;
+}
+.contents {
+  width: 80%;
+  display: block;
+  justify-content: center;
+}
 /* .tab:hover + .subtabs {
   display: block;
 } */

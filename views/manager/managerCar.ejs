@@ -1,8 +1,9 @@
 <%- include('../include/managerhead.ejs') %>
 <link rel="stylesheet" href="/stylesheets/car.css">
-<div class="container">
-    <div class="contents">
-        <h1>차량관리</h1>
+<div class="container5">
+    <div class="contents5">
+        <div class="titletext">차량관리</div>
+        <hr class="hrtitle">
         <h2 class="title">판매목록</h2>  
         <h3 class="counting">총 <span><%= totalCount %></span>개</h3>
         <!-- <form action="/car/hashtag">
@@ -82,7 +83,6 @@
 </div>
 </body>
 <script>
-<<<<<<< HEAD
   window.onload = () => {
     setQueryStringParams();
     setSelectedSort();
@@ -150,10 +150,6 @@
         document.querySelector('#longmile').value=searchlongmile;
       }
     }
-</script>
-</html>
-
-=======
   const arrayForm = document.getElementById('arrayForm');
   const array = document.getElementById('array');
   array.addEventListener('change', () => {
@@ -171,4 +167,4 @@
   console.log(document.querySelector('#array option[selected]').value); 
 </script>
 </html>
->>>>>>> kdh
+
