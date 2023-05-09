@@ -165,3 +165,7 @@
 .viewImg li.recommended{
     border: 1px solid #ff5f5f;
 }
+.srch{
+    display: flex;
+    justify-content: space-between;
+}

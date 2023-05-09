@@ -100,6 +100,49 @@ exports.renderSaleComp = async (req, res) => {
   }
 };
 
+// 정렬
+exports.renderArray = async (req, res, next) => {
+  try {
+    const pageNum = parseInt(req.query.page) || 1;
+    const limit = 5;
+    const offset = (pageNum - 1) * limit;
+
+    // 전체 데이터 수 구하기
+    const countResult = await cars.findAndCountAll({
+      where: {status: 1},
+    });
+    const totalCount = countResult.count;
+
+    const totalPages = Math.ceil(totalCount / limit);
+
+    const array = decodeURIComponent(req.query.array);
+    order = [];
+    if (array === "최신순") {
+      order.push(["createdAt", "DESC"]);
+    } else if (array === "등록순") {
+      order.push(["num", "DESC"]);
+    }
+
+    const Cars = await cars.findAll({
+      where: {status: 1},
+      order: order,
+      offset: offset,
+      limit: limit,
+    });
+
+    res.render("manager/managerCar", {
+      title: "내차팔기",
+      Cars,
+      currentPage: pageNum,
+      totalPages,
+      totalCount, // 전체 데이터 수 추가
+    });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+}
+
 // 차량상세
 exports.renderDetail = async (req, res, next) => {
   const carNum = req.params.carNum;

@@ -4,6 +4,7 @@ const {isManager} = require('../../middlewares/');
 const {
     renderCar,
     renderDetail,
+    renderArray,
     addRecommend,
     renderSaleComp,
     saleComp,
@@ -16,6 +17,8 @@ router.get('/', isManager, renderCar);
 router.get('/saleComp', isManager, renderSaleComp);
 // 차량상세 페이지
 router.get('/detail/:carNum', isManager, renderDetail);
+// 차량상세 페이지
+router.get('/array', isManager, renderArray);
 // 추천차량등록
 router.post('/recommend/:carNum', isManager, addRecommend);
 // 판매완료

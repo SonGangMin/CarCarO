@@ -20,6 +20,7 @@
           <option value="price_asc">낮은 가격순</option>
           <option value="price_desc">높은 가격순</option>
         </select>
+
         <ul class="viewImg">
           <% Cars.forEach(function(carList) { %>
           <li onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'"  <% if (carList.recommends === 1) { %>class="recommended"<% } %>>
@@ -81,6 +82,7 @@
 </div>
 </body>
 <script>
+<<<<<<< HEAD
   window.onload = () => {
     setQueryStringParams();
     setSelectedSort();
@@ -151,3 +153,22 @@
 </script>
 </html>
 
+=======
+  const arrayForm = document.getElementById('arrayForm');
+  const array = document.getElementById('array');
+  array.addEventListener('change', () => {
+    arrayForm.submit();
+  });
+
+  if (window.location.search.includes('array=%EB%93%B1%EB%A1%9D%EC%88%9C')) {
+    // query 값에 "array=등록순"이 포함되어 있을 경우
+    document.querySelector('#array option[value="등록순"]').selected = true;
+  } else {
+    // 그 외의 경우 (최신순이 기본값이므로)
+    document.querySelector('#array option[value="최신순"]').selected = true;
+  }
+  console.log(window.location.search); // 현재 페이지의 query string 출력
+  console.log(document.querySelector('#array option[selected]').value); 
+</script>
+</html>
+>>>>>>> kdh
