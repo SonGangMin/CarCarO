@@ -11,11 +11,11 @@
     <ul class="viewImg">
       <div class="insidetext">판매중인 차량 총 <span style="color: red"><%= count %></span> 대</div>
       <% twits.forEach(function(carList) { %>
-          <li onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'" <% if (carList.recommends === 1) { %>class="recommended"<% } %>>
+          <li <% if (carList.recommends === 1) { %>class="recommended"<% } %>>
             <% if (carList.picture.length > 0) { %>
-              <img src="<%= carList.picture[0].url %>" alt="" class="thumbnail" />
+              <img src="<%= carList.picture[0].url %>" onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'" class="thumbnail" />
             <% } %>
-            <div class="middle_li">
+            <div class="middle_li" onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'">
               <p><%= carList.brand %> <%= carList.model %></p>
               <div class="option">
                 <span><%= carList.year %></span>
@@ -25,15 +25,15 @@
               </div>
             </div>
             <div class="buttonBox">
-              <a href="/car/caredit/<%= carList.carNum %>">수정</a>
-              <form action="/car/delete/<%= carList.carNum %>" method="POST">
-                <input type="submit" value="삭제" />
+              <button class="Car-btn" onclick="confirmEdit('<%= carList.carNum %>')">수정</button>
+              <form action="/car/delete/<%= carList.carNum %>" method="POST" onsubmit="return confirm('정말로 삭제하시겠습니까?')">
+                <input class="Car-btn" type="submit" value="삭제" />
               </form>
-              <form action="/manager/managerCar/recommend/<%= carList.carNum %>" method="post">
+              <form action="/manager/managerCar/recommend/<%= carList.carNum %>" method="post" onsubmit="return confirmRecommendAction(event, '<%= carList.carNum %>', <%= carList.recommends %>)">
                 <% if(carList.recommends === 0) { %>
-                  <button onclick="return confirmRecommend('<%= carList.carNum %>')">추천차량등록</button>
+                  <button class="Car-btn" type="submit">추천차량등록</button>
                 <% } else if(carList.recommends === 1) { %>
-                  <button onclick="return confirmRecommend('<%= carList.carNum %>')">추천차량취소</button>
+                  <button class="Car-btn" type="submit">추천차량취소</button>
                 <% } %>
               </form>
             </div>
@@ -43,11 +43,11 @@
     <ul class="viewImg">
       <div class="insidetext">판매완료 차량 총 <span style="color: red"><%= soldcount %></span> 대</div>
       <% solds.forEach(function(carList) { %>
-          <li onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'" <% if (carList.recommends === 1) { %>class="recommended"<% } %>>
+          <li <% if (carList.recommends === 1) { %>class="recommended"<% } %>>
             <% if (carList.picture.length > 0) { %>
-              <img src="<%= carList.picture[0].url %>" alt="" class="thumbnail" />
+              <img src="<%= carList.picture[0].url %>" onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'" class="thumbnail" />
             <% } %>
-            <div class="middle_li">
+            <div class="middle_li" onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'">
               <p><%= carList.brand %> <%= carList.model %></p>
               <div class="option">
                 <span><%= carList.year %></span>
@@ -57,15 +57,15 @@
               </div>
             </div>
             <div class="buttonBox">
-              <a href="/car/caredit/<%= carList.carNum %>">수정</a>
-              <form action="/car/delete/<%= carList.carNum %>" method="POST">
-                <input type="submit" value="삭제" />
+              <button class="Car-btn" onclick="confirmEdit('<%= carList.carNum %>')">수정</button>
+              <form action="/car/delete/<%= carList.carNum %>" method="POST" onsubmit="return confirm('정말로 삭제하시겠습니까?')">
+                <input class="Car-btn" type="submit" value="삭제" />
               </form>
-              <form action="/manager/managerCar/recommend/<%= carList.carNum %>" method="post">
+              <form action="/manager/managerCar/recommend/<%= carList.carNum %>" method="post" onsubmit="return confirmRecommendAction(event, '<%= carList.carNum %>', <%= carList.recommends %>)">
                 <% if(carList.recommends === 0) { %>
-                  <button onclick="return confirmRecommend('<%= carList.carNum %>')">추천차량등록</button>
+                  <button class="Car-btn" type="submit">추천차량등록</button>
                 <% } else if(carList.recommends === 1) { %>
-                  <button onclick="return confirmRecommend('<%= carList.carNum %>')">추천차량취소</button>
+                  <button class="Car-btn" type="submit">추천차량취소</button>
                 <% } %>
               </form>
             </div>
@@ -74,3 +74,19 @@
     </ul>
   </div>
 </div>
+<script>
+function confirmEdit(path){
+  if (confirm('정말로 수정하시겠습니까?')) {
+    opener.location.href = `/car/caredit/${path}`;
+    window.close();
+  }
+}
+function confirmRecommendAction(event, carNum, recommends) {
+    var message = recommends === 0 ? '추천차량으로 등록하시겠습니까?' : '추천차량 등록을 취소하시겠습니까?';
+    if (!confirm(message)) {
+      event.preventDefault();
+      return false;
+    }
+  }
+
+</script>
