@@ -12,7 +12,7 @@ dl {
 }
 
 a {
-  color: #000;
+  color: #191919;
   text-decoration: none;
   font-weight: bold;
 }
@@ -20,44 +20,48 @@ a {
 /* 헤더 */
 #hd {
   width: 100%;
-  border-bottom: 1px solid #ddd;
   padding: 0 150px 30px;
 }
 
+/* 헤더상단 */
 .util {
   width: 100%;
   padding: 5px 10px;
   text-align: right;
+  background-color: #FEE500;
 }
 .util a {
   font-weight: normal;
-  color: #888;
+  color: #191919;
 }
 
+/* 헤더하단 */
 .hd_menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  background-color: #FEE500;
 }
 .hd_lt {
   display: flex;
   align-items: center;
 }
 
+/* 로고 */
 .logo {
   margin-right: 100px;
 }
 .logo a {
   display: flex;
-  width: 30%;
-  max-width: 200px;
+  width: 100px;
   align-items: center;
 }
 .logo img {
   width: 100%;
 }
 
+/* 네비게이션 메뉴 */
 .nav {
   display: flex;
 }
@@ -68,20 +72,28 @@ a {
 
 .nav li a {
   display: block;
-  color: #888;
+  color: #556677;
 }
 .nav li.active a {
-  color: #000;
+  color: #191919;
 }
 
+/* 검색, 햄버거메뉴 */
+.hd_rt{
+  display: flex;
+  align-items: center;
+}
 .hd_rt a{
   position: relative;
   display: block;
   width: 23px;
   height: 18px;
   z-index: 99999;
+  transition: all .3s ease;
 }
-
+.hd_rt a.active{
+  transform: translateX(150px);
+}
 .hd_rt span{
   position: absolute;
   display: block;
@@ -93,7 +105,7 @@ a {
 }
 
 .hd_rt a.active span{
-  background-color: #000;
+  background-color: #191919;
 }
 
 .hd_rt span:nth-child(2),
@@ -116,6 +128,7 @@ a {
   transform: rotate(-45deg);
 }
 
+/* 슬라이드 메뉴 */
 .slide_menu{
   position: fixed;
   top: 0;
@@ -134,12 +147,12 @@ a {
   position: absolute;
   right: 0;
   transform: translateX(100%);
-  width: 250px;
+  width: 350px;
   height: 100%;
   flex-direction: column;
   /* margin-top: 35px; */
   padding-top: 101px;
-  background-color: aquamarine;
+  background-color: #FEE500;
   opacity: 0;
   transition: all .3s ease;
 }
@@ -149,12 +162,25 @@ a {
 }
 .slide_menu .nav li{
   width: 100%;
-  padding: 10px;
   border-top: 1px solid #fff;
+}
+.slide_menu .nav li:first-child{
+  padding: 15px;
 }
 .slide_menu .nav li:last-child{
   border-bottom: 1px solid #fff;
 }
+.slide_menu .nav li a{
+  color: #191919;
+  padding: 15px;
+}
+.slide_menu .nav li .hashtagsearch{
+  width: 100%;
+}
+.slide_menu .nav li .hashtagsearchbox{
+  width: 100%;
+}
+/* 슬라이드 메뉴 나올때 바디 스크롤 막기 */
 body.noscroll{
   overflow-y: hidden;
 }

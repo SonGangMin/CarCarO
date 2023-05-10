@@ -11,7 +11,8 @@ exports.renderMain = async (req, res, next) => {
   const isMine = req.user && req.user.id;
   // const carNum = req.param
   try {
-    const Cars = await models.cars.findAll({
+    const Cars = await models.cars.findAndCountAll({
+      nest: true,
       include: [
         {
           attributes: ["user_id"],
@@ -26,6 +27,11 @@ exports.renderMain = async (req, res, next) => {
       ],
       order: [["createdAt", "desc"]],
     });
+
+    const {count, rows: twits} = Cars;
+    console.log("2222222->", twits[0].picture[0]);
+
+    console.log("1111111111->", count);
     const isOwner = req.user && Cars.user_id === req.user.id;
     const status2 = Cars.status === 2;
 
@@ -33,7 +39,7 @@ exports.renderMain = async (req, res, next) => {
 
     res.render("index", {
       title: "CarCarO",
-      twits: Cars,
+      twits,
       isOwner,
       status2,
       isMine,
