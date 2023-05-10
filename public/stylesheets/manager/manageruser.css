@@ -1,5 +1,5 @@
 * {
-  background: white;
+  background: #556677;
 }
 .header_usercar {
   display: flex;
@@ -53,6 +53,7 @@
   padding: 10px;
   margin-bottom: 20px;
   cursor: pointer;
+  /* background: white; */
 }
 .viewImg li > a {
   width: 100%;
@@ -63,6 +64,7 @@
 }
 .viewImg p {
   font-size: 18px;
+  font-weight: bold;
 }
 .viewImg .buttonBox {
   z-index: 999;
@@ -71,5 +73,10 @@
   display: block;
   margin-bottom: 5px;
   color: #000000;
-  font-weight: normal;
+  font-weight: bold;
+}
+.insidetext {
+  font-size: 25px;
+  margin-bottom: 2%;
+  text-align: center;
 }

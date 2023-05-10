@@ -75,14 +75,23 @@ exports.renderUserCarsale = async (req, res, next) => {
   const userId = req.params.id;
   try {
     const Cars = await cars.findAndCountAll({
-      where: { user_id: userId },
+      where: { user_id: userId, status: 1 },
+      order: [["createdAt", "DESC"]],
+    });
+    const SoldCars = await cars.findAndCountAll({
+      where: { user_id: userId, status: 2 },
       order: [["createdAt", "DESC"]],
     });
     const { count, rows: twits } = Cars;
+    const { count: soldcount, rows: solds } = SoldCars;
+    const allcount = count + soldcount;
     res.render("manager/managerUser_carsale", {
       userId,
+      allcount,
       count,
+      soldcount,
       twits,
+      solds,
     });
   } catch (err) {
     console.error(err);

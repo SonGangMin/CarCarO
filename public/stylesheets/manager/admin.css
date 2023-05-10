@@ -73,7 +73,12 @@ body {
   transition: all 0.3s ease;
   text-align: center;
 }
-
+.top_tr {
+  background: #fee500;
+}
+.usertable tr:hover {
+  background: #fef01b;
+}
 .subtabs a:hover {
   background-color: #3a1d1d;
   color: #fef01b;
