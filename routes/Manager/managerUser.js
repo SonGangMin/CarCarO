@@ -6,6 +6,8 @@ const {
   gradeEdit,
   deleteEdit,
   renderUserCarsale,
+  renderinfoEdit,
+  infoEdit,
 } = require("../../controllers/manager/managerUser");
 
 // 회원관리 페이지
@@ -16,5 +18,7 @@ router.post("/edit/:id", isManager, gradeEdit);
 router.post("/delete/:id", isManager, deleteEdit);
 // 각 회원의 판매차량페이지
 router.get("/:id", isManager, renderUserCarsale);
-
+// 회원 정보수정
+router.get("/editinfo/:no", isManager, renderinfoEdit);
+router.post("/editinfo/", isManager, infoEdit);
 module.exports = router;

@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5763d0e-74bf-4443-9f4b-374b4073ca35" name="Changes" comment="" />
+    <list default="true" id="b5763d0e-74bf-4443-9f4b-374b4073ca35" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/car.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/car.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/cardetail.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/cardetail.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/manager/managerUser.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/manager/managerUser.ejs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,6 +36,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -46,6 +52,7 @@
       <workItem from="1682993157618" duration="91000" />
       <workItem from="1683011633536" duration="4000" />
       <workItem from="1683634892984" duration="409000" />
+      <workItem from="1683699140374" duration="541000" />
     </task>
     <servers />
   </component>

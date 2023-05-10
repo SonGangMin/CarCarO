@@ -1,5 +1,6 @@
 <%- include('./include/head.ejs') %>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<link rel="stylesheet" href="/stylesheets/cardetail.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
@@ -10,17 +11,22 @@
         </div>
       <% } %>
         <div class="contents">
-            <h1 class="title"><%= Cars.brand %> <%= Cars.model %> <%= Cars.carNum %></h1>  
+            <div class="titlearea">
+              <% if(Cars.brand === '국산기타' || Cars.brand === '수입기타') { %>
+                <div id="title"><%= Cars.model %></div>
+              <% } else { %>
+                <div id="title"><%= Cars.brand %> <%= Cars.model %></div>
+              <% } %>
+            </div>
+            <div class="hashtags">
+              <% Hashs.forEach(function(hash) { %>
+                <div class="hashtag">#<%= hash.cars_hashtag %></div>
+              <% }); %>
+            </div>
+            <hr class="hrtitle">
             <div class="viewDetail">
                 <ul class="viewDetail">
                     <li>
-                        <p><%= Cars.brand %> <%= Cars.model %></p>
-                        <div class="option">
-                            <span><%= Cars.year %></span>
-                            <span><%= Cars.mile %>km</span>
-                            <span><%= Cars.fuel %></span>
-                            <span><%= Cars.hashtag %></span>
-                        </div>
                         <div class="slider">
                             <ul class="bxslider">
                               <% for (let i = 0; i < Cars.picture.length; i++) { %>
@@ -35,7 +41,106 @@
                               <% } %>
                             </div>
                         </div>
+                        </li>
                   </ul>
+                  <hr class="hrcontent">
+                  <div class="detailcontents">
+                    <div class="detailcontent1">
+                      <span class="option-title">차량 주요정보</span>
+                      <div class="infozone">
+                        <div class="info">
+                          <i class="fa-solid fa-calendar"> 연식</i>
+                          <div class="detailinfo"><%= Cars.year %></div>
+                        </div>
+                        <div class="info">
+                          <i class="fa-solid fa-car-side"> 주행거리</i>
+                          <div class="detailinfo"><%= Cars.mile %>km</div>
+                        </div>
+                        <div class="info">
+                          <i class="fa-solid fa-gas-pump"> 연료방식</i>
+                          <div class="detailinfo"><%= Cars.fuel %></div>
+                        </div>
+                        <div class="info">
+                          <i class="fa-solid fa-gear"> 기어방식</i>
+                          <div class="detailinfo"><%= Cars.trans %></div>
+                        </div>
+                        <div class="info">
+                          <i class="fa-solid fa-chair"> 인승</i>
+                          <div class="detailinfo"><%= Cars.seater %>인승</div>
+                        </div>
+                      </div><br><br>
+                      <span class="option-title">차량 추가옵션</span>
+                      <div class="circles">
+                         <% const circleClass_disp = Cars.disp === '1' ? 'circle1' : 'circle2' %>
+                         <% const circleClass_roof = Cars.roof === '1' ? 'circle1' : 'circle2' %>
+                         <% const circleClass_nav = Cars.nav === '1' ? 'circle1' : 'circle2' %>
+                         <% const circleClass_key = Cars.key === '1' ? 'circle1' : 'circle2' %>
+                         <% const circleClass_light = Cars.light === '1' ? 'circle1' : 'circle2' %>
+                         <% const circleClass_sensor = Cars.sensor === '1' ? 'circle1' : 'circle2' %>
+                         <% const circleClass_camera = Cars.camera === '1' ? 'circle1' : 'circle2' %>
+                         <% const circleClass_box = Cars.box === '1' ? 'circle1' : 'circle2' %>
+                         <% const circleClass_leather = Cars.leather === '1' ? 'circle1' : 'circle2' %>
+                         <% const circleClass_heated = Cars.heated === '1' ? 'circle1' : 'circle2' %>
+                         <%= console.log(circleClass_nav); %>
+                        <div class="<%= circleClass_disp %>">디스플레이</div>
+                        <div class="<%= circleClass_roof %>">썬루프</div>
+                        <div class="<%= circleClass_nav %>">네비게이션</div>
+                        <div class="<%= circleClass_key %>">스마트키</div>
+                        <div class="<%= circleClass_light %>">오토라이트</div>
+                        <div class="<%= circleClass_sensor %>">주차센서</div>
+                        <div class="<%= circleClass_camera %>">후방카메라</div>
+                        <div class="<%= circleClass_box %>">블랙박스</div>
+                        <div class="<%= circleClass_leather %>">가죽시트</div>
+                        <div class="<%= circleClass_heated %>">열선시트</div>
+                      </div>
+                      <span class="option-title">차량 부가설명</span>
+                      <div class="etc">
+                        <%= Cars.etc %>
+                      </div>
+
+                    </div>
+                    <div class="detailcontent2">
+                      <div class="pricezone">
+                        <span class="option-title">판매가격</span>
+                        <span class="price">
+                          <% var price = Cars.price;
+                            var unit = '';
+                            if (price >= 10000) {
+                              price = Math.floor(price / 10000);
+                              unit = '억';
+                            } else if (price >= 1) {
+                              price = Math.floor(price / 1);
+                              unit = '만';
+                            } %>
+                       <%= price.toLocaleString() + unit + '원' %>
+                       </span>
+                      </div>
+                      <div class="etczone 1">
+                        <i class="fa-solid fa-user"> <%= Users.name %>(<%= Cars.user_id %>)</i>
+                        <i class="fa-solid fa-location-dot"> <%= Cars.area %></i>
+                        <i class="fa-solid fa-heart"> <%= Cars.likes_count %></i>
+                      </div>
+                      <div class="etczone 2">
+                        <i class="fa-solid fa-phone"> <% var tel = Users.tel;
+                          var formattedTel = tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+                       %>
+                       <%= formattedTel %>
+                       </i>
+                       <i class="fa-solid fa-phone"><% var tel = Cars.tel;
+                        var formattedTel = tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+                     %>
+                     <%= formattedTel %></i>
+                      </div>
+                      <div class="pricezone">
+                        <span class="option-title">차 번호</span>
+                        <span class="carnum"><%= Cars.carNum %></span>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
                   <div class="btn_area">
                     <a href="/car/carsale">목록으로</a>
 

@@ -310,6 +310,12 @@ exports.renderDetail = async (req, res, next) => {
     const Cars = await cars.findOne({
       where: { carNum },
     });
+    const Hashs = await hashtags.findAll({
+      where: { cars_num: Cars.num },
+    });
+    const Users = await users.findOne({
+      where: { id: Cars.user_id },
+    });
     const isOwner = req.user && Cars.user_id === req.user.id;
     const status2 = Cars.status === 2;
     // console.log("Cars.user_id====================", Cars.user_id);
@@ -320,6 +326,8 @@ exports.renderDetail = async (req, res, next) => {
       isOwner,
       status2,
       req: req,
+      Hashs,
+      Users,
     });
   } catch (error) {
     console.error(error);

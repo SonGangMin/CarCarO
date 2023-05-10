@@ -41,6 +41,9 @@ exports.renderCar = async (req, res) => {
       case "likes_desc":
         order = [["likes_count", "DESC"]];
         break;
+      case "recommend_desc":
+        order = [["recommends", "DESC"]];
+        break;
       default:
         order = [["createdAt", "DESC"]]; // 최근 등록순
     }

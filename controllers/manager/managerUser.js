@@ -4,6 +4,7 @@ const {
   getPagination,
   getPagingData,
 } = require("../pagination");
+const bcrypt = require("bcrypt");
 
 // 회원리스트 뿌리기
 exports.renderUser = async (req, res) => {
@@ -93,6 +94,35 @@ exports.renderUserCarsale = async (req, res, next) => {
       twits,
       solds,
     });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.renderinfoEdit = async (req, res, next) => {
+  try {
+    const no = req.params.no;
+    const user = await users.findOne({ where: { no } });
+    res.render("manager/managerUser_info", {
+      user,
+    });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+exports.infoEdit = async (req, res, next) => {
+  try {
+    const { id, password, name, tel, email, birth } = req.body;
+    const hash = await bcrypt.hash(password, 12);
+
+    await users.update(
+      { id, password: hash, name, tel, email, birth },
+      { where: { id } }
+    );
+    res.json({ success: true });
   } catch (err) {
     console.error(err);
     next(err);
