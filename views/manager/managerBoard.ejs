@@ -49,7 +49,8 @@
     border-spacing: 0;
   }
   section.notice {
-    width: 90%;
+    margin: 0 auto;
+    width: 85%;
     /* justify-content: center; */
     /* display: flex; */
     padding: 2px 0;
@@ -70,7 +71,6 @@
 
   #board-search .search-window {
     padding: 15px 0;
-    background-color: #f9f7f9;
   }
   #board-search .search-window .search-wrap {
     position: relative;
@@ -262,8 +262,8 @@
     width: 15%;
   }
   tr:hover {
-    background-color: white;
-    /* color: white; */
+    background-color: #8ba0b6;
+    color: white;
   }
   .notice-row {
     background-color: darkgray; /* 회색 배경색 */
@@ -284,18 +284,35 @@
     justify-content: space-around;
   }
   .top_tr{
-    background-color: white;
+    background-color: #556677;
+    font-size: 15px;
   }
   .notice_num {
     color: red;
     font-weight: bold;
   }
 
+  .Board-btn {
+    background-color:#FEE500;
+    color: #000000;
+    border-radius:3px;
+  }
+
+  .Board-btn:hover {
+    cursor: pointer;
+  }
+
+  .Board-btn:active {
+    background-color: #dbc501;
+  }
+
 </style>
 <section class="notice">
   <div class="page-title">
     <div>
-      <h3>게시판관리</h3>
+      <div class="titletext"><i class="fa-solid fa-comment fa-fade"></i>게시판관리</div>
+      <hr class="hrtitle" />
+      <h2>자유게시판</h2>
     </div>
   </div>
 
@@ -344,13 +361,13 @@
             </td>
             <td>
               <div class="manage">
-                <button onclick="confirmEdit('<%= twit.user.name %>', '<%= twit.postId %>')">수정</button>
+                <button onclick="confirmEdit('<%= twit.user.name %>', '<%= twit.postId %>')" class="Board-btn">수정</button>
               <form
                 action="/manager/managerboard/delete/<%= twit.postId %>"
                 method="POST"
                 onsubmit="return confirm('<%= twit.user.name %> 님의 글을 정말로 삭제하시겠습니까?')"
               >
-                <input type="submit" value="삭제" />
+                <input class="Board-btn" type="submit" value="삭제" />
               </form>
               <% if (twit.grade === 2) { %>
                 <form
@@ -358,7 +375,7 @@
                 method="POST"
                 onsubmit="return confirm('<%= twit.user.name %> 님의 공지글을 정말로 일반게시글로 내리시겠습니까?')"
               >
-                <input type="submit" value="공지내리기" />
+                <input class="Board-btn" type="submit" value="공지내리기" />
               </form>
               <% } else { %>
                 <form
@@ -366,7 +383,7 @@
                 method="POST"
                 onsubmit="return confirm('<%= twit.user.name %> 님의 게시글을 정말로 공지글로 등록하시겠습니까?')"
               >
-                <input type="submit" value="공지로등록" />
+                <input class="Board-btn" type="submit" value="공지로등록" />
               </form>
               <% } %>
               </div>

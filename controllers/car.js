@@ -582,7 +582,7 @@ exports.listDelete = async (req, res, next) => {
     await cars.destroy({
       where: { carNum },
     });
-    res.redirect("/car/carsale");
+    res.redirect("back");
   } catch (error) {
     console.error(error);
     next(error);

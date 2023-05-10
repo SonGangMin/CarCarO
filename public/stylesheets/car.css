@@ -17,6 +17,8 @@
   border: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 20px;
+}
+.viewImg img {
   cursor: pointer;
 }
 .viewImg li > a {
@@ -28,6 +30,9 @@
 }
 .viewImg p {
   font-size: 18px;
+}
+.middle_li {
+  cursor: pointer;
 }
 .option span {
   display: block;
@@ -165,4 +170,20 @@
 .srch {
   display: flex;
   justify-content: space-between;
+}
+.srch {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Car-btn {
+  background-color: #fee500;
+  color: #000000;
+  border-radius: 3px;
+}
+.Car-btn:hover {
+  cursor: pointer;
+}
+.Car-btn:active {
+  background-color: #dbc501;
 }
