@@ -6,6 +6,10 @@
 }
 
 /* 슬라이드 */
+.slick-list{
+    border-radius: 30px;
+}
+
 .slider img{
     width: 100%;
     max-height: 600px;
@@ -66,18 +70,172 @@
 
 /* 해시태그 */
 .hashtagsearch {
-    margin: 1% auto;
-    width: 250px;
+    position: relative;
+    margin-right:  20px;
+    width: 280px;
     /* border: solid 1px black; */
 }
-
-.hashtagsearchbox {
-    width: 200px;
+.hashtagsearchbox{
+    width: 280px;
     height: 30px;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    padding: 0 10px;
+}
+.hashtagsearch button{
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #888;
 }
 
+/* 검색하기 */
+.findcar{
+    width: 100%;
+    padding: 100px;
+}
+.findcar h1{
+    text-align: center;
+}
+.bigbox form div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #9bbbd4;
+    border-bottom-style: dotted;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+}
+.bigbox form div input,
+.bigbox form div select{
+    font-size: 16px;
+    padding: 10px;
+    border: 3px solid #9bbbd4;
+    background-color: #fff;
+    color: #9bbbd4;
+    font-weight: bold;
+    border-radius: 50px;
+}
+.bigbox form div:nth-child(1) input,
+.bigbox form div:nth-child(1) select{
+    width: calc(100% / 3 - 5px);
+}
+.bigbox form div:nth-child(2) select,
+.bigbox form div:nth-child(5) select{
+    width: calc(100% / 2 - 15px);
+}
+.bigbox form div:nth-child(3) select,
+.bigbox form div:nth-child(4) select{
+    width: calc(100% / 2 - 15px);
+}
+.bigbox form div input::placeholder{
+    color: #9bbbd4;
+}
+.bigbox form div span{
+    color: #9bbbd4;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.findcar button{
+    display: inline-block;
+    width: 100%;
+    background-color: #FEE500;
+    border: 3px solid #FEE500;
+    color: #191919;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 5px;
+    border-radius: 50px;
+}
+
+.findcar button:hover{
+    opacity: .8;
+    cursor: pointer;
+}
+
+/* 검색 리스트 */
+.bigbox ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.bigbox ul li {
+    width: 25%;
+    padding: 10px 10px;
+    text-align: center;
+}
+
+.bigbox1{
+    border-bottom: 3px solid #9bbbd4;
+    border-bottom-style: dotted;
+    padding-bottom: 100px;
+}
+
+.bigbox2{
+    margin-top: 100px;
+}
+
+.statistics{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.statisCount div{
+    display: flex;
+    align-items: flex-end;
+}
+.statistics div span{
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    color: #191919;
+    margin-right: 10px;
+}
+.statistics div h3{
+    font-size: 22px;
+    font-weight: bold;
+    color: #9bbbd4;
+}
+.statistics select{
+    border: 2px solid #9bbbd4;
+    background-color: transparent;
+    padding: 5px 0;
+    color: #9bbbd4;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.condition{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.condition div{
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    background-color: #FEE500;
+    border-radius: 50px;
+    color: #191919;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* 추천차량, 인기차량 */
 .reccar {
-    /* border: solid 1px black; */
+    border-bottom: 4px solid #ddd;
+    border-bottom-style: dotted;
     padding: 100px;
     position: relative;
     width: 100%;
@@ -96,7 +254,7 @@
     transform: translateX(-50%);
     width: 30px;
     height: 2px;
-    background-color: orange;
+    background-color: #FEE500;
 }
 
 .reccar ul {
@@ -138,24 +296,42 @@
 }
 
 .thumbnail {
-    width: 100%;
+    width: 99%;
     height: 150px;
+    margin-top: 1px;
+    border: 2px solid #fff;
 }
 
 .reccarlist,
 .popucarlist {
-    border: solid 1px black;
+    position: relative;
+    border: solid 2px #FEE500;
     width: 100%;
     border-radius: 20px;
-    height: 270px;
+    height: 293px;
     padding-bottom: 10px;
+    background-color: #9bbbd4;
+    overflow: hidden;
 }
 .reccarlist img,
 .popucarlist img{
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-top-left-radius: 17px;
+    border-top-right-radius: 17px;
 }
 
+.carProfile{
+    position: absolute;
+    background-color: #fff;
+    border-bottom-left-radius: 17px;
+    border-bottom-right-radius: 17px;
+    width: 100%;
+    height: 137px;
+    padding-top: 5px;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    margin: -30px auto 0;
+}
 .carProfile span{
     position: relative;
     display: inline-block;
@@ -174,26 +350,55 @@
     height: 12px;
     background-color: #ddd;
 }
-.carProfile span:last-child{
-    display: none;
-}
-.carProfile span:last-child:after{
+.carProfile span:nth-child(2):after,
+.carProfile span:nth-child(5):after{
     display: none;
 }
 .carProfile h5{
-    font-size: 18px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 26px;
+    color: #9bbbd4;
 }
 .carProfile h5 p{
     display: inline-block;
     font-size: 14px;
     margin-left: 5px;
+    color: #191919;
 }
 
 .like {
     position: relative;
-    right: -35%;
-    top: -40px;
+    right: -41% !important;
+    top: -33px !important;
 }
+.like button:hover{
+    opacity: .7;
+    cursor:pointer;
+}
+.notLoggedIn{
+    background-color: transparent !important;
+    border: none !important;
+}
+.heart{
+    border: none !important;
+    background-color: transparent !important;
+    font-size: 16px;
+    font-weight: bold;
+    color: red;
+}
+.Mine{
+    border: none !important;
+    background-color: transparent !important;
+    font-size: 16px;
+    font-weight: bold;
+}
+.moreBtn{
+    
+}
+/*  */
 
 #highlight {
     background-color: lightcoral;

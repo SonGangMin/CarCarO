@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/stylesheets/faqSearch.css" />
     <link rel="stylesheet" href="/stylesheets/car.css" />
     <link rel="stylesheet" href="/stylesheets/index.css" />
-    <link rel="stylesheet" href="/stylesheets/hashtagsearch.css" />
+
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 
@@ -17,6 +17,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+    <script src="https://kit.fontawesome.com/a045861cb2.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <header id="hd">
@@ -63,6 +64,12 @@
           </ul>
         </div>
         <div class="hd_rt">
+          <div class="hashtagsearch">
+            <form action="/hashtagsearch/" method="get">
+                <input class="hashtagsearchbox" name="hashtag" placeholder="해쉬태그 검색 ex) #제네시스 #G80">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+        </div>
           <a href="javascript:void(0);" id="hambug">
             <span></span>
             <span></span>
@@ -78,7 +85,7 @@
           <div class="hashtagsearch">
             <form action="/hashtagsearch/" method="get">
                 <input class="hashtagsearchbox" name="hashtag" placeholder="해쉬태그 검색 ex) #제네시스 #G80">
-                <button type="submit">검색</button>
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
           </div>
         </li>
