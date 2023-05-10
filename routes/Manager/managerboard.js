@@ -27,8 +27,8 @@ router.post("/editgradeup/:postId", isManager, editManagerGradeup); //공지로�
 router.post("/editgradedown/:postId", isManager, editManagerGradedown); //공지에서 내리기
 
 //댓글관리
-router.post("/:postId", createManagerComment); //댓글작성
-router.post("/comment/edit/:commentId", editManagerComment);
+router.post("/:postId", isManager, createManagerComment); //댓글작성
+router.post("/comment/edit/:commentId", isManager, editManagerComment);
 // router.post("/comment/delete/:commentId", deleteComment); //댓글삭제
 
 module.exports = router;

@@ -3,6 +3,7 @@
         <div class="contents">
             <h1 class="title">내차팔기 등록하기</h1>
             <form method="post" id="carForm" class="formCar" enctype="multipart/form-data">
+                <input type="text" value="<%= Cars.num %>" name="num" id="num" readonly hidden>
                 <label for=""><b>자동차 번호</b><input id="carNum" type="text" name="carNum" placeholder="ex) 00가 0000" value="<%= Cars.carNum %>"></label>
                 <label for="">
                     <b>국산·수입</b>
@@ -198,6 +199,7 @@
   
   
         const form = document.querySelector('#carForm');
+        const numInput = document.querySelector('#num');
         const carNumInput = document.querySelector('#carNum');
         const fromInput = document.querySelector('#from');
         const brandInput = document.querySelector('#brand');
@@ -240,6 +242,7 @@
             e.preventDefault();
 
             const formData = new FormData();
+            formData.append('num', numInput.value);
             formData.append('carNum', carNumInput.value);
             formData.append('from', fromInput.value);
             formData.append('brand', brandInput.value);
@@ -316,3 +319,4 @@
     <script src="/javascript/car.js" defer></script>
 </body>
 </html>
+<%- include('./include/footer.ejs') %>

@@ -1,9 +1,10 @@
 <%- include('../include/managerhead.ejs') %>
-<div class="container">
+<div class="container5">
   <div class="contents">
-    <h1>광고관리</h1>
-    <table>
-        <tr>
+    <div class="titletext"><i class="fa-solid fa-rectangle-ad fa-fade"></i>광고관리</div>
+    <hr class="hrtitle">
+    <table class="usertable">
+        <tr class="top_tr">
             <th>번호</th>
             <th>제목</th>
             <th>링크</th>
@@ -43,7 +44,7 @@
           </ul>
         </nav>
       <% } %>
-      <a href="/manager/advertise/addAdvertise">광고등록</a>
+      <div class="addadver"><a href="/manager/advertise/addAdvertise">광고등록</a></div>
   </div>
 </div>
 </body>

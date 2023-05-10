@@ -373,6 +373,7 @@ exports.uploadPost = async (req, res, next) => {
       files.push({ filename: file.filename, url: `/carImg/${file.filename}` });
     }
     const Cars = await cars.create({
+      num: null,
       carNum,
       from,
       brand,
@@ -402,7 +403,6 @@ exports.uploadPost = async (req, res, next) => {
       etc,
       price,
       hashtag,
-      num: null,
       user_id: req.user.id,
     });
     const Hashtags = req.body.hashtag.match(/#[^\s#]*/g);
@@ -430,6 +430,7 @@ exports.uploadPost = async (req, res, next) => {
 // 수정 등록
 exports.editBtn = async (req, res, next) => {
   const {
+    num,
     carNum,
     from,
     brand,
@@ -503,18 +504,18 @@ exports.editBtn = async (req, res, next) => {
       }
     );
     const Hashtags = req.body.hashtag.match(/#[^\s#]*/g);
+    await hashtags.destroy({
+      where: { cars_num: num },
+    });
     if (Hashtags) {
       const result = await Promise.all(
         Hashtags.map((tag) => {
-          return hashtags.update(
-            {},
-            {
-              where: {
-                cars_hashtag: tag.slice(1).toLowerCase(),
-                cars_num: Cars.num,
-              },
-            }
-          );
+          return hashtags.findOrCreate({
+            where: {
+              cars_hashtag: tag.slice(1).toLowerCase(),
+              cars_num: num,
+            },
+          });
         })
       );
       // await post.addHashtags(result.map(r => r[0]));
@@ -581,7 +582,7 @@ exports.listDelete = async (req, res, next) => {
     await cars.destroy({
       where: { carNum },
     });
-    res.redirect("/car/carsale");
+    res.redirect("back");
   } catch (error) {
     console.error(error);
     next(error);

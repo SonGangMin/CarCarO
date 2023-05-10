@@ -1,0 +1,76 @@
+<link rel="stylesheet" href="/stylesheets/manager/manageruser.css" />
+<div class="container5">
+  <div class="contents5">
+    <div class="header_usercar">
+      <div class="titletext"><%= userId %> 님의 판매차량</div>
+      <div class="count">
+        총 <span style="color: red"><%= allcount %></span> 대
+      </div>
+    </div>
+    <hr class="hrtitle" />
+    <ul class="viewImg">
+      <div class="insidetext">판매중인 차량 총 <span style="color: red"><%= count %></span> 대</div>
+      <% twits.forEach(function(carList) { %>
+          <li onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'" <% if (carList.recommends === 1) { %>class="recommended"<% } %>>
+            <% if (carList.picture.length > 0) { %>
+              <img src="<%= carList.picture[0].url %>" alt="" class="thumbnail" />
+            <% } %>
+            <div class="middle_li">
+              <p><%= carList.brand %> <%= carList.model %></p>
+              <div class="option">
+                <span><%= carList.year %></span>
+                <span><%= carList.mile %>km</span>
+                <span><%= carList.fuel %></span>
+                <span><%= carList.hashtag %></span>
+              </div>
+            </div>
+            <div class="buttonBox">
+              <a href="/car/caredit/<%= carList.carNum %>">수정</a>
+              <form action="/car/delete/<%= carList.carNum %>" method="POST">
+                <input type="submit" value="삭제" />
+              </form>
+              <form action="/manager/managerCar/recommend/<%= carList.carNum %>" method="post">
+                <% if(carList.recommends === 0) { %>
+                  <button onclick="return confirmRecommend('<%= carList.carNum %>')">추천차량등록</button>
+                <% } else if(carList.recommends === 1) { %>
+                  <button onclick="return confirmRecommend('<%= carList.carNum %>')">추천차량취소</button>
+                <% } %>
+              </form>
+            </div>
+          </li>
+      <% }); %>
+    </ul>
+    <ul class="viewImg">
+      <div class="insidetext">판매완료 차량 총 <span style="color: red"><%= soldcount %></span> 대</div>
+      <% solds.forEach(function(carList) { %>
+          <li onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'" <% if (carList.recommends === 1) { %>class="recommended"<% } %>>
+            <% if (carList.picture.length > 0) { %>
+              <img src="<%= carList.picture[0].url %>" alt="" class="thumbnail" />
+            <% } %>
+            <div class="middle_li">
+              <p><%= carList.brand %> <%= carList.model %></p>
+              <div class="option">
+                <span><%= carList.year %></span>
+                <span><%= carList.mile %>km</span>
+                <span><%= carList.fuel %></span>
+                <span><%= carList.hashtag %></span>
+              </div>
+            </div>
+            <div class="buttonBox">
+              <a href="/car/caredit/<%= carList.carNum %>">수정</a>
+              <form action="/car/delete/<%= carList.carNum %>" method="POST">
+                <input type="submit" value="삭제" />
+              </form>
+              <form action="/manager/managerCar/recommend/<%= carList.carNum %>" method="post">
+                <% if(carList.recommends === 0) { %>
+                  <button onclick="return confirmRecommend('<%= carList.carNum %>')">추천차량등록</button>
+                <% } else if(carList.recommends === 1) { %>
+                  <button onclick="return confirmRecommend('<%= carList.carNum %>')">추천차량취소</button>
+                <% } %>
+              </form>
+            </div>
+          </li>
+      <% }); %>
+    </ul>
+  </div>
+</div>
