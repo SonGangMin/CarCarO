@@ -49,7 +49,10 @@ body {
 /* .tab:hover {
   background-color: #666666;
 } */
-
+.popup {
+  cursor: pointer;
+  font-weight: bold;
+}
 .subtabs {
   display: none;
   position: absolute;
@@ -70,7 +73,14 @@ body {
   transition: all 0.3s ease;
   text-align: center;
 }
-
+.top_tr {
+  background: #556677;
+  color: white;
+}
+.usertable tr:hover {
+  background: #8ba0b6;
+  color: white;
+}
 .subtabs a:hover {
   background-color: #3a1d1d;
   color: #fef01b;
@@ -139,4 +149,22 @@ table th:last-child {
 table tr:last-child th,
 table tr:last-child td {
   border-bottom: none;
+}
+
+.addadver {
+  display: flex;
+
+  justify-content: end;
+  margin: 1% 2% 0% 0%;
+  font-size: 18px;
+}
+.addadver > a {
+  text-decoration: none;
+  color: white;
+  background-color: #556677;
+  border-radius: 10px;
+  padding: 0.5%;
+}
+.addadver > a:hover {
+  background-color: #3a1d1d;
 }
