@@ -109,7 +109,7 @@ exports.renderArray = async (req, res, next) => {
 
     // 전체 데이터 수 구하기
     const countResult = await cars.findAndCountAll({
-      where: {status: 1},
+      where: { status: 1 },
     });
     const totalCount = countResult.count;
 
@@ -124,7 +124,7 @@ exports.renderArray = async (req, res, next) => {
     }
 
     const Cars = await cars.findAll({
-      where: {status: 1},
+      where: { status: 1 },
       order: order,
       offset: offset,
       limit: limit,
@@ -141,7 +141,7 @@ exports.renderArray = async (req, res, next) => {
     console.error(error);
     next(error);
   }
-}
+};
 
 // 차량상세
 exports.renderDetail = async (req, res, next) => {
@@ -176,7 +176,7 @@ exports.addRecommend = async (req, res, next) => {
     } else if (recommend.recommends === 1) {
       await cars.update({ recommends: 0 }, { where: { carNum } });
     }
-    res.redirect("/manager/managerCar");
+    res.redirect("back");
   } catch (error) {
     console.error(error);
     next(error);

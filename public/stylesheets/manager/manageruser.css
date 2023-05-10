@@ -52,7 +52,6 @@
   border: 2px solid #3a1d1d;
   padding: 10px;
   margin-bottom: 20px;
-  cursor: pointer;
   /* background: white; */
 }
 .viewImg li > a {
@@ -79,4 +78,10 @@
   font-size: 25px;
   margin-bottom: 2%;
   text-align: center;
+}
+img {
+  cursor: pointer;
+}
+.middle_li {
+  cursor: pointer;
 }
