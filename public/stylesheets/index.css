@@ -6,6 +6,10 @@
 }
 
 /* 슬라이드 */
+.slider{
+    width: 98%;
+    margin: 0 auto;
+}
 .slick-list{
     border-radius: 30px;
 }
@@ -173,6 +177,9 @@
     padding: 10px 10px;
     text-align: center;
 }
+.carsale ul li{
+    background-color: #fff;
+}
 
 .bigbox1{
     border-bottom: 3px solid #9bbbd4;
@@ -236,7 +243,7 @@
 .reccar {
     border-bottom: 4px solid #ddd;
     border-bottom-style: dotted;
-    padding: 100px;
+    padding: 50px 100px;
     position: relative;
     width: 100%;
     display: block;
@@ -245,6 +252,7 @@
 .contents h1{
     position: relative;
     margin-bottom: 30px;
+    text-align: center;
 }
 .contents h1:after{
     content: '';
@@ -273,7 +281,7 @@
 }
 .popucar {
     /* border: solid 1px black; */
-    padding: 100px;
+    padding: 50px 100px;
     position: relative;
     width: 100%;
     display: block;
@@ -395,8 +403,77 @@
     font-size: 16px;
     font-weight: bold;
 }
-.moreBtn{
-    
+
+/* 커뮤니티 */
+.notice{
+    padding-bottom: 20px;
+}
+.board-table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.board-table li{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border: 2px solid #eee;
+    border-radius: 50px;
+    padding: 10px 0;
+    margin-bottom: 5px;
+}
+.board-table li b{
+    text-align: center !important;
+}
+.board-table li b:nth-child(1),
+.board-table li p:nth-child(1){
+    width: 5%;
+    text-align: center;
+}
+.board-table li b:nth-child(2),
+.board-table li p:nth-child(2){
+    width: 40%;
+    text-align: left;
+}
+.board-table li b:nth-child(3),
+.board-table li p:nth-child(3){
+    width: 20%;
+    text-align: center;
+}
+.board-table li b:nth-child(4),
+.board-table li p:nth-child(4){
+    width: 30%;
+    text-align: center;
+}
+.board-table li b:nth-child(5),
+.board-table li p:nth-child(5){
+    width: 5%;
+    text-align: center;
+}
+
+.search-wrap{
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.search-wrap select,
+.search-wrap input{
+    color: #9bbbd4;
+    font-weight: bold;
+    border: 2px solid #9bbbd4;
+    background-color: #fff;
+    border-radius: 50px;
+    padding: 5px;
+    margin-right: 5px;
+}
+.search-wrap input::placeholder{
+    color: #9bbbd4;
+}
+.search-wrap .btn{
+    background-color: #FEE500;
+    color: #191919;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
 }
 /*  */
 

@@ -4,15 +4,16 @@
 <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script src="/javascript/index.js" defer></script>
-<div class="slider">
-    <% Adver.forEach(function(advers) { %>
-        <div onclick="location.href='<%= advers.href %>'">
-            <img src="<%= advers.img[0].url %>"/>
-        </div>
-    <% }); %>
-</div>
+
 <div class="container">
     <div class="contents">
+        <div class="slider">
+            <% Adver.forEach(function(advers) { %>
+                <div onclick="location.href='<%= advers.href %>'">
+                    <img src="<%= advers.img[0].url %>"/>
+                </div>
+            <% }); %>
+        </div>
         <div class="findcar">
             <h1>차량검색</h1>
             <div class="bigbox" id="search">

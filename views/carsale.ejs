@@ -1,6 +1,6 @@
 <%- include('./include/head.ejs') %>
     <div class="container">
-        <div class="contents">
+        <div class="contents carsale">
             <h1 class="title">판매목록</h1>  
             <h3 class="counting">총 <span><%= totalCount %></span>개</h3>
             <!-- <form action="/car/hashtag">
@@ -10,22 +10,24 @@
             <ul class="viewImg">
               <% Cars.forEach(function(carList) { %>
               <li>
-                  <% if (carList.picture.length > 0) { %>
-                  <img src="<%= carList.picture[0].url %>" alt="" class="thumbnail" onclick="location.href='/car/detail/<%= carList.carNum %>'">
-                  <% } %>
-                  <div class="middle_li" onclick="location.href='/car/detail/<%= carList.carNum %>'">
-                    <p><%= carList.brand %> <%= carList.model %></p>
-                    <div class="option">
-                      <span><%= carList.year %></span>
-                      <span><%= carList.mile %>km</span>
-                      <span><%= carList.fuel %></span>
-                      <span><%= carList.hashtag %></span>
+                  <div class="profile" onclick="location.href='/car/detail/<%= carList.carNum %>'">
+                    <% if (carList.picture.length > 0) { %>
+                    <img src="<%= carList.picture[0].url %>" alt="" class="thumbnail">
+                    <% } %>
+                    <div class="middle_li">
+                      <p><%= carList.brand %> <%= carList.model %></p>
+                      <div class="option">
+                        <span>연식 <%= carList.year %>, </span>
+                        <span><%= carList.mile %> km, </span> 
+                        <span><%= carList.fuel %>, </span> 
+                        <span><%= carList.hashtag %></span>
+                      </div>
                     </div>
                   </div>
                   <div class="buttonBox">
                     <button class="Car-btn" onclick="confirmEdit('<%= carList.carNum %>')">수정</button>
                     <form action="/car/delete/<%= carList.carNum %>" method="POST" onsubmit="return confirm('정말로 삭제하시겠습니까?')">
-                      <input class="Car-btn" type="submit" value="삭제" />
+                      <input class="Car-btn del-btn" type="submit" value="삭제" />
                     </form>
                   </div>
               </li>
@@ -57,7 +59,9 @@
                   </ul>
                 </nav>
               <% } %>
-              <a href="/car/carupload" class="goupload">내차등록</a>
+              <div class="goupload">
+                <a href="/car/carupload" class="goupBtn">내차등록</a>
+              </div>
         </div>
     </div>
 <script>
@@ -67,6 +71,7 @@
     }
   }
 </script>
+<%- include('./include/footer.ejs') %>
 </body>
 </html>
-<%- include('./include/footer.ejs') %>
+
