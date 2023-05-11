@@ -5,8 +5,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome
 />
 <script src="../public/javascript/faq.js"></script>
 <script src="../public/javascript/faqcontent.js"></script>
-<!-- <script src="../routes/faqsearch.js"></script> -->
+<style>
+  .faqsearchpart {
+    margin: 0 auto;
+  }
+</style>
 <div class="faqblock">
+  <div class="faqsearchpart">
   <form action="faq/faqSearch/:keyword" method="get">
     질문 검색
     <input
@@ -17,7 +22,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome
     />
     <button class="btn">검색</button><br /><br /><br />
   </form>
-
+  </div>
   <h1 class="manyques">자주 묻는 질문</h1>
   <br />
   <div class="manytime" align="center">
@@ -34,6 +39,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome
             </div>
           </div>
         </li>
+        <hr><br>
         <% } %> <% }); %>
       </ul>
     </div>
