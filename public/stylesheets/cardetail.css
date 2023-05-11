@@ -1,3 +1,6 @@
+.container{
+  position: relative;
+}
 .titlearea {
   display: flex;
   justify-content: center;
@@ -70,16 +73,30 @@
   display: flex;
   /* border: 1px solid black; */
 }
-.detailcontent1 {
+.detailcontent1{
   width: 70%;
+  padding: 1%;
+  border-right: 1px solid lightgrey;
+}
+.detailcontent1.adm {
+  width: 100%;
   /* border: 1px solid red; */
   padding: 1%;
   border-right: 1px solid lightgrey;
 }
 .detailcontent2 {
   width: 30%;
+  padding: 1%;
+}
+.detailcontent2.adm {
+  position: absolute;
+  top: 0;
+  right: 1%;
+  width: 16%;
   /* border: 1px solid blue; */
   padding: 1%;
+  background-color: #fee500;
+  border-radius: 20px;
 }
 .option-title {
   display: block;
@@ -150,4 +167,13 @@
   border: 1px solid black;
   text-align: center;
   background: white;
+}
+
+.btn_area{
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
+}
+.btn_area .Car-btn{
+  font-weight: bold;
 }

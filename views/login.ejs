@@ -11,28 +11,31 @@
     <form
       action="/auth/login"
       method="post"
-      class="form"
+      class="form login"
       onsubmit="sessionStorage.removeItem('loginRedirectUrl')"
     >
       <h1 class="title">로그인</h1>
-      <label for=""><span>아이디</span><input type="text" name="id" /></label>
+      <label for=""><input type="text" name="id" placeholder="아이디"/></label>
       <label for=""
-        ><span>비밀번호</span><input type="password" name="password"
-      /></label>
-      <button type="submit" class="btn">로그인</button>
-      <input id="redirectUrl" type="hidden" name="redirectUrl" />
-      <button type="button" onclick="location.href=('/auth/kakao')" class="btn">
-        카카오 로그인
-      </button>
-      <button type="button" onclick="location.href=('/join')" class="btn">
-        회원가입
-      </button>
-      <button type="button" onclick="findIdPopup()" class="btn">
-        아이디 찾기
-      </button>
-      <button type="button" onclick="findPwPopup()" class="btn">
-        비밀번호 찾기
-      </button>
+        ><input type="password" name="password" placeholder="비밀번호"/></label>
+        <input id="redirectUrl" type="hidden" name="redirectUrl" />
+        <button type="submit" class="btn">로그인</button>
+        <button type="button" onclick="location.href=('/auth/kakao')" class="btn">
+          카카오 로그인
+        </button>
+        <div class="sub_btnBox">
+          <button type="button" onclick="findIdPopup()" class="sub_btn">
+            아이디 찾기
+          </button>
+          <span>ㅣ</span>
+          <button type="button" onclick="findPwPopup()" class="sub_btn">
+            비밀번호 찾기
+          </button>
+          <span>ㅣ</span>
+          <button type="button" onclick="location.href=('/join')" class="sub_btn">
+            회원가입
+          </button>
+        </div>
     </form>
 
     <script>

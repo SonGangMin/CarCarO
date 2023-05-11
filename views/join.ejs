@@ -18,31 +18,29 @@
     <form action="/auth/join" id="joinform" method="post" class="form">
       <h1 class="title">회원가입</h1>
       <label for=""
-        ><span>아이디</span
-        ><input id="id" type="text" name="id" required/> &nbsp;&nbsp;&nbsp;</label>
+        ><input id="id" type="text" name="id" required placeholder="아이디"/>
         <span id="id_feedback"></span>
-      <label for=""
-        ><span>비밀번호</span><input id="pw" type="password" name="password"
-      /></label><span id="password_feedback"></span>
-      <label for=""
-        ><span>비밀번호 확인</span
-        ><input id="checkpw" type="password" name="checkpassword"
-      /></label><span id="password_confirm_feedback"></span>
-      <label for=""
-        ><span>이름</span><input id="name" type="text" name="name"
-      /></label><span id="name_feedback"></span>
+      </label>
+        
       <label for="">
-        <span>전화번호</span>
-        <div class="phone">
-          <input id="tel" type="number" name="tel" />
-        </div>
-      </label><span id="tel_feedback"></span>
+        <input id="pw" type="password" name="password" placeholder="비밀번호"/>
+        <span id="password_feedback"></span></label>
       <label for=""
-        ><span>이메일</span><input id="email" type="email" name="email"
-      /></label><span id="email_feedback"></span>
+        ><input id="checkpw" type="password" name="checkpassword" placeholder="비밀번호 재확인"
+      /><span id="password_confirm_feedback"></span></label>
       <label for=""
-        ><span>나이</span><input id="birth" type="number" name="birth"
-      /></label><span id="birth_feedback"></span>
+        ><input id="name" type="text" name="name" placeholder="이름"
+      /><span id="name_feedback"></span></label></span>
+      <label for="">
+          <input id="tel" type="number" name="tel" placeholder="전화번호"/>
+        <span id="tel_feedback"></span>
+      </label>
+      <label for=""
+        ><input id="email" type="email" name="email" placeholder="이메일"
+      /><span id="email_feedback"></span></label>
+      <label for=""
+        ><input id="birth" type="number" name="birth" placeholder="나이"
+      /><span id="birth_feedback"></span></label>
       <button type="button" onclick="checkForm()" class="join_btn">
         회원가입
       </button>
