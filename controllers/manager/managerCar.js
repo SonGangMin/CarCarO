@@ -1,4 +1,4 @@
-const { cars, users } = require("../../models");
+const { cars, users, hashtags } = require("../../models");
 const {
   getPagingDataCount,
   getPagination,
@@ -155,13 +155,20 @@ exports.renderDetail = async (req, res, next) => {
     });
     const isOwner = req.user && Cars.user_id === req.user.id;
     const status2 = cars.status === 2;
-    // console.log("Cars.user_id====================", Cars.user_id);
-    // console.log("users.id=======================", req.user.id);
+    const Hashs = await hashtags.findAll({
+      where: { cars_num: Cars.num },
+    });
+    const Users = await users.findOne({
+      where: { id: Cars.user_id },
+    });
+
     res.render("manager/managerDetail", {
       title: Cars.model,
       Cars,
       isOwner,
       status2,
+      Hashs,
+      Users,
     });
   } catch (error) {
     console.error(error);
