@@ -104,15 +104,19 @@
                         <span class="option-title">판매가격</span>
                         <span class="price">
                           <% var price = Cars.price;
-                            var unit = '';
-                            if (price >= 10000) {
-                              price = Math.floor(price / 10000);
-                              unit = '억';
-                            } else if (price >= 1) {
-                              price = Math.floor(price / 1);
-                              unit = '만';
-                            } %>
-                       <%= price.toLocaleString() + unit + '원' %>
+                          var unit = '';
+                          if (price >= 10000) {
+                            price = Math.floor(price / 10000);
+                            unit = '억 ';
+                            var remainder = Cars.price % 10000;
+                            if (remainder > 0) {
+                              unit += remainder.toLocaleString() + '만';
+                            }
+                          } else if (price >= 1) {
+                            price = Math.floor(price);
+                            unit = '만';
+                          } %>
+                        <%= price.toLocaleString() + unit + '원' %>
                        </span>
                       </div>
                       <div class="etczone 1">
