@@ -45,7 +45,7 @@
                   </ul>
                   <hr class="hrcontent">
                   <div class="detailcontents">
-                    <div class="detailcontent1">
+                    <div class="detailcontent1 adm user">
                       <span class="option-title">차량 주요정보</span>
                       <div class="infozone">
                         <div class="info">
@@ -99,7 +99,7 @@
                       </div>
 
                     </div>
-                    <div class="detailcontent2">
+                    <div class="detailcontent2 adm user">
                       <div class="pricezone">
                         <span class="option-title">판매가격</span>
                         <span class="price">
@@ -151,7 +151,6 @@
                               <button type="submit" id="saleComp">판매완료등록</button>
                             </form>  
                         <% } %>
-                      <div class="postzone">
                         <div class="btncenter">
                           <button onclick="location.href='/board/newpostWithcar/<%= Cars.num %>'">커뮤니티에 링크달기</button>
                         </div>
@@ -178,6 +177,18 @@
         imgBox.forEach((img) => {
             img.style.cssText += `max-width: 150px; width: calc(100% / ${n}); height: 100px; display: block; padding: 0 10px;` ;
         });
+
+        // 사이드 스크롤메뉴
+        $(document).ready(function(){
+          var currentPosition = parseInt($(".detailcontent2").css("top"));
+          $(window).scroll(function() {
+            var position = $(window).scrollTop(); 
+            $(".detailcontent2").stop().animate({"top":position+currentPosition+"px"},1000);
+          });
+        });
+        function goBack() {
+          window.history.back();
+        }
     </script>
 </body>
 </html>

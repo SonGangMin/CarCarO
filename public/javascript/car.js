@@ -51,3 +51,4 @@ hashtag.addEventListener('input', (e) => {
     e.target.value = value.slice(0, -1);
   }
 })
+

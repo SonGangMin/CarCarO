@@ -1,6 +1,10 @@
 .container {
   position: relative;
 }
+.contents{
+  width: 80%;
+  background-color: #fff;
+}
 .titlearea {
   display: flex;
   justify-content: center;
@@ -61,28 +65,22 @@
 }
 .etczone {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   margin-top: 4%;
+}
+.etczone i{
+  margin-bottom: 15px;
 }
 .postzone {
   justify-content: center;
   margin-top: 20%;
 }
 .btncenter {
-  display: flex;
-  justify-content: center;
+  width: 100%;
   margin-top: 2%;
 }
-.btncenter button {
-  background-color: #fee500;
-  color: #191919;
-  border-radius: 5px;
-  margin-left: 0.5%;
-  padding: 5px 10px;
-  border: 2px solid #3a1d1d;
-  font-weight: bold;
-  cursor: pointer;
-}
+
 .price {
   color: blue;
   font-weight: bold;
@@ -116,6 +114,10 @@
   padding: 1%;
   background-color: #fee500;
   border-radius: 20px;
+}
+.detailcontent2.user{
+  top: 20px;
+  right: 100px;
 }
 .option-title {
   display: block;
@@ -190,8 +192,31 @@
 
 .btn_area {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin-top: 200px;
+}
+.btn_area button,
+.btn_area input,
+.btn_area a {
+  display: block;
+  width: 100%;
+  background-color: #fee500;
+  color: #191919;
+  border-radius: 5px;
+  margin-left: 0.5%;
+  padding: 2px 10px;
+  border: 2px solid #3a1d1d;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 2px;
+  text-align: center;
+}
+.btn_area button:hover,
+.btn_area input:hover,
+.btn_area a:hover{
+  background-color: #191919;
+  color: #fee500;
 }
 .btn_area .Car-btn {
   font-weight: bold;

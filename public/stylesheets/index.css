@@ -150,7 +150,7 @@
 
 .findcar button{
     display: inline-block;
-    width: 100%;
+    /* width: 100%; */
     background-color: #FEE500;
     color: #191919;
     font-weight: bold;
@@ -186,7 +186,9 @@
     border-bottom-style: dotted;
     padding-bottom: 100px;
 }
-
+.bigbox1 button{
+    width: 100%;
+}
 .bigbox2{
     margin-top: 100px;
 }
@@ -385,6 +387,7 @@
 .like button:hover{
     opacity: .7;
     cursor:pointer;
+    background-color: transparent !important;
 }
 .notLoggedIn{
     background-color: transparent !important;
