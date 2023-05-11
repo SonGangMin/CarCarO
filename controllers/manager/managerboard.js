@@ -57,6 +57,10 @@ exports.renderManagerBoardContent = async (req, res, next) => {
           model: models.users,
           as: "user",
         },
+        {
+          model: models.cars,
+          as: "car_num_car",
+        },
       ],
     });
     if (!board) {

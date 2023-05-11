@@ -1,306 +1,215 @@
 <%- include('../include/managerhead.ejs') %>
 <style>
-  .buttons {
-    display: flex;
-    justify-content: end;
-    margin: 0 5% 0% 0%;
+  .container {
+    width: 100%;
+    padding: 0 100px 200px;
   }
-  .board_container {
-    /* display: flex; */
-    /* justify-content: center; */
-    /* text-align: center; */
-    padding: 1% 7% 5% 7%;
-    /* border: 1px solid red; */
-  }
-  .board_container2 {
-    padding: 3% 7% 2% 7%;
-    /* border: 1px solid black; */
-  }
-  .main_name {
-    font-size: 30px;
-    margin: 10px;
-    color: yellowgreen;
-    font-weight: bold;
-  }
-  .greenhr {
-    background: yellowgreen;
-    height: 3px;
-    border: 0;
-  }
-  .greenhr2 {
-    background: lightgreen;
-    height: 1px;
-    border: 0;
-    margin: 1% 0% 3% 0%;
-  }
-  .greenhr3 {
-    background: lightgreen;
-    height: 1px;
-    border: 0;
-    margin: -7% 0% 3% 0%;
-  }
-  .board_title {
-    font-size: 22px;
-    font-weight: bold;
-  }
-  .board_name {
-    display: flex;
-    justify-content: space-between;
-    color: gray;
-    margin: 1% 1% 5% 1%;
-  }
-  .board_content {
-    word-break: break-all;
-    margin: 1% 1% 5% 1%;
-  }
-  .buttons .button {
-    background: none;
-    border: none;
-    padding: 0;
-    margin-right: 2%;
-    font: inherit;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-  }
-  .comment_title {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0% 0% 1% 2%;
-  }
-  .text_red {
-    color: red;
-  }
-  .comment {
-    display: flex;
-    justify-content: space-between;
-    margin: 0;
-    padding: 0;
-  }
-  .input {
-    display: none;
-  }
-  .comment_user {
-    width: 20%;
-    /* border: 1px solid black; */
-  }
-  #comment_content {
+  .contents {
     width: 80%;
-    display: flex;
-    justify-content: space-between;
-    /* border: 1px solid blue; */
-  }
-  #content_txt {
-    width: 50%;
-  }
-  .comment_form {
-    /* display: flex; */
-    /* border: 1px solid black; */
-    justify-content: space-between;
-  }
-  .cancelsubmit {
-    display: flex;
-    justify-content: end;
-  }
-  .cancelsubmit input {
-    margin: 1% 0 0 1%;
-    background: none;
-    border: none;
-    padding: 0;
-    margin-right: 2%;
-    font: inherit;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-  }
-  #editdelete {
-    /* margin: 0% 0 0 1%; */
-    background: none;
-    border: none;
-    padding: 0;
-    /* margin-right: 2%; */
-    font: inherit;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-    /* width: 5%; */
-  }
-  .createcomment {
-    margin-top: 2%;
-    justify-content: end;
-    width: 100%;
-  }
-  .createinput {
-    width: 100%;
-  }
-  #editdelete {
-    height: 100%;
-  }
-
-  a {
-    text-decoration: none;
-    color: black;
+    padding-top: 30px;
+    background-color: #9bbbd4;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
 </style>
-<div class="board_container">
-  <div
-    class="main_name"
-    onclick="location.href='/manager/managerboard/'"
-    style="cursor: pointer"
-  >
-    커뮤니티
-  </div>
-  <hr class="greenhr" />
-  <div class="board_container2">
-    <div class="board_title">
-      <% if(board.grade === 1) { %> [일반] <% } else { %> [공지] <% } %> <%=
-      board.title %>
+<link rel="stylesheet" href="/stylesheets/boardcontent.css" />
+<div class="container">
+  <div class="contents">
+    <div class="titlearea">
+      <div class="main_name" onclick="location.href='/board/'">커뮤니티</div>
     </div>
-    <div class="board_name">
-      <span
-        ><%= board.user.name %>(<%= board.user_id %>) | 조회수 : <%= board.views
-        %></span
-      >
-      <span
-        ><%= board.createdAt.getFullYear() %>년 <%= (board.createdAt.getMonth()
-        + 1) %>월 <%= board.createdAt.getDate() %>일 (<%= ["일", "월", "화",
-        "수", "목", "금", "토"][board.createdAt.getDay()] %>) <%=
-        board.createdAt.getHours() %>시 <%= board.createdAt.getMinutes()
-        %>분</span
-      >
-    </div>
-    <div class="board_content">
-      <% board.content.split('\n').forEach(function(line) { %> <%= line %><br />
-      <% }) %>
-    </div>
-
-    <div class="buttons">
-      <button
-        onclick="return confirm('<%= board.user.name %> 님의 게시글을 수정하시겠습니까?')"
-        class="button"
-      >
-        <a href="/manager/managerboard/edit/<%= board.postId %>">수정</a>
-      </button>
-      <form
-        action="/manager/managerboard/delete/<%= board.postId %>"
-        method="POST"
-        onsubmit="return confirm('<%= board.user.name %> 님의 게시글을 정말로 삭제하시겠습니까?')"
-      >
-        <input type="submit" value="삭제" class="button" />
-      </form>
-    </div>
-  </div>
-
-  <div class="board_container2">
-    <div class="comment_title">
-      전체댓글 <span class="text_red"><%= board.count %></span>개
-    </div>
-    <hr class="greenhr2" />
-    <ul>
-      <% comments.forEach(function(comment) { %>
-      <li class="comment">
-        <div class="comment_user">
-          <%= comment.user.name %>(<%= comment.user_id %>)
-        </div>
-        <div id="comment_content">
-          <div class="txt" id="content_txt"><%= comment.content %></div>
-          <form
-            id="edit-form-<%= comment.number %>"
-            action="/manager/managerboard/comment/edit/<%= comment.number %>"
-            method="post"
-            class="comment_form"
-          >
-            <input
-              class="input"
-              id="comment_input"
-              type="text"
-              value="<%= comment.content %>"
-              style="display: none; width: 350px"
-              name="content"
-            />
-            <div class="cancelsubmit">
-              <input
-                class="input cancel"
-                type="button"
-                onclick="window.location.reload();"
-                value="취소"
-                style="display: none"
-              />
-              <input
-                class="input submit"
-                type="submit"
-                value="적용"
-                style="display: none"
-              />
+    <hr class="greenhr" />
+    <div class="board_container2">
+      <div class="board_title">
+        <% if(board.grade === 1) { %> [일반] <% } else { %> [공지] <% } %> <%=
+        board.title %>
+      </div>
+      <div class="board_name">
+        <span
+          ><%= board.user.name %>(<%= board.user_id %>) | 조회수 : <%=
+          board.views %></span
+        >
+        <span
+          ><%= board.createdAt.getFullYear() %>년 <%=
+          (board.createdAt.getMonth() + 1) %>월 <%= board.createdAt.getDate()
+          %>일 (<%= ["일", "월", "화", "수", "목", "금",
+          "토"][board.createdAt.getDay()] %>) <%= board.createdAt.getHours()
+          %>시 <%= board.createdAt.getMinutes() %>분</span
+        >
+      </div>
+      <% if (board.car_num !== null) { %>
+      <div class="carlinkarea">
+        <div class="carlink">
+          <a href="/car/detail/<%= board.car_num %>">
+            <div class="carinfo">
+              <div class="carinfotitle">차량정보</div>
+              <div class="imgbox">
+                <% if(board.car_num_car.picture.length > 0) { %>
+                <img
+                  src="<%= board.car_num_car.picture[0].url %>"
+                  class="thumbnail"
+                />
+                <% } %>
+              </div>
+              <div class="carzone">
+                <%= board.car_num_car.brand %> <%= board.car_num_car.model %>
+                <div class="cardetailinfo">
+                  <%= board.car_num_car.year %> 년식 | <%=
+                  board.car_num_car.mile %> km | <%= board.car_num_car.fuel %> |
+                  <%= board.car_num_car.area %> | &nbsp; <% var price =
+                  board.car_num_car.price; var unit = ''; if (price >= 10000) {
+                  price = Math.floor(price / 10000); unit = '억 '; var remainder
+                  = board.car_num_car.price % 10000; if (remainder > 0) { unit
+                  += remainder.toLocaleString() + '만'; } } else if (price >= 1)
+                  { price = Math.floor(price); unit = '만'; } %> <%=
+                  price.toLocaleString() + unit + '원' %>
+                </div>
+              </div>
             </div>
-          </form>
-          <span class="commenttime"
-            ><%= (comment.createdAt.getMonth() + 1) %>월 <%=
-            comment.createdAt.getDate() %>일 (<%= ["일", "월", "화", "수", "목",
-            "금", "토"][comment.createdAt.getDay()] %>) <%=
-            comment.createdAt.getHours() %>: <%= comment.createdAt.getMinutes()
-            %></span
-          >
-          <button
-            class="txt edit"
-            id="editdelete"
-            data-comment-number="<%= comment.number %>"
+          </a>
+        </div>
+      </div>
+      <% } %>
+      <div class="board_content">
+        <% board.content.split('\n').forEach(function(line) { %> <%= line %><br />
+        <% }) %>
+      </div>
+
+      <div class="buttons">
+        <a href="/board/edit/<%= board.postId %>"
+          ><button
+            onclick="return confirm('게시글을 수정하시겠습니까?')"
+            class="button"
           >
             수정
-          </button>
-          <form
-            action="/manager/managerboard/comment/delete/<%= comment.number %>"
-            method="POST"
-            onsubmit="return confirm('<%= comment.user.name %> 님의 댓글을 정말로 삭제하시겠습니까?')"
+          </button></a
+        >
+        <form action="/board/delete/<%= board.postId %>" method="POST">
+          <button
+            onclick="return confirm('게시글을 정말로 삭제하시겠습니까?')"
+            class="button"
           >
-            <input class="delete" type="submit" value="삭제" id="editdelete" />
-          </form>
-        </div>
-      </li>
-      <% }); %>
-    </ul>
-    <script>
-      const edits = document.querySelectorAll(".edit");
-      edits.forEach((target) => {
-        target.addEventListener("click", function () {
-          const commentContent = this.parentNode.querySelector(".txt");
-          const inputComment = this.parentNode.querySelector(".input");
-          const inputSubmit = this.parentNode.querySelector(".submit");
-          const inputCancel = this.parentNode.querySelector(".cancel");
-          const txtEdit = this;
-          const txtDelete = this.parentNode.querySelector(".delete");
+            삭제
+          </button>
+        </form>
+      </div>
+    </div>
 
-          commentContent.style.display = "none";
-          inputComment.style.display = "block";
-          inputSubmit.style.display = "block";
-          inputCancel.style.display = "block";
-          txtEdit.style.display = "none";
-          txtDelete.style.display = "none";
-        });
-      });
+    <div class="board_container2">
+      <div class="comment_title">
+        전체댓글 <span class="text_red"><%= board.count %></span>개
+      </div>
+      <hr class="greenhr2" />
+      <ul>
+        <% comments.forEach(function(comment) { %>
+        <li class="comment">
+          <div class="comment_user">
+            <%= comment.user.name %>(<%= comment.user_id %>) <% if
+            (board.user_id === comment.user_id) { %>
+            <i class="fa-solid fa-chess-king fa-fade"></i>
+            <% } %>
+          </div>
 
-      const submitButtons = document.querySelectorAll(".submit");
-      submitButtons.forEach((button) => {
-        button.addEventListener("click", function (event) {
-          const form = this.parentNode.querySelector("form");
-          form.submit();
+          <div id="comment_content">
+            <div class="txt" id="content_txt"><%= comment.content %></div>
+            <form
+              id="edit-form-<%= comment.number %>"
+              action="/board/comment/edit/<%= comment.number %>"
+              method="post"
+              class="comment_form"
+            >
+              <input
+                class="input"
+                id="comment_input"
+                type="text"
+                value="<%= comment.content %>"
+                style="display: none; width: 350px"
+                name="content"
+              />
+              <div class="cancelsubmit">
+                <input
+                  class="input cancel"
+                  type="button"
+                  onclick="window.location.reload();"
+                  value="취소"
+                  style="display: none"
+                />
+                <input
+                  class="input submit"
+                  type="submit"
+                  value="적용"
+                  style="display: none"
+                />
+              </div>
+            </form>
+            <span class="commenttime"
+              ><%= (comment.createdAt.getMonth() + 1) %>월 <%=
+              comment.createdAt.getDate() %>일 (<%= ["일", "월", "화", "수",
+              "목", "금", "토"][comment.createdAt.getDay()] %>) <%=
+              comment.createdAt.getHours() %>: <%=
+              comment.createdAt.getMinutes() %></span
+            >
+            <button
+              class="txt edit"
+              id="editdelete"
+              data-comment-number="<%= comment.number %>"
+            >
+              수정
+            </button>
+            <form
+              action="/board/comment/delete/<%= comment.number %>"
+              method="POST"
+              onsubmit="return confirm('댓글을 정말로 삭제하시겠습니까?')"
+            >
+              <input
+                class="delete"
+                type="submit"
+                value="삭제"
+                id="editdelete"
+              />
+            </form>
+          </div>
+        </li>
+        <% }); %>
+      </ul>
+      <hr class="greenhr2" />
+      <script>
+        const edits = document.querySelectorAll(".edit");
+        edits.forEach((target) => {
+          target.addEventListener("click", function () {
+            const commentContent = this.parentNode.querySelector(".txt");
+            const inputComment = this.parentNode.querySelector(".input");
+            const inputSubmit = this.parentNode.querySelector(".submit");
+            const inputCancel = this.parentNode.querySelector(".cancel");
+            const txtEdit = this;
+            const txtDelete = this.parentNode.querySelector(".delete");
+
+            commentContent.style.display = "none";
+            inputComment.style.display = "block";
+            inputSubmit.style.display = "block";
+            inputCancel.style.display = "block";
+            txtEdit.style.display = "none";
+            txtDelete.style.display = "none";
+          });
         });
-      });
-    </script>
-    <script>
-      function onPageClick(event, page) {
-        location.href =
-          "/manager/managerboard/content/<%= board.postId %>?page=" + page;
-        console.info(page + " (from options)");
-      }
-    </script>
-    <%- include('../include/pagination.ejs') %>
-    <hr class="greenhr3" />
+
+        const submitButtons = document.querySelectorAll(".submit");
+        submitButtons.forEach((button) => {
+          button.addEventListener("click", function (event) {
+            const form = this.parentNode.querySelector("form");
+            form.submit();
+          });
+        });
+        function onPageClick(event, page) {
+          location.href = "/board/content/<%= board.postId %>?page=" + page;
+          console.info(page + " (from options)");
+        }
+      </script>
+      <%- include('../include/pagination.ejs') %>
+    </div>
+    <br />
+    <div class="end">
+      <button onclick="location.href='/board'">목록으로</button>
+    </div>
   </div>
-  <hr class="greenhr" />
-  <br />
-  <button><a href="/manager/managerboard">목록으로</a></button>
 </div>

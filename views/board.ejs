@@ -33,13 +33,13 @@
               <p>
                 <a href="/board/content/<%= twit.postId %>">
                   <% if (twit.grade === 2) { %>
-                  <span
-                    style="
-                      font-weight: bold;
-                    " class="board_title"
-                    ><%= twit.title %> [<%= twit.count %>]</span
-                  >
-                  <% } else { %> <%= twit.title %> [<%= twit.count %>] <% } %>
+                    <span
+                      style="
+                        font-weight: bold;
+                      " class="board_title"
+                      ><%= twit.title %> <% if (twit.car_num !== null) { %> <i class="fa-solid fa-link fa-fade"></i><% } %>[<%= twit.count %>]</span
+                    > 
+                  <% } else { %> <%= twit.title %> <% if (twit.car_num !== null) { %> <i class="fa-solid fa-link fa-fade"></i><% } %> [<%= twit.count %>] <% } %>
                 </a>
               </p>
               <p><%= twit.user.name %>(<%= twit.user_id %>)</p>
