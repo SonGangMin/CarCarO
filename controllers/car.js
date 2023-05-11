@@ -274,6 +274,7 @@ exports.renderSalecar = async (req, res, next) => {
 
     const Cars = await cars.findAll({
       attributes: [
+        "num",
         "carNum",
         "model",
         "brand",
@@ -305,13 +306,14 @@ exports.renderSalecar = async (req, res, next) => {
 
 // 등록된 차량 상세
 exports.renderDetail = async (req, res, next) => {
-  const carNum = req.params.carNum;
+  const num = req.params.num;
+  const isMine = req.user && req.user.id;
   try {
     const Cars = await cars.findOne({
-      where: { carNum },
+      where: { num },
     });
     const Hashs = await hashtags.findAll({
-      where: { cars_num: Cars.num },
+      where: { cars_num: num },
     });
     const Users = await users.findOne({
       where: { id: Cars.user_id },
@@ -320,6 +322,7 @@ exports.renderDetail = async (req, res, next) => {
     const status2 = Cars.status === 2;
     // console.log("Cars.user_id====================", Cars.user_id);
     // console.log("users.id=======================", req.user.id);
+
     res.render("cardetail", {
       title: Cars.model,
       Cars,
@@ -328,6 +331,7 @@ exports.renderDetail = async (req, res, next) => {
       req: req,
       Hashs,
       Users,
+      isMine,
     });
   } catch (error) {
     console.error(error);

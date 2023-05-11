@@ -12,6 +12,9 @@
     </div>
   <% } %>
   <div class="contents">
+    <div class="backbtn_area">
+      <button class="backbtn" onclick="goBack()">뒤로</button>
+    </div>   
     <div class="titlearea">
       <% if(Cars.brand === '국산기타' || Cars.brand === '수입기타') { %>
         <div id="title"><%= Cars.model %></div>
@@ -175,6 +178,10 @@
         $(".detailcontent2").stop().animate({"top":position+currentPosition+"px"},1000);
       });
     });
+    function goBack() {
+      window.history.back();
+    }
 </script>
+
 </body>
 </html>

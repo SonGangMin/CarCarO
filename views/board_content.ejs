@@ -1,350 +1,178 @@
 <%- include('./include/head.ejs') %>
-<style>
-  .buttons {
-    display: flex;
-    justify-content: end;
-    margin: 0 5% 0% 0%;
-  }
-  .board_container {
-    /* display: flex; */
-    /* justify-content: center; */
-    /* text-align: center; */
-    padding: 1% 7% 5% 7%;
-    /* border: 1px solid red; */
-  }
-  .board_container2 {
-    padding: 3% 7% 2% 7%;
-    /* border: 1px solid black; */
-  }
-  .main_name {
-    font-size: 30px;
-    margin: 10px;
-    color: yellowgreen;
-    font-weight: bold;
-  }
-  .greenhr {
-    background: yellowgreen;
-    height: 3px;
-    border: 0;
-  }
-  .greenhr2 {
-    background: lightgreen;
-    height: 1px;
-    border: 0;
-    margin: 1% 0% 3% 0%;
-  }
-  .greenhr3 {
-    background: lightgreen;
-    height: 1px;
-    border: 0;
-    margin: -7% 0% 3% 0%;
-  }
-  .board_title {
-    font-size: 22px;
-    font-weight: bold;
-  }
-  .board_name {
-    display: flex;
-    justify-content: space-between;
-    color: gray;
-    margin: 1% 1% 5% 1%;
-  }
-  .board_content {
-    word-break: break-all;
-    margin: 1% 1% 5% 1%;
-  }
-  .buttons .button {
-    background: none;
-    border: none;
-    padding: 0;
-    margin-right: 2%;
-    font: inherit;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-  }
-  .comment_title {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0% 0% 1% 2%;
-  }
-  .text_red {
-    color: red;
-  }
-  .comment {
-    display: flex;
-    justify-content: space-between;
-    margin: 1% 0 0 0;
-    padding: 0;
-  }
-  .input {
-    display: none;
-  }
-  .comment_user {
-    width: 20%;
-    font-size: 15px;
-    /* border: 1px solid black; */
-  }
-  #comment_content {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    font-size: 15px;
-    /* border: 1px solid blue; */
-  }
-  .commenttime {
-    font-size: 15px;
-  }
-  #content_txt {
-    width: 50%;
-  }
-  .comment_form {
-    /* display: flex; */
-    /* border: 1px solid black; */
-    justify-content: space-between;
-  }
-  .cancelsubmit {
-    display: flex;
-    justify-content: end;
-  }
-  .cancelsubmit input {
-    margin: 1% 0 0 1%;
-    background: none;
-    border: none;
-    padding: 0;
-    margin-right: 2%;
-    font: inherit;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-  }
-  #editdelete {
-    /* margin: 0% 0 0 1%; */
-    background: none;
-    border: none;
-    padding: 0;
-    /* margin-right: 2%; */
-    font: inherit;
-    cursor: pointer;
-    text-decoration: none;
-    color: black;
-    font-weight: bold;
-    /* width: 5%; */
-  }
-  .createcomment {
-    margin-top: 10%;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    /* font-size: 15px; */
-    /* margin-left: 20%; */
-  }
-  .createcomment_head {
-    /* margin-top: 1%; */
-    background-color: yellowgreen;
-    border: none;
-    color: white;
-    height: 40px;
-    width: 20%;
-    font-weight: bold;
-    text-align: center;
-    justify-items: center;
-    /* align-items: center; */
-  }
-  .createinput {
-    width: 650px;
-    height: 40px;
-  }
-  #editdelete {
-    height: 100%;
-  }
-  .commentsubmit {
-    display: flex;
-    justify-content: end;
-  }
-  .commentsubmit > input {
-    margin-top: 1%;
-    background-color: skyblue;
-    border: none;
-    color: white;
-    height: 40px;
-    width: 15%;
-    font-weight: bold;
-  }
-</style>
-<div class="board_container">
-  <div
-    class="main_name"
-    onclick="location.href='/board/'"
-    style="cursor: pointer"
-  >
-    커뮤니티
-  </div>
-  <hr class="greenhr" />
-  <div class="board_container2">
-    <div class="board_title">
-      <% if(board.grade === 1) { %> [일반] <% } else { %> [공지] <% } %> <%=
-      board.title %>
+<link rel="stylesheet" href="/stylesheets/boardcontent.css" />
+<div class="container">
+  <div class="contents">
+    <div class="titlearea">
+      <div class="main_name" onclick="location.href='/board/'">커뮤니티</div>
     </div>
-    <div class="board_name">
-      <span
-        ><%= board.user.name %>(<%= board.user_id %>) | 조회수 : <%= board.views
-        %></span
-      >
-      <span
-        ><%= board.createdAt.getFullYear() %>년 <%= (board.createdAt.getMonth()
-        + 1) %>월 <%= board.createdAt.getDate() %>일 (<%= ["일", "월", "화",
-        "수", "목", "금", "토"][board.createdAt.getDay()] %>) <%=
-        board.createdAt.getHours() %>시 <%= board.createdAt.getMinutes()
-        %>분</span
-      >
-    </div>
-    <div class="board_content">
-      <% board.content.split('\n').forEach(function(line) { %> <%= line %><br />
-      <% }) %>
-    </div>
+    <hr class="greenhr" />
+    <div class="board_container2">
+      <div class="board_title">
+        <% if(board.grade === 1) { %> [일반] <% } else { %> [공지] <% } %> <%=
+        board.title %>
+      </div>
+      <div class="board_name">
+        <span
+          ><%= board.user.name %>(<%= board.user_id %>) | 조회수 : <%=
+          board.views %></span
+        >
+        <span
+          ><%= board.createdAt.getFullYear() %>년 <%=
+          (board.createdAt.getMonth() + 1) %>월 <%= board.createdAt.getDate()
+          %>일 (<%= ["일", "월", "화", "수", "목", "금",
+          "토"][board.createdAt.getDay()] %>) <%= board.createdAt.getHours()
+          %>시 <%= board.createdAt.getMinutes() %>분</span
+        >
+      </div>
+      <div class="board_content">
+        <% board.content.split('\n').forEach(function(line) { %> <%= line %><br />
+        <% }) %>
+      </div>
 
-    <div class="buttons">
-      <% if (isboardOwner) { %>
-      <button
-        onclick="return confirm('게시글을 수정하시겠습니까?')"
-        class="button"
-      >
-        <a href="/board/edit/<%= board.postId %>">수정</a>
-      </button>
-      <form
-        action="/board/delete/<%= board.postId %>"
-        method="POST"
-        onsubmit="return confirm('게시글을 정말로 삭제하시겠습니까?')"
-      >
-        <input type="submit" value="삭제" class="button" />
-      </form>
-      <% } %>
-    </div>
-  </div>
-
-  <div class="board_container2">
-    <div class="comment_title">
-      전체댓글 <span class="text_red"><%= board.count %></span>개
-    </div>
-    <hr class="greenhr2" />
-    <ul>
-      <% comments.forEach(function(comment) { %>
-      <li class="comment">
-        <div class="comment_user">
-          <%= comment.user.name %>(<%= comment.user_id %>)
-        </div>
-        <div id="comment_content">
-          <div class="txt" id="content_txt"><%= comment.content %></div>
-          <% if (comment.user_id === userId) { %>
-          <form
-            id="edit-form-<%= comment.number %>"
-            action="/board/comment/edit/<%= comment.number %>"
-            method="post"
-            class="comment_form"
-          >
-            <input
-              class="input"
-              id="comment_input"
-              type="text"
-              value="<%= comment.content %>"
-              style="display: none; width: 350px"
-              name="content"
-            />
-            <div class="cancelsubmit">
-              <input
-                class="input cancel"
-                type="button"
-                onclick="window.location.reload();"
-                value="취소"
-                style="display: none"
-              />
-              <input
-                class="input submit"
-                type="submit"
-                value="적용"
-                style="display: none"
-              />
-            </div>
-          </form>
-          <span class="commenttime"
-            ><%= (comment.createdAt.getMonth() + 1) %>월 <%=
-            comment.createdAt.getDate() %>일 (<%= ["일", "월", "화", "수", "목",
-            "금", "토"][comment.createdAt.getDay()] %>) <%=
-            comment.createdAt.getHours() %>: <%= comment.createdAt.getMinutes()
-            %></span
-          >
-          <button
-            class="txt edit"
-            id="editdelete"
-            data-comment-number="<%= comment.number %>"
-          >
-            수정
-          </button>
-          <form
-            action="/board/comment/delete/<%= comment.number %>"
-            method="POST"
-            onsubmit="return confirm('댓글을 정말로 삭제하시겠습니까?')"
-          >
-            <input class="delete" type="submit" value="삭제" id="editdelete" />
-          </form>
-        </div>
+      <div class="buttons">
+        <% if (isboardOwner) { %>
+        <button
+          onclick="return confirm('게시글을 수정하시겠습니까?')"
+          class="button"
+        >
+          <a href="/board/edit/<%= board.postId %>">수정</a>
+        </button>
+        <form
+          action="/board/delete/<%= board.postId %>"
+          method="POST"
+          onsubmit="return confirm('게시글을 정말로 삭제하시겠습니까?')"
+        >
+          <input type="submit" value="삭제" class="button" />
+        </form>
         <% } %>
-      </li>
-      <% }); %>
-    </ul>
-    <% if (isUser) { %>
-    <div class="createcomment">
-      <div class="createcomment_head">댓글등록하기</div>
-      <form action="/board/content/<%= board.postId %>" method="post">
-        <input type="text" name="content" class="createinput" />
-        <div class="commentsubmit">
-          <input type="submit" style="cursor: pointer" value="등록" />
-        </div>
-      </form>
+      </div>
     </div>
-    <% } %>
-    <script>
-      const edits = document.querySelectorAll(".edit");
-      edits.forEach((target) => {
-        target.addEventListener("click", function () {
-          const commentContent = this.parentNode.querySelector(".txt");
-          const inputComment = this.parentNode.querySelector(".input");
-          const inputSubmit = this.parentNode.querySelector(".submit");
-          const inputCancel = this.parentNode.querySelector(".cancel");
-          const txtEdit = this;
-          const txtDelete = this.parentNode.querySelector(".delete");
 
-          commentContent.style.display = "none";
-          inputComment.style.display = "block";
-          inputSubmit.style.display = "block";
-          inputCancel.style.display = "block";
-          txtEdit.style.display = "none";
-          txtDelete.style.display = "none";
-        });
-      });
+    <div class="board_container2">
+      <div class="comment_title">
+        전체댓글 <span class="text_red"><%= board.count %></span>개
+      </div>
+      <hr class="greenhr2" />
+      <ul>
+        <% comments.forEach(function(comment) { %>
+        <li class="comment">
+          <div class="comment_user">
+            <%= comment.user.name %>(<%= comment.user_id %>)
+          </div>
+          <div id="comment_content">
+            <div class="txt" id="content_txt"><%= comment.content %></div>
+            <% if (comment.user_id === userId) { %>
+            <form
+              id="edit-form-<%= comment.number %>"
+              action="/board/comment/edit/<%= comment.number %>"
+              method="post"
+              class="comment_form"
+            >
+              <input
+                class="input"
+                id="comment_input"
+                type="text"
+                value="<%= comment.content %>"
+                style="display: none; width: 350px"
+                name="content"
+              />
+              <div class="cancelsubmit">
+                <input
+                  class="input cancel"
+                  type="button"
+                  onclick="window.location.reload();"
+                  value="취소"
+                  style="display: none"
+                />
+                <input
+                  class="input submit"
+                  type="submit"
+                  value="적용"
+                  style="display: none"
+                />
+              </div>
+            </form>
+            <span class="commenttime"
+              ><%= (comment.createdAt.getMonth() + 1) %>월 <%=
+              comment.createdAt.getDate() %>일 (<%= ["일", "월", "화", "수",
+              "목", "금", "토"][comment.createdAt.getDay()] %>) <%=
+              comment.createdAt.getHours() %>: <%=
+              comment.createdAt.getMinutes() %></span
+            >
+            <button
+              class="txt edit"
+              id="editdelete"
+              data-comment-number="<%= comment.number %>"
+            >
+              수정
+            </button>
+            <form
+              action="/board/comment/delete/<%= comment.number %>"
+              method="POST"
+              onsubmit="return confirm('댓글을 정말로 삭제하시겠습니까?')"
+            >
+              <input
+                class="delete"
+                type="submit"
+                value="삭제"
+                id="editdelete"
+              />
+            </form>
+          </div>
+          <% } %>
+        </li>
+        <% }); %>
+      </ul>
+      <% if (isUser) { %>
+      <div class="createcomment">
+        <div class="createcomment_head">댓글등록하기</div>
+        <form action="/board/content/<%= board.postId %>" method="post">
+          <input type="text" name="content" class="createinput" />
+          <div class="commentsubmit">
+            <input type="submit" style="cursor: pointer" value="등록" />
+          </div>
+        </form>
+      </div>
+      <% } %>
+      <script>
+        const edits = document.querySelectorAll(".edit");
+        edits.forEach((target) => {
+          target.addEventListener("click", function () {
+            const commentContent = this.parentNode.querySelector(".txt");
+            const inputComment = this.parentNode.querySelector(".input");
+            const inputSubmit = this.parentNode.querySelector(".submit");
+            const inputCancel = this.parentNode.querySelector(".cancel");
+            const txtEdit = this;
+            const txtDelete = this.parentNode.querySelector(".delete");
 
-      const submitButtons = document.querySelectorAll(".submit");
-      submitButtons.forEach((button) => {
-        button.addEventListener("click", function (event) {
-          const form = this.parentNode.querySelector("form");
-          form.submit();
+            commentContent.style.display = "none";
+            inputComment.style.display = "block";
+            inputSubmit.style.display = "block";
+            inputCancel.style.display = "block";
+            txtEdit.style.display = "none";
+            txtDelete.style.display = "none";
+          });
         });
-      });
-    </script>
-    <script>
-      function onPageClick(event, page) {
-        location.href = "/board/content/<%= board.postId %>?page=" + page;
-        console.info(page + " (from options)");
-      }
-    </script>
-    <%- include('./include/pagination.ejs') %>
-    <hr class="greenhr3" />
+
+        const submitButtons = document.querySelectorAll(".submit");
+        submitButtons.forEach((button) => {
+          button.addEventListener("click", function (event) {
+            const form = this.parentNode.querySelector("form");
+            form.submit();
+          });
+        });
+      </script>
+      <script>
+        function onPageClick(event, page) {
+          location.href = "/board/content/<%= board.postId %>?page=" + page;
+          console.info(page + " (from options)");
+        }
+      </script>
+      <%- include('./include/pagination.ejs') %>
+    </div>
+    <hr class="greenhr" />
+    <br />
+    <button><a href="/board">목록으로</a></button>
   </div>
-  <hr class="greenhr" />
-  <br />
-  <button><a href="/board">목록으로</a></button>
 </div>
 <%- include('./include/footer.ejs') %>

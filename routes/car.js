@@ -24,8 +24,8 @@ const router = express.Router();
 // 내차찾기 페이지
 router.get("/carfind", renderFindcar);
 
-router.post("/carfind", carLike);
-router.post("/carfind2", carDislike);
+router.post("/carLike", carLike);
+router.post("/carDislike", carDislike);
 // 내차찾기 검색
 router.get("/carfind/search/", renderCarSearch);
 // 내차팔기 리스트 페이지
@@ -37,7 +37,7 @@ router.get("/caredit/:carNum", isLoggedIn, carEdit);
 // 내차팔기 리스트 삭제
 router.post("/delete/:carNum", isLoggedIn, listDelete);
 // 내차팔기 리스트 상세 페이지
-router.get("/detail/:carNum", isLoggedIn, renderDetail);
+router.get("/detail/:num", renderDetail);
 // 해시태그 검색 리스트 페이지
 router.get("/hashtag", isLoggedIn, renderHashtag);
 // 팔기완료 등록

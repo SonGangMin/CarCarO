@@ -1,4 +1,4 @@
-.container{
+.container {
   position: relative;
 }
 .titlearea {
@@ -64,6 +64,25 @@
   justify-content: space-between;
   margin-top: 4%;
 }
+.postzone {
+  justify-content: center;
+  margin-top: 20%;
+}
+.btncenter {
+  display: flex;
+  justify-content: center;
+  margin-top: 2%;
+}
+.btncenter button {
+  background-color: #fee500;
+  color: #191919;
+  border-radius: 5px;
+  margin-left: 0.5%;
+  padding: 5px 10px;
+  border: 2px solid #3a1d1d;
+  font-weight: bold;
+  cursor: pointer;
+}
 .price {
   color: blue;
   font-weight: bold;
@@ -73,7 +92,7 @@
   display: flex;
   /* border: 1px solid black; */
 }
-.detailcontent1{
+.detailcontent1 {
   width: 70%;
   padding: 1%;
   border-right: 1px solid lightgrey;
@@ -169,11 +188,21 @@
   background: white;
 }
 
-.btn_area{
+.btn_area {
   display: flex;
   justify-content: center;
   margin-top: 200px;
 }
-.btn_area .Car-btn{
+.btn_area .Car-btn {
   font-weight: bold;
+}
+.backbtn {
+  background-color: #191919;
+  color: #fee500;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
 }

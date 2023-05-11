@@ -37,6 +37,14 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
+    },
+    car_num: {
+      type: DataTypes.BIGINT,
+      allowNull: true,
+      references: {
+        model: 'cars',
+        key: 'num'
+      }
     }
   }, {
     sequelize,
@@ -56,6 +64,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "user_id" },
+        ]
+      },
+      {
+        name: "boards_FK_1",
+        using: "BTREE",
+        fields: [
+          { name: "car_num" },
         ]
       },
     ]

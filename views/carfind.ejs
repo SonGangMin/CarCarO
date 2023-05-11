@@ -196,7 +196,7 @@
           <ul>
             <% twits.forEach(function(twit) { %>
               <li>
-                <a href="/car/detail/<%= twit.carNum %>">
+                <a href="/car/detail/<%= twit.num %>">
                   <div class="reccarlist" id="<%= isMine === twit.user_id ? 'highlight' : '' %>">
                     <% if (twit.picture.length > 0) { %>
                       <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail">
@@ -210,21 +210,21 @@
                       <% } %>
 
                       <% if (typeof isMine === 'undefined') { %>
-                        <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
-                      <% } else if (isMine === twit.user_id) { %>
-                        <button class="Mine"><i class="fa-solid fa-user"></i><%= twit.likes_count %></button>
-                      <% } else { %>
+                        <button class="notLoggedIn" onclick="notLogin(event)"><i class="fa-solid fa-heart" style="color: #000;"></i> <%= twit.likes_count %></button>
+                    <% } else if (isMine === twit.user_id) { %>
+                        <button class="Mine" onclick="myCar(event)"><i class="fa-solid fa-user"></i> 내차<%= twit.likes_count %></button>
+                    <% } else { %>
                         <% if(!count) { %>
-                        <form action="/car/carfind" method="post">
+                        <form action="/car/carLike" method="post">
                             <input type="hidden" name="carNum" value="<%= twit.num %>">
                             <button type="submit" class="heart"><i class="fa-solid fa-heart" style="color: #000;"></i> <%= twit.likes_count %></button>
                         </form>
                         <% } else { %>
-                        <form action="/car/carfind2" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
+                        <form action="/car/carDislike" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
                             <input type="hidden" name="carNum" value="<%= twit.num %>">
                             <button type="submit" class="heart"><i class="fa-solid fa-heart" style="color: red;"></i> <%= twit.likes_count %></button>
                         </form>
-                      <% } %>
+                    <% } %>
                     <% } %>
                     </div>
                     <div class="carProfile">
@@ -361,6 +361,15 @@
       if(searchlongmile){
         document.querySelector('#longmile').value=searchlongmile;
       }
+    }
+    function notLogin(event){
+      event.preventDefault();
+      alert('로그인이 필요합니다.')
+      window.location.href = '/login'
+    }
+    function myCar(event){
+      event.preventDefault();
+      alert('자신의 차량은 추천할 수 없습니다.')
     }
   </script>
 </body>
