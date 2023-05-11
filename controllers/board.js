@@ -199,7 +199,7 @@ exports.renderEditPost = async (req, res, next) => {
     if (post.userId !== req.session.userId) {
       throw new Error("게시글 수정 권한이 없습니다.");
     }
-    res.render("board_edit", { post, title: "수정하기" });
+    res.render("board_edit", { post, title: "수정하기", req });
   } catch (err) {
     console.error(err);
     next(err);
