@@ -1,19 +1,19 @@
-const { cars, users } = require("../../models");
+const { cars, users, hashtags } = require("../../models");
+const {
+  getPagingDataCount,
+  getPagination,
+  getPagingData,
+} = require("../pagination");
 
 // 등록된 차리스트 뿌리기
-exports.renderCar = async (req, res) => {
+exports.renderCar = async (req, res, next) => {
   try {
-    const pageNum = parseInt(req.query.page) || 1;
-    const limit = 5;
-    const offset = (pageNum - 1) * limit;
-
+    const page = req.query.page ? parseInt(req.query.page, 10) : 1;
     // 전체 데이터 수 구하기
     const countResult = await cars.findAndCountAll({
       where: { status: 1 },
     });
     const totalCount = countResult.count;
-
-    const totalPages = Math.ceil(totalCount / limit);
     const sortOption = req.query.sort || "createdAt_desc";
     let order;
     switch (sortOption) {
@@ -47,19 +47,19 @@ exports.renderCar = async (req, res) => {
       default:
         order = [["createdAt", "DESC"]]; // 최근 등록순
     }
+    const { limit, offset } = getPagination(page, 5);
     const Cars = await cars.findAll({
+      nest: true,
       order,
-      where: { status: 1 },
-      offset: offset,
-      limit: limit,
+      offset,
+      limit,
     });
-
+    const pagingData = getPagingDataCount(totalCount, page, limit);
     res.render("manager/managerCar", {
       title: "내차팔기",
       Cars,
-      currentPage: pageNum,
-      totalPages,
       totalCount,
+      pagingData,
       sortOption, // 전체 데이터 수 추가
     });
   } catch (error) {
@@ -155,13 +155,20 @@ exports.renderDetail = async (req, res, next) => {
     });
     const isOwner = req.user && Cars.user_id === req.user.id;
     const status2 = cars.status === 2;
-    // console.log("Cars.user_id====================", Cars.user_id);
-    // console.log("users.id=======================", req.user.id);
+    const Hashs = await hashtags.findAll({
+      where: { cars_num: Cars.num },
+    });
+    const Users = await users.findOne({
+      where: { id: Cars.user_id },
+    });
+
     res.render("manager/managerDetail", {
       title: Cars.model,
       Cars,
       isOwner,
       status2,
+      Hashs,
+      Users,
     });
   } catch (error) {
     console.error(error);

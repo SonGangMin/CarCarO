@@ -54,36 +54,20 @@
             </li>
           <% }); %>
         </ul>
-        
-        <% if (totalPages > 1) { %>
-            <nav>
-              <ul class="pagination">
-                <% if (currentPage == 1) { %>
-                  <li class="disabled"><span>&laquo;</span></li>
-                <% } else { %>
-                  <li><a href="?page=<%= currentPage - 1 %>">&laquo;</a></li>
-                <% } %>
-          
-                <% for (let i = 1; i <= totalPages; i++) { %>
-                  <% if (i == currentPage) { %>
-                    <li class="active"><span><%= i %></span></li>
-                  <% } else { %>
-                    <li><a href="?page=<%= i %>"><%= i %></a></li>
-                  <% } %>
-                <% } %>
-          
-                <% if (currentPage == totalPages) { %>
-                  <li class="disabled"><span>&raquo;</span></li>
-                <% } else { %>
-                  <li><a href="?page=<%= currentPage + 1 %>">&raquo;</a></li>
-                <% } %>
-              </ul>
-            </nav>
-          <% } %>
+        <%- include('../include/pagination.ejs') %>
     </div>
 </div>
 </body>
 <script>
+    function onPageClick(event, page) {
+      const queryParams = new URLSearchParams(window.location.search);
+      queryParams.set('page', page); // 현재 페이지 설정
+    
+      const queryString = queryParams.toString();
+      const searchUrl = `/manager/managerCar?${queryString}`;
+    
+      location.href = searchUrl;
+    }
   window.onload = () => {
     setQueryStringParams();
     setSelectedSort();
@@ -107,14 +91,13 @@
     const url = `/manager/managerCar${sort ? `?sort=${sort}` : ""}`;
     window.location.href = url;
     }
-    function setSelectedSort() {
-      console.log('sssssssssssssssssssssssssssssssssssss');
-      const urlParams = new URLSearchParams(window.location.search);
-      const sortValue = urlParams.get('sort');
-      if (sortValue) {
-        document.querySelector('select[name="sort"]').value = sortValue;
-      }
+  function setSelectedSort() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sortValue = urlParams.get('sort');
+    if (sortValue) {
+      document.querySelector('select[name="sort"]').value = sortValue;
     }
+  }
 
   function setQueryStringParams(){
     if(!location.search){
