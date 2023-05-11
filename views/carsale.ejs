@@ -10,7 +10,7 @@
             <ul class="viewImg">
               <% Cars.forEach(function(carList) { %>
               <li>
-                  <div class="profile" onclick="location.href='/car/detail/<%= carList.carNum %>'">
+                  <div class="profile" onclick="location.href='/car/detail/<%= carList.num %>'">
                     <% if (carList.picture.length > 0) { %>
                     <img src="<%= carList.picture[0].url %>" alt="" class="thumbnail">
                     <% } %>

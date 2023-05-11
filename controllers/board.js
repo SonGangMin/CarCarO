@@ -291,3 +291,29 @@ exports.editComment = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.renderNewpostWithcar = async (req, res, next) => {
+  const num = req.params.num;
+  const Cars = await models.cars.findOne({
+    where: { num },
+  });
+  res.render("board_newpostwithCar", { title: "글 작성", req, num, Cars });
+};
+
+exports.newpostWithcar = async (req, res, next) => {
+  try {
+    await models.boards.create({
+      postId: null,
+      title: req.body.title,
+      content: req.body.content,
+      createdAt: null,
+      updatedAt: null,
+      user_id: req.user.id,
+      car_num: req.body.num,
+    });
+    res.redirect("/board");
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};

@@ -13,6 +13,8 @@ const {
   createComment,
   editComment,
   deleteComment,
+  renderNewpostWithcar,
+  newpostWithcar,
 } = require("../controllers/board");
 
 // 게시판기능
@@ -20,6 +22,10 @@ router.get("/", renderBoard); //게시판 입장
 router.get("/newpost", isLoggedIn, renderNewpost); // 게시글작성
 router.post("/", isLoggedIn, createPost); // 게시글작성
 router.get("/content/:postId", renderBoardContent); // 게시글자세히보기
+
+router.get("/newpostWithcar/:num", isLoggedIn, renderNewpostWithcar);
+router.post("/newpostWithcar/", isLoggedIn, newpostWithcar);
+
 router.get("/search/", renderSearch); //검색
 router.get("/edit/:postId", renderEditPost); //수정
 router.post("/edit/:postId", editPost); //수정

@@ -274,6 +274,7 @@ exports.renderSalecar = async (req, res, next) => {
 
     const Cars = await cars.findAll({
       attributes: [
+        "num",
         "carNum",
         "model",
         "brand",
@@ -305,14 +306,14 @@ exports.renderSalecar = async (req, res, next) => {
 
 // 등록된 차량 상세
 exports.renderDetail = async (req, res, next) => {
-  const carNum = req.params.carNum;
+  const num = req.params.num;
   const isMine = req.user && req.user.id;
   try {
     const Cars = await cars.findOne({
-      where: { carNum },
+      where: { num },
     });
     const Hashs = await hashtags.findAll({
-      where: { cars_num: Cars.num },
+      where: { cars_num: num },
     });
     const Users = await users.findOne({
       where: { id: Cars.user_id },

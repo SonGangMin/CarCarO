@@ -6,7 +6,7 @@
   /* background: #9bbbd4; */
 }
 
-body{
+body {
   position: relative;
   background-color: #9bbbd4;
   overflow-x: hidden;
@@ -210,16 +210,20 @@ body.noscroll {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
-.contents.carsale{
+.contents.carsale {
   background-color: #9bbbd4;
 }
 
 .title {
   margin-bottom: 50px;
 }
+.notice_num {
+  font-weight: bold;
+  color: red;
+}
 
 /* 푸터 */
-footer{
+footer {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -227,7 +231,7 @@ footer{
   height: 200px;
   padding: 0 100px;
 }
-.footer{
+.footer {
   background-color: #fff;
   font-weight: bold;
 }

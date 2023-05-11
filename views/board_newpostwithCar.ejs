@@ -8,7 +8,11 @@
     <hr class="greenhr" />
     <div class="board_container2">
       <div class="board_title">게시글 등록하기</div>
-      <form method="post" action="/board" onsubmit="return validateForm()">
+      <form
+        method="post"
+        action="/board/newpostWithcar/"
+        onsubmit="return validateForm()"
+      >
         <input
           type="text"
           name="title"
@@ -24,6 +28,23 @@
           placeholder="내용을 입력해주세요"
           class="input_content"
         ></textarea>
+        <hr class="greenhr2" />
+        <input type="text" name="num" value="<%= num %>" hidden />
+        <div class="carinfo">
+          <div class="carinfotitle">차량정보</div>
+          <div class="imgbox">
+            <% if(Cars.picture.length >0) { %>
+            <img src="<%= Cars.picture[0].url %>" class="thumbnail" />
+          </div>
+          <% } %>
+          <div class="carzone">
+            <%= Cars.brand %> <%= Cars.model %>
+            <div class="cardetailinfo">
+              <%= Cars.year %> 년식 | <%= Cars.mile %> km | <%= Cars.fuel %> |
+              <%= Cars.area %>
+            </div>
+          </div>
+        </div>
         <hr class="greenhr2" />
         <div class="buttons">
           <button type="button" id="back" onclick="location.href='/board'">

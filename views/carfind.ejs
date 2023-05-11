@@ -196,7 +196,7 @@
           <ul>
             <% twits.forEach(function(twit) { %>
               <li>
-                <a href="/car/detail/<%= twit.carNum %>">
+                <a href="/car/detail/<%= twit.num %>">
                   <div class="reccarlist" id="<%= isMine === twit.user_id ? 'highlight' : '' %>">
                     <% if (twit.picture.length > 0) { %>
                       <img src="<%= twit.picture[0].url %>" alt="" class="thumbnail">

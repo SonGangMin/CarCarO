@@ -217,7 +217,7 @@
         <ul>
           <% Cars.forEach(function(car) { %>
           <li>
-            <a href="/car/detail/<%= car.carNum %>">
+            <a href="/car/detail/<%= car.num %>">
               <div
                 class="reccarlist"
                 id="<%= isMine === car.user_id ? 'highlight' : '' %>"
