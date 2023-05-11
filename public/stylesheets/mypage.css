@@ -112,13 +112,14 @@
 }
 .left_area_list a{
   display: block;
+  font-size: 20px;
 }
 .mypage_left_area {
   /* border: solid 1px red; */
-  width: 28%;
+  width: 23%;
 }
 .mypage_right_area {
-  width: 72%;
+  width: 77%;
 }
 .mypage_profile {
   display: flex;
