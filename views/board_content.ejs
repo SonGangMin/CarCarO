@@ -24,6 +24,44 @@
           %>시 <%= board.createdAt.getMinutes() %>분</span
         >
       </div>
+      <% if (board.car_num !== null) { %>
+        <div class="carlink">
+          <a href="/car/detail/<%= board.car_num %>">
+            <div class="carinfo">
+              <div class="carinfotitle">차량정보</div>
+              <div class="imgbox">
+                <% if(board.car_num_car.picture.length > 0) { %>
+                <img
+                  src="<%= board.car_num_car.picture[0].url %>"
+                  class="thumbnail"
+                />
+                <% } %>
+              </div>
+              <div class="carzone">
+                <%= board.car_num_car.brand %> <%= board.car_num_car.model %>
+                <div class="cardetailinfo">
+                  <%= board.car_num_car.year %> 년식 | <%= board.car_num_car.mile
+                  %> km | <%= board.car_num_car.fuel %> | <%=
+                  board.car_num_car.area %> | &nbsp; <% var price = board.car_num_car.price;
+                  var unit = '';
+                  if (price >= 10000) {
+                    price = Math.floor(price / 10000);
+                    unit = '억 ';
+                    var remainder = board.car_num_car.price % 10000;
+                    if (remainder > 0) {
+                      unit += remainder.toLocaleString() + '만';
+                    }
+                  } else if (price >= 1) {
+                    price = Math.floor(price);
+                    unit = '만';
+                  } %>
+                <%= price.toLocaleString() + unit + '원' %>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        <% } %>
       <div class="board_content">
         <% board.content.split('\n').forEach(function(line) { %> <%= line %><br />
         <% }) %>
@@ -37,12 +75,13 @@
         >
           <a href="/board/edit/<%= board.postId %>">수정</a>
         </button>
-        <form
-          action="/board/delete/<%= board.postId %>"
-          method="POST"
-          onsubmit="return confirm('게시글을 정말로 삭제하시겠습니까?')"
-        >
-          <input type="submit" value="삭제" class="button" />
+        <form action="/board/delete/<%= board.postId %>" method="POST">
+          <button
+            onclick="return confirm('게시글을 정말로 삭제하시겠습니까?')"
+            class="button"
+          >
+            삭제
+          </button>
         </form>
         <% } %>
       </div>
@@ -58,7 +97,11 @@
         <li class="comment">
           <div class="comment_user">
             <%= comment.user.name %>(<%= comment.user_id %>)
+            <% if (board.user_id === comment.user_id) { %>
+              <i class="fa-solid fa-chess-king"></i>
+            <% } %>
           </div>
+          
           <div id="comment_content">
             <div class="txt" id="content_txt"><%= comment.content %></div>
             <% if (comment.user_id === userId) { %>
@@ -123,16 +166,16 @@
         </li>
         <% }); %>
       </ul>
+      <hr class="greenhr2" />
       <% if (isUser) { %>
-      <div class="createcomment">
-        <div class="createcomment_head">댓글등록하기</div>
-        <form action="/board/content/<%= board.postId %>" method="post">
+      <form action="/board/content/<%= board.postId %>" method="post">
+        <div class="createcomment">
+          <div class="createcomment_head">댓글등록하기</div>
           <input type="text" name="content" class="createinput" />
-          <div class="commentsubmit">
-            <input type="submit" style="cursor: pointer" value="등록" />
+          <input type="submit" style="cursor: pointer" value="등록" class="createsubmit"/>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
       <% } %>
       <script>
         const edits = document.querySelectorAll(".edit");
@@ -161,8 +204,6 @@
             form.submit();
           });
         });
-      </script>
-      <script>
         function onPageClick(event, page) {
           location.href = "/board/content/<%= board.postId %>?page=" + page;
           console.info(page + " (from options)");
@@ -170,9 +211,8 @@
       </script>
       <%- include('./include/pagination.ejs') %>
     </div>
-    <hr class="greenhr" />
     <br />
-    <button><a href="/board">목록으로</a></button>
+    <div class="end"><button onclick="location.href='/board'">목록으로</button></div>
   </div>
 </div>
 <%- include('./include/footer.ejs') %>
