@@ -1,6 +1,6 @@
 .buttons {
-  /* display: flex; */
-  /* justify-content: end; */
+  display: flex;
+  justify-content: flex-end;
   /* margin-left: 80%; */
   /* border: 1px solid black; */
 }
@@ -44,8 +44,8 @@
   margin: 1% 1% 5% 1%;
 }
 .button {
-  margin-left: 1%;
-  width: 10%;
+  width: 70px;
+  margin-left: 10px;
   height: 25px;
   background: #fee500;
   border: none;

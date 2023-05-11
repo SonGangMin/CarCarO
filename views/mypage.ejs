@@ -61,7 +61,7 @@
           <ul class="viewImg">
             <% twits.forEach(function(twit) { %>
             <li
-              onclick="location.href='/car/detail/<%= twit.car_num_car.carNum %>'"
+              onclick="location.href='/car/detail/<%= twit.car_num_car.num %>'"
             >
               <% if (twit.car_num_car.picture.length > 0) { %>
               <img

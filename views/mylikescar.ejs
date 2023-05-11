@@ -109,7 +109,7 @@
       <ul>
         <% twits.forEach(function(twit) { %> <% if(isOwner === twit.userid) %>
         <li>
-          <a href="/car/detail/<%= twit.car_num_car.carNum %>">
+          <a href="/car/detail/<%= twit.car_num_car.num %>">
             <div class="listbox">
               <% if (twit.car_num_car.picture.length > 0) { %>
               <img
