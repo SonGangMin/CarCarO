@@ -152,12 +152,12 @@
     display: inline-block;
     width: 100%;
     background-color: #FEE500;
-    border: 3px solid #FEE500;
     color: #191919;
     font-weight: bold;
     font-size: 18px;
     padding: 5px;
     border-radius: 50px;
+    border: none;
 }
 
 .findcar button:hover{
@@ -406,7 +406,7 @@
 
 /* 커뮤니티 */
 .notice{
-    padding-bottom: 20px;
+    padding: 0 20px 20px;
 }
 .board-table{
     width: 100%;
@@ -421,6 +421,24 @@
     padding: 10px 0;
     margin-bottom: 5px;
 }
+.text_right{
+    text-align: right;
+    margin: 20px 0 10px;
+}
+.text_right button{
+    border: none;
+    background-color: #FEE500;
+    color: #191919;
+    padding: 5px 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.text_right button:hover{
+    background-color: #191919;
+    color: #FEE500;
+}
+
 .board-table li b{
     text-align: center !important;
 }
