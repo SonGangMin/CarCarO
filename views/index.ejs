@@ -194,9 +194,9 @@
                                     <% } %>
 
                                     <% if (typeof isMine === 'undefined') { %>
-                                        <button class="notLoggedIn"><i class="fa-solid fa-heart" style="color: #000;"></i> <%= twit.likes_count %></button>
+                                        <button class="notLoggedIn" onclick="notLogin(event)"><i class="fa-solid fa-heart" style="color: #000;"></i> <%= twit.likes_count %></button>
                                     <% } else if (isMine === twit.user_id) { %>
-                                        <button class="Mine"><i class="fa-solid fa-user"></i> 내차<%= twit.likes_count %></button>
+                                        <button class="Mine" onclick="myCar(event)"><i class="fa-solid fa-user"></i> 내차<%= twit.likes_count %></button>
                                     <% } else { %>
                                         <% if(!count) { %>
                                         <form action="/car/carLike" method="post">
@@ -251,9 +251,9 @@
                                             <% } %>
                                         <% } %>
                                         <% if (typeof isMine === 'undefined') { %>
-                                            <button class="notLoggedIn"><i class="fa-solid fa-heart" style="color: #000;"></i> <%= twit.likes_count %></button>
+                                            <button class="notLoggedIn" onclick="notLogin(event)"><i class="fa-solid fa-heart" style="color: #000;"></i> <%= twit.likes_count %></button>
                                         <% } else if (isMine === twit.user_id) { %>
-                                            <button class="Mine"><i class="fa-solid fa-user"></i> 내차<%= twit.likes_count %></button>
+                                            <button class="Mine" onclick="myCar(event)"><i class="fa-solid fa-user"></i> 내차<%= twit.likes_count %></button>
                                         <% } else { %>
                                             <% if(!count) { %>
                                             <form action="/car/carLike" method="post">
@@ -436,6 +436,15 @@ showMoreButton.addEventListener('click', async function() {
       if(searchlongmile){
         document.querySelector('#longmile').value=searchlongmile;
       }
+    }
+    function notLogin(event){
+      event.preventDefault();
+      alert('로그인이 필요합니다.')
+      window.location.href = '/login'
+    }
+    function myCar(event){
+      event.preventDefault();
+      alert('자신의 차량은 추천할 수 없습니다.')
     }
 </script>
 

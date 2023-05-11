@@ -37,7 +37,7 @@ router.get("/caredit/:carNum", isLoggedIn, carEdit);
 // 내차팔기 리스트 삭제
 router.post("/delete/:carNum", isLoggedIn, listDelete);
 // 내차팔기 리스트 상세 페이지
-router.get("/detail/:carNum", isLoggedIn, renderDetail);
+router.get("/detail/:carNum", renderDetail);
 // 해시태그 검색 리스트 페이지
 router.get("/hashtag", isLoggedIn, renderHashtag);
 // 팔기완료 등록
