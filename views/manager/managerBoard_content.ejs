@@ -40,7 +40,7 @@
       <% if (board.car_num !== null) { %>
       <div class="carlinkarea">
         <div class="carlink">
-          <a href="/car/detail/<%= board.car_num %>">
+          <a href="/manager/managerCar/detail/<%= board.car_num_car.carNum %>">
             <div class="carinfo">
               <div class="carinfotitle">차량정보</div>
               <div class="imgbox">
@@ -76,7 +76,7 @@
       </div>
 
       <div class="buttons">
-        <a href="/board/edit/<%= board.postId %>"
+        <a href="/manager/managerboard/edit/<%= board.postId %>"
           ><button
             onclick="return confirm('게시글을 수정하시겠습니까?')"
             class="button"
@@ -84,7 +84,10 @@
             수정
           </button></a
         >
-        <form action="/board/delete/<%= board.postId %>" method="POST">
+        <form
+          action="/manager/managerboard/delete/<%= board.postId %>"
+          method="POST"
+        >
           <button
             onclick="return confirm('게시글을 정말로 삭제하시겠습니까?')"
             class="button"
@@ -157,7 +160,7 @@
               수정
             </button>
             <form
-              action="/board/comment/delete/<%= comment.number %>"
+              action="/manager/managerboard/comment/delete/<%= comment.number %>"
               method="POST"
               onsubmit="return confirm('댓글을 정말로 삭제하시겠습니까?')"
             >
@@ -201,7 +204,8 @@
           });
         });
         function onPageClick(event, page) {
-          location.href = "/board/content/<%= board.postId %>?page=" + page;
+          location.href =
+            "/manager/managerboard/content/<%= board.postId %>?page=" + page;
           console.info(page + " (from options)");
         }
       </script>
@@ -209,7 +213,7 @@
     </div>
     <br />
     <div class="end">
-      <button onclick="location.href='/board'">목록으로</button>
+      <button onclick="location.href='/manager/managerboard'">목록으로</button>
     </div>
   </div>
 </div>
