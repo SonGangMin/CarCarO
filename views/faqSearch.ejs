@@ -1,6 +1,8 @@
 <%- include('./include/head.ejs') %>
 <script src="../routes/faqSearch.js"></script>
 
+<div class="container">
+    <div class="contents">
 <div class="faqblock">
     <form action=":keyword" method="get">
         질문 검색 <input type="text" class="search" name="keyword" placeholder="검색어를 입력해주세요.">
@@ -24,6 +26,8 @@
         </div>
     </div>
     <button class="inquiry" ><a href="/faq/inquiry">문의하기</a></button>
+</div>
+</div>
 </div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>

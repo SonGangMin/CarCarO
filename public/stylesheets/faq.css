@@ -1,6 +1,6 @@
 .faqblock {
     width: 700px;
-    height: 1000px;
+    height: 1200px;
     margin: 0 auto;
     padding: 50px 50px;
 }
@@ -62,10 +62,10 @@
     padding: 50px;
     border: solid 1px #000000;
     position: relative;
-    display: flex;
-    justify-content: center;
+    /* display: flex; */
+    /* justify-content: center; */
     position: relative;
-    left: 32%;
+    left: -10%;
 }
 
 .leftblock {
