@@ -95,7 +95,8 @@
                       </div>
                       <span class="option-title">차량 부가설명</span>
                       <div class="etc">
-                        <%= Cars.etc %>
+                        <% Cars.etc.split('\n').forEach(function(line) { %> <%= line %><br />
+                        <% }) %>
                       </div>
 
                     </div>

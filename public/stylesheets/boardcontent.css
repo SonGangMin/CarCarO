@@ -6,6 +6,8 @@
 }
 .board_container2 {
   padding: 3% 7% 2% 7%;
+
+  /* display: flex; */
   /* border: 1px solid black; */
 }
 .greenhr {
@@ -201,11 +203,18 @@
   font-weight: bold;
   background: #3a1d1d;
   border-radius: 20px;
+  cursor: pointer;
 }
 .carlink {
   border: 1px solid black;
   margin-top: 2%;
+  width: 70%;
   border-radius: 15px;
+}
+.carlinkarea {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2%;
 }
 .carinfo {
   /* border: 1px solid black; */

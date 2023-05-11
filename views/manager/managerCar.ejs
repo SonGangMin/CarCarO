@@ -32,11 +32,12 @@
               <div class="middle_li" onclick="location.href='/manager/managerCar/detail/<%= carList.carNum %>'">
                 <p><%= carList.brand %> <%= carList.model %></p>
                 <div class="option">
+                  <span style="font-weight: bold;">판매자: <%= carList.user_id %></span><br>
                   <span><%= carList.year %></span>
                   <span><%= carList.mile %>km</span>
                   <span><%= carList.fuel %></span>
-                  <span><%= carList.hashtag %></span>
                 </div>
+                <div><i class="fa-solid fa-heart" style="color: red;"> <%= carList.likes_count %></i></div>
               </div>
               <div class="buttonBox">
                 <button class="Car-btn" onclick="confirmEdit('<%= carList.carNum %>')">수정</button>

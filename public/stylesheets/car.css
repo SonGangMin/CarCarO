@@ -19,7 +19,7 @@
   margin-bottom: 20px;
   border-radius: 10px;
 }
-.viewImg li .profile{
+.viewImg li .profile {
   display: flex;
   width: 80%;
   cursor: pointer;
@@ -43,10 +43,11 @@
 .middle_li {
   cursor: pointer;
 }
+
 .option span {
   display: inline-block;
   margin-bottom: 5px;
-  color: #9bbbd4;
+  color: #191919;
   font-weight: normal;
 }
 .viewImg .buttonBox {
@@ -58,7 +59,7 @@
   justify-content: flex-end;
   margin-bottom: 20px;
 }
-.goupBtn{
+.goupBtn {
   display: inline-block;
   padding: 10px 15px;
   background-color: #fee500;
@@ -199,11 +200,11 @@
   padding: 5px 10px;
   border: none;
 }
-.Car-btn.del-btn{
+.Car-btn.del-btn {
   background-color: #191919;
   color: #fee500;
 }
-.Car-btn:nth-child(2){
+.Car-btn:nth-child(2) {
   background-color: #191919;
   color: #fee500;
 }

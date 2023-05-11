@@ -9,9 +9,9 @@
     <div class="contents">
         <div class="slider">
             <% Adver.forEach(function(advers) { %>
-                <div onclick="location.href='<%= advers.href %>'">
-                    <img src="<%= advers.img[0].url %>"/>
-                </div>
+              <div onclick="window.open('<%= advers.href %>')" class="adver_">
+                <img src="<%= advers.img[0].url %>"/>
+              </div>            
             <% }); %>
         </div>
         <div class="findcar">

@@ -19,6 +19,7 @@
   font-weight: bold;
   background: #3a1d1d;
   border-radius: 20px;
+  cursor: pointer;
 }
 .greenhr {
   margin: 1% 0% 0% 0;
