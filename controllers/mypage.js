@@ -127,6 +127,7 @@ exports.checkPasswordPage = async (req, res) => {
       res.redirect(`${req.user.id}`);
     } else {
       res.render("mypage_password", {
+        title: "오류",
         message: "비밀번호가 일치하지 않습니다.",
         req,
       });

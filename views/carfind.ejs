@@ -212,15 +212,15 @@
                       <% if (typeof isMine === 'undefined') { %>
                         <button class="notLoggedIn">♥ 로그인안함<%= twit.likes_count %></button>
                       <% } else if (isMine === twit.user_id) { %>
-                        <button class="Mine"><i class="fa-solid fa-user"></i><%= twit.likes_count %></button>
+                        <button class="Mine"><i class="fa-solid fa-user"></i>내차 <%= twit.likes_count %></button>
                       <% } else { %>
                         <% if(!count) { %>
-                        <form action="/car/carfind" method="post">
+                        <form action="/car/carLike" method="post">
                             <input type="hidden" name="carNum" value="<%= twit.num %>">
                             <button type="submit" class="heart"><i class="fa-solid fa-heart" style="color: #000;"></i> <%= twit.likes_count %></button>
                         </form>
                         <% } else { %>
-                        <form action="/car/carfind2" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
+                        <form action="/car/carDislike" method="post" onsubmit="return confirm('관심차량 목록에서 삭제하시겠습니까?')">
                             <input type="hidden" name="carNum" value="<%= twit.num %>">
                             <button type="submit" class="heart"><i class="fa-solid fa-heart" style="color: red;"></i> <%= twit.likes_count %></button>
                         </form>
