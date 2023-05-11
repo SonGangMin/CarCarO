@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 .pagination {
   display: flex;
   justify-content: center;
@@ -47,7 +46,7 @@
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
   z-index: 2;
-  color: #fee500;
+  color: #FEE500;
   cursor: default;
   background-color: #191919;
   font-weight: bold;
@@ -59,7 +58,7 @@
 .pagination > .disabled > a:hover,
 .pagination > .disabled > a:focus {
   color: #777;
-  cursor: unset;
+  cursor:unset;
   background-color: #fff;
   border-color: #ddd;
 }

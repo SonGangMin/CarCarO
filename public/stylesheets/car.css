@@ -17,27 +17,36 @@
   border: 1px solid #ccc;
   padding: 10px;
   margin-bottom: 20px;
+  border-radius: 10px;
 }
-.viewImg img {
+.viewImg li .profile{
+  display: flex;
+  width: 80%;
   cursor: pointer;
 }
+
 .viewImg li > a {
   width: 100%;
 }
 .viewImg .thumbnail {
-  width: 230px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
+  margin-right: 40px;
+  cursor: pointer;
+  border-radius: 100%;
 }
 .viewImg p {
-  font-size: 18px;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: bold;
 }
 .middle_li {
   cursor: pointer;
 }
 .option span {
-  display: block;
+  display: inline-block;
   margin-bottom: 5px;
-  color: #000000;
+  color: #9bbbd4;
   font-weight: normal;
 }
 .viewImg .buttonBox {
@@ -45,10 +54,16 @@
 }
 
 .goupload {
-  float: right;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+.goupBtn{
   display: inline-block;
-  border: 1px solid #000;
-  padding: 10px 20px;
+  padding: 10px 15px;
+  background-color: #fee500;
+  border-radius: 5px;
+  color: #191919;
 }
 
 .pagination {
@@ -178,8 +193,19 @@
 
 .Car-btn {
   background-color: #fee500;
-  color: #000000;
+  color: #191919;
   border-radius: 3px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border: none;
+}
+.Car-btn.del-btn{
+  background-color: #191919;
+  color: #fee500;
+}
+.Car-btn:nth-child(2){
+  background-color: #191919;
+  color: #fee500;
 }
 .Car-btn:hover {
   cursor: pointer;
