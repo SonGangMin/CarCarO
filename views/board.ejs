@@ -42,7 +42,7 @@
                   <% } else { %> <%= twit.title %> <% if (twit.car_num !== null) { %> <i class="fa-solid fa-link fa-fade"></i><% } %> [<%= twit.count %>] <% } %>
                 </a>
               </p>
-              <p><%= twit.user.name %>(<%= twit.user_id %>)</p>
+              <span style="cursor: pointer;" onclick="location.href=`/board/search/?searchType=id&result=<%= twit.user_id %>`"><%= twit.user.name %>(<%= twit.user_id %>)</span>
               <p>
                 <%= twit.createdAt.getFullYear() %>년 <%=
                 (twit.createdAt.getMonth() + 1) %>월 <%= twit.createdAt.getDate()
