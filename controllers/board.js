@@ -256,7 +256,7 @@ exports.createComment = async (req, res, next) => {
       user_id: req.user.id,
       post_id: req.params.postId,
     });
-    res.redirect(`/board/content/${postId}`);
+    res.json();
   } catch (err) {
     console.error(err);
     next(err);
