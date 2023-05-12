@@ -50,6 +50,7 @@ exports.renderCar = async (req, res, next) => {
     const { limit, offset } = getPagination(page, 5);
     const Cars = await cars.findAll({
       nest: true,
+      where: { status: 1 },
       order,
       offset,
       limit,
