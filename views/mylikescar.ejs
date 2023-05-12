@@ -103,37 +103,44 @@
         </li>
       </ul>
     </aside>
-    <div class="bigbox" id="list" style="float: left; width: 50%">
+    <div class="container">
+      <div class="contents">
+    <div class="bigbox bigbox2" id="list">
       <h1>관심차량</h1>
       <br />
+      <div class="statistics">
+      </div>
       <ul>
-        <% twits.forEach(function(twit) { %> <% if(isOwner === twit.userid) %>
+        <% twits.forEach(function(car) { %> <% if(isOwner === car.userid) %>
         <li>
-          <a href="/car/detail/<%= twit.car_num_car.num %>">
-            <div class="listbox">
-              <% if (twit.car_num_car.picture.length > 0) { %>
-              <img
-                src="<%= twit.car_num_car.picture[0].url %>"
-                alt=""
-                class="thumbnail"
-              />
-              <% } %><br /><br />
-              <div class="text-box">
-                <div>
-                  <%= twit.car_num_car.from %> <%= twit.car_num_car.brand %> <%=
-                  twit.car_num_car.model %>
-                </div>
-                <div>
-                  <%= twit.car_num_car.fuel %> <%= twit.car_num_car.year %>년식
-                  <%= twit.car_num_car.price %>만원
-                </div>
+          <a href="/car/detail/<%= car.car_num_car.num %>">
+            <div
+              class="reccarlist"
+              id="<%= isMine === car.user_id ? 'highlight' : '' %>"
+            >
+              <% if (car.car_num_car.picture.length > 0) { %>
+                <img src="<%= car.car_num_car.picture[0].url %>" alt="" class="thumbnail">
+                <% } %>
+              <div class="carProfile">
+                <div> <%= car.car_num_car.brand %> <%= car.car_num_car.model %> </div>
+                
+                <div class="carOption">
+                  <span><%= car.car_num_car.year %>년식</span>
+                  <span><%= car.car_num_car.mile %>km</span><br>
+                  <span><%= car.car_num_car.fuel %></span>
+                  <span><%= car.car_num_car.area %></span>
+                  <h5><%= car.car_num_car.price %><p>만원</p></h5>
               </div>
+            
             </div>
           </a>
         </li>
         <% }) %>
       </ul>
     </div>
+    </div>
+    </div>
+    
   </section>
 </div>
 <%- include('./include/footer.ejs') %>
