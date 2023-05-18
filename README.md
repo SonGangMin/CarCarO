@@ -4,6 +4,17 @@ CarCarO 프로젝트 (개인간 중고차거래사이트)
 영남인재교육원 CarCarO팀 1차프로젝트
 
 
+초기 계획서(draw.io)
+[https://drive.google.com/file/d/1nn-2BvyjHm3bndFRsilQXUfTwnntA07N/view?usp=sharing](https://drive.google.com/file/d/1nn-2BvyjHm3bndFRsilQXUfTwnntA07N/view?usp=sharing)
+
+
+
+
+
+
+
+
+
 
 
 -실행방법
